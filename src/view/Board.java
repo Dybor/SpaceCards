@@ -2,10 +2,15 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -13,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import model.Card;
 import model.Player;
 import controler.AbstractControler;
 import observer.Observer;
@@ -30,6 +36,8 @@ private JLabel label_PV;
 private JLabel label_nbBuilding;
 private JLabel label_nbCard;
 
+private Hand hand;
+
 // Menu
 private JMenuBar menuBar = new JMenuBar();
 private JMenu menu_File = new JMenu("Fichier");
@@ -39,6 +47,15 @@ private JMenuItem item_new = new JMenuItem("Nouvelle Partie");
 private JMenuItem item_join = new JMenuItem("Rejoindre une Partie");
 private JMenuItem item_quit = new JMenuItem("Quitter");
 
+
+public static int POSITION_X_HAND = 0;   // position de départ de la main du joueur en x 
+public static int POSITION_y_HAND = 400; // position de départ de la main du joueur en y
+public static int WIDTH_CARD_HAND = 120; // largeur d'une carte dans la main du joueur
+public static int HEIGHT_CARD_HAND = 200;// hauteur d'une carte dans la main du joueur
+
+
+// Test Model
+private ArrayList<Card> cards = new ArrayList<Card>();
 
 
 public Board(AbstractControler controler){                
@@ -56,8 +73,12 @@ private void initComposant(){
 	initBoard();
 	initStats();
 	initMenu();
+	initHands();
+	
+	
 	
 	initFrame();
+	initTestModel();
 }   
 
 private void initBoard(){
@@ -95,13 +116,44 @@ private void initMenu(){
 	menuBar.add(menu_Game);
 }
 
+private void initHands(){
+	hand = new Hand();
+}
+
 private void initFrame(){
 	this.setLayout(new BorderLayout());
 	this.getContentPane().add(board,BorderLayout.CENTER);
 	this.getContentPane().add(stats,BorderLayout.EAST);
+	this.getContentPane().add(hand,BorderLayout.SOUTH);
+	
 	
 	this.setJMenuBar(menuBar);
 
+}
+
+private void initTestModel(){
+	Toolkit toolkit = Toolkit.getDefaultToolkit();
+	
+	Image image = toolkit.getImage("card1.png");
+	this.getContentPane().add(new JLabel(createImageIcon("/Cards/card1.png", "descr")),BorderLayout.WEST);
+	
+	
+	for(int i = 1;i<8;i++){
+			cards.add(new Card(toolkit.getImage("card1.png")));
+	}
+	
+}
+
+/** Returns an ImageIcon, or null if the path was invalid. */
+protected ImageIcon createImageIcon(String path,
+                                           String description) {
+    java.net.URL imgURL = getClass().getResource(path);
+    if (imgURL != null) {
+        return new ImageIcon(imgURL, description);
+    } else {
+        System.err.println("Couldn't find file: " + path);
+        return null;
+    }
 }
 
 
@@ -110,7 +162,10 @@ public void actionPerformed(ActionEvent e) {
 	 if(e.getSource()==item_join){
 		 
 	 } else if(e.getSource()==item_new){
-		 
+		 for(Card c : cards){
+			 System.out.println(c.getImage() .getHeight(null));
+		 }
+		 updateCards(cards);
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
 	 }
@@ -122,5 +177,10 @@ public void actionPerformed(ActionEvent e) {
 public void updatePV(ArrayList<Integer> pv) {
 	
 }
+
+public void updateCards(ArrayList<Card> cards){
+	hand.updateCards(cards);
+}
+
 
 }
