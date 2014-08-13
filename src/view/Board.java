@@ -37,11 +37,13 @@ private JPanel eastSide;
 private JPanel stats;
 private ZoomCardPanel zoomCard;
 
+
 private JLabel label_PV;
 private JLabel label_nbBuilding;
 private JLabel label_nbCard;
 
 private Hand hand;
+private BoardCard boardCard;
 
 // Menu
 private JMenuBar menuBar = new JMenuBar();
@@ -54,14 +56,20 @@ private JMenuItem item_quit = new JMenuItem("Quitter");
 
 
 public static int POSITION_X_HAND = 0;   // position de départ de la main du joueur en x 
-public static int POSITION_y_HAND = 0; // position de départ de la main du joueur en y
+public static int POSITION_Y_HAND = 50; // position de départ de la main du joueur en y
+public static int POSITION_X_BOARD = 0;   // position de départ sur le plateau du joueur en x 
+public static int POSITION_Y_BOARD = 0; // position de départ sur le plateau du joueur en y
+
 public static int WIDTH_CARD_HAND = 120; // largeur d'une carte dans la main du joueur
 public static int HEIGHT_CARD_HAND = 200;// hauteur d'une carte dans la main du joueur
+public static int WIDTH_CARD_BOARD = 60; // largeur d'une carte sur le plateau du joueur
+public static int HEIGHT_CARD_BOARD = 100;// hauteur d'une carte sur le plateau du joueur
 public static int WIDTH_CARD_ZOOM = 240; // largeur d'une carte zoomée
 public static int HEIGHT_CARD_ZOOM = 400;// hauteur d'une carte zoomée
 
 // Test Model
 private ArrayList<Card> cards = new ArrayList<Card>();
+private ArrayList<Card> cards2 = new ArrayList<Card>();
 
 
 public Board(AbstractControler controler){                
@@ -95,6 +103,10 @@ private void initComposant(){
 
 private void initBoard(){
 	board = new JPanel();
+	boardCard = new BoardCard();
+	boardCard.addMouseMotionListener(this);
+	boardCard.addMouseListener(this);
+	board.add(boardCard);
 }
 
 private void initStats(){
@@ -168,6 +180,17 @@ private void initTestModel(){
 			
 	}
 	
+	for(int i = 8;i>0;i--){
+		try {
+			cards2.add(new Card(ImageIO.read(new File("./src/Cards/card"+i+".png"))));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+}
+
+	
+	
 }
 
 
@@ -177,6 +200,7 @@ public void actionPerformed(ActionEvent e) {
 		 
 	 } else if(e.getSource()==item_new){
 		 updateCards(cards);
+		 updateBoardCards(cards2);
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
 	 }
@@ -193,12 +217,18 @@ public void updateCards(ArrayList<Card> cards){
 	hand.updateCards(cards);
 }
 
+public void updateBoardCards(ArrayList<Card> cards){
+	boardCard.updateCards(cards);
+}
+
 
 
 @Override
 public void mouseClicked(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseClicked(e);
+	} else if(e.getComponent().equals(boardCard)){
+		boardCard.mouseClicked(e);
 	}
 	
 }
@@ -207,6 +237,8 @@ public void mouseClicked(MouseEvent e) {
 public void mouseEntered(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseEntered(e);
+	} else if(e.getComponent().equals(boardCard)){
+		boardCard.mouseEntered(e);
 	}
 }
 
@@ -215,6 +247,8 @@ public void mouseExited(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseExited(e);
 		zoomCard.setCard(null);
+	} else if(e.getComponent().equals(boardCard)){
+		boardCard.mouseExited(e);
 	}
 }
 
@@ -222,6 +256,8 @@ public void mouseExited(MouseEvent e) {
 public void mousePressed(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mousePressed(e);
+	} else if(e.getComponent().equals(boardCard)){
+		boardCard.mousePressed(e);
 	}
 }
 
@@ -229,6 +265,8 @@ public void mousePressed(MouseEvent e) {
 public void mouseReleased(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseReleased(e);
+	} else if(e.getComponent().equals(boardCard)){
+		boardCard.mouseReleased(e);
 	}
 }
 
@@ -236,6 +274,8 @@ public void mouseReleased(MouseEvent e) {
 public void mouseDragged(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseDragged(e);
+	} else if(e.getComponent().equals(boardCard)){
+		boardCard.mouseDragged(e);
 	}
 }
 
@@ -249,6 +289,13 @@ public void mouseMoved(MouseEvent e) {
 			zoomCard.setCard(null);
 		}
 	
+	} else if(e.getComponent().equals(boardCard)){
+		boardCard.mouseMoved(e);
+		if(boardCard.getFocusedCard()!=null){
+			zoomCard.setCard(new GraphicCard(boardCard.getFocusedCard().getImage(),0,0,Board.WIDTH_CARD_ZOOM, Board.HEIGHT_CARD_ZOOM));
+		} else {
+			zoomCard.setCard(null);
+		}
 	}
 }
 
