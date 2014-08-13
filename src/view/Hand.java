@@ -1,12 +1,13 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 
 import model.Card;
 
@@ -15,13 +16,11 @@ public class Hand extends JPanel{
 	private ArrayList<GraphicCard> cards = new ArrayList<GraphicCard>();
 	
 	public Hand() {
-		// TODO Auto-generated constructor stub
+		this.setPreferredSize(new Dimension(10*Board.WIDTH_CARD_HAND, Board.HEIGHT_CARD_HAND));
+		
+		this.setBorder(javax.swing.border.LineBorder.createBlackLineBorder());
 	}
 	
-	public Hand(Image image){
-		cards.add(new GraphicCard(image, 0, 50, Board.WIDTH_CARD_HAND, Board.HEIGHT_CARD_HAND));
-		this.add(new JLabel("Test"));
-	}
 		
 	public void paintComponent(Graphics g) {
 		for (Iterator iter = cards.iterator(); iter.hasNext();) {

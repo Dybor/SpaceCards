@@ -26,6 +26,7 @@ public class GraphicCard implements IDrawable{
 	
 	@Override
 	public void draw(Graphics g) {
+		//g.drawImage(scaleImage(image,width,height),x,y,width,height,null);
 		g.drawImage(scaleImage(image,width,height),x,y,width,height,null);
 	}
 

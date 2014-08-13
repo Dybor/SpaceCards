@@ -6,11 +6,13 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -49,7 +51,7 @@ private JMenuItem item_quit = new JMenuItem("Quitter");
 
 
 public static int POSITION_X_HAND = 0;   // position de départ de la main du joueur en x 
-public static int POSITION_y_HAND = 400; // position de départ de la main du joueur en y
+public static int POSITION_y_HAND = 0; // position de départ de la main du joueur en y
 public static int WIDTH_CARD_HAND = 120; // largeur d'une carte dans la main du joueur
 public static int HEIGHT_CARD_HAND = 200;// hauteur d'une carte dans la main du joueur
 
@@ -59,11 +61,10 @@ private ArrayList<Card> cards = new ArrayList<Card>();
 
 
 public Board(AbstractControler controler){                
-  this.setSize(800, 600);
+  this.setSize(1900, 1000);
   this.setTitle("Race For The Galaxy");
   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   this.setLocationRelativeTo(null);
-  this.setResizable(false);
   initComposant();                
   this.controler = controler;                
   this.setVisible(true);
@@ -132,28 +133,17 @@ private void initFrame(){
 }
 
 private void initTestModel(){
-	Toolkit toolkit = Toolkit.getDefaultToolkit();
 	
-	Image image = toolkit.getImage("card1.png");
-	this.getContentPane().add(new JLabel(createImageIcon("/Cards/card1.png", "descr")),BorderLayout.WEST);
-	
-	
-	for(int i = 1;i<8;i++){
-			cards.add(new Card(toolkit.getImage("card1.png")));
+	for(int i = 1;i<9;i++){
+			try {
+				cards.add(new Card(ImageIO.read(new File("./src/Cards/card"+i+".png"))));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 	}
 	
-}
-
-/** Returns an ImageIcon, or null if the path was invalid. */
-protected ImageIcon createImageIcon(String path,
-                                           String description) {
-    java.net.URL imgURL = getClass().getResource(path);
-    if (imgURL != null) {
-        return new ImageIcon(imgURL, description);
-    } else {
-        System.err.println("Couldn't find file: " + path);
-        return null;
-    }
 }
 
 
@@ -162,9 +152,6 @@ public void actionPerformed(ActionEvent e) {
 	 if(e.getSource()==item_join){
 		 
 	 } else if(e.getSource()==item_new){
-		 for(Card c : cards){
-			 System.out.println(c.getImage() .getHeight(null));
-		 }
 		 updateCards(cards);
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
