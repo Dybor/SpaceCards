@@ -2,14 +2,12 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -21,11 +19,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import model.Card;
-import model.Player;
 import controler.AbstractControler;
 import observer.Observer;
 
-public class Board extends JFrame implements Observer, ActionListener{
+public class Board extends JFrame implements Observer, ActionListener, MouseListener{
 
 
 //L'instance de notre objet contrôleur
@@ -54,7 +51,8 @@ public static int POSITION_X_HAND = 0;   // position de départ de la main du jou
 public static int POSITION_y_HAND = 0; // position de départ de la main du joueur en y
 public static int WIDTH_CARD_HAND = 120; // largeur d'une carte dans la main du joueur
 public static int HEIGHT_CARD_HAND = 200;// hauteur d'une carte dans la main du joueur
-
+public static int WIDTH_CARD_ZOOM = 240; // largeur d'une carte zoomée
+public static int HEIGHT_CARD_ZOOM = 400;// hauteur d'une carte zoomée
 
 // Test Model
 private ArrayList<Card> cards = new ArrayList<Card>();
@@ -119,6 +117,7 @@ private void initMenu(){
 
 private void initHands(){
 	hand = new Hand();
+	hand.addMouseListener(this);
 }
 
 private void initFrame(){
@@ -138,7 +137,6 @@ private void initTestModel(){
 			try {
 				cards.add(new Card(ImageIO.read(new File("./src/Cards/card"+i+".png"))));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -167,6 +165,44 @@ public void updatePV(ArrayList<Integer> pv) {
 
 public void updateCards(ArrayList<Card> cards){
 	hand.updateCards(cards);
+}
+
+
+
+@Override
+public void mouseClicked(MouseEvent e) {
+	if(e.getComponent().equals(hand)){
+		hand.mouseClicked(e);
+	}
+	
+}
+
+@Override
+public void mouseEntered(MouseEvent e) {
+	if(e.getComponent().equals(hand)){
+		hand.mouseEntered(e);
+	}
+}
+
+@Override
+public void mouseExited(MouseEvent e) {
+	if(e.getComponent().equals(hand)){
+		hand.mouseEntered(e);
+	}
+}
+
+@Override
+public void mousePressed(MouseEvent e) {
+	if(e.getComponent().equals(hand)){
+		hand.mousePressed(e);
+	}
+}
+
+@Override
+public void mouseReleased(MouseEvent e) {
+	if(e.getComponent().equals(hand)){
+		hand.mouseReleased(e);
+	}
 }
 
 

@@ -2,16 +2,19 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
 
 
+
+
 import model.Card;
 
-public class Hand extends JPanel{
+public class Hand extends JPanel implements MouseListener{
 
 	private ArrayList<GraphicCard> cards = new ArrayList<GraphicCard>();
 	
@@ -39,4 +42,43 @@ public class Hand extends JPanel{
 		}
 		repaint();
 	}
+	
+
+	public void mouseClicked(MouseEvent e) {
+	
+		
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		for(GraphicCard card : cards){
+			if(card.getRectangle().contains(e.getPoint())){
+				card.setWidth(Board.WIDTH_CARD_ZOOM);
+				card.setHeight(Board.HEIGHT_CARD_ZOOM);
+			}
+		}
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
