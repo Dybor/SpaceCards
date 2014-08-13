@@ -1,70 +1,40 @@
 package model;
 
+import java.util.ArrayList;
+
+import observer.Observer;
+
 public class Game extends AbstractModel{
 
-	  //Définit l'opérateur
-	  public void setOperateur(String ope){    
-	    //On lance le calcul
-	    calcul();
-
-	    //On stocke l'opérateur
-	    this.operateur = ope;
-
-	    //Si l'opérateur n'est pas =
-	    if(!ope.equals("=")){
-	      //On réinitialise l'opérande
-	      this.operande = "";
-	    }    
-	  }
-
-	  //Définit le nombre
-	  public void setNombre(String result){
-	    //On concatène le nombre 
-	    this.operande += result;
-	    //On met à jour 
-	    notifyObserver(this.operande);
-	  }
-
-	  //Force le calcul
-	  public void getResultat() {
-	    calcul();
-	  }
-
-	  //Réinitialise tout
-	  public void reset(){
-	    this.result = 0;
-	    this.operande = "0";
-	    this.operateur = "";
-	    //Mise à jour !
-	    notifyObserver(String.valueOf(this.result));
-	  }
-
-	  //Calcul
-	  public void calcul(){
-	    //S'il n'y a pas d'opérateur, le résultat est le nombre saisi
-	    if(this.operateur.equals("")){
-	      this.result = Double.parseDouble(this.operande);
-	    }
-	    else{
-	      //Si l'opérande n'est pas vide, on calcule avec l'opérateur de calcul 
-	      if(!this.operande.equals("")){
-	        if(this.operateur.equals("+"))
-	          this.result += Double.parseDouble(this.operande);
-	        if(this.operateur.equals("-"))
-	          this.result -= Double.parseDouble(this.operande);
-	        if(this.operateur.equals("*"))
-	          this.result *= Double.parseDouble(this.operande);          
-	        if(this.operateur.equals("/")){
-	          try{
-	            this.result /= Double.parseDouble(this.operande);
-	          }catch(ArithmeticException e){
-	            this.result = 0;
-	          }
-	        }
-	      }
-	    }
-	    this.operande = "";
-	    //On lance aussi la mise à jour !
-	    notifyObserver(String.valueOf(this.result));
-	  }
+	public static int UPDATE_PV = 0;
+	@Override
+	public void updatePV() {
+		notifyObserver(UPDATE_PV);
 	}
+
+	@Override
+	public void notifyObserver(int i) {
+		for(Observer obs : listObserver){
+			switch (i){
+			case 0: // UPDATE_PV
+				obs.updatePV(listOfPV());
+			break;
+			default:
+			}
+		}
+		
+		
+	}
+	
+	private ArrayList<Integer> listOfPV(){
+		ArrayList<Integer> list = new ArrayList<>();
+		
+		for (Player p : this.listPlayer){
+			list.add(p.getPv());
+		}
+		
+		return list;
+	}
+
+
+}
