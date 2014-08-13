@@ -6,8 +6,8 @@ import model.Card;
 import model.Player;
 
 public interface Observer {
-	  public void updatePV(ArrayList<Integer> pv);
-	  public void updateCards(ArrayList<Card> cards);
+	  public void updatePV(ArrayList<Integer> pv);    //met à jour les points de victoire de tous les joueurs
+	  public void updateCards(ArrayList<Card> cards); //met à jour les cartes du joueur actif
 	  
 	  
 }

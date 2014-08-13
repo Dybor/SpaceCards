@@ -1,11 +1,13 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,14 +24,18 @@ import model.Card;
 import controler.AbstractControler;
 import observer.Observer;
 
-public class Board extends JFrame implements Observer, ActionListener, MouseListener{
+public class Board extends JFrame implements Observer, ActionListener, MouseListener, MouseMotionListener{
 
 
 //L'instance de notre objet contrôleur
 private AbstractControler controler;
 
 private JPanel board;
+
+
+private JPanel eastSide;
 private JPanel stats;
+private ZoomCardPanel zoomCard;
 
 private JLabel label_PV;
 private JLabel label_nbBuilding;
@@ -59,9 +65,10 @@ private ArrayList<Card> cards = new ArrayList<Card>();
 
 
 public Board(AbstractControler controler){                
-  this.setSize(1900, 1000);
   this.setTitle("Race For The Galaxy");
   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  this.setExtendedState(this.MAXIMIZED_BOTH);
+  
   this.setLocationRelativeTo(null);
   initComposant();                
   this.controler = controler;                
@@ -71,13 +78,19 @@ public Board(AbstractControler controler){
 private void initComposant(){
 	initBoard();
 	initStats();
+	initZoomCard();
 	initMenu();
 	initHands();
 	
 	
+	initEastSide();
+	
+	
+	initTestModel();
+	
 	
 	initFrame();
-	initTestModel();
+	
 }   
 
 private void initBoard(){
@@ -118,17 +131,30 @@ private void initMenu(){
 private void initHands(){
 	hand = new Hand();
 	hand.addMouseListener(this);
+	hand.addMouseMotionListener(this);
+}
+
+private void initZoomCard(){
+	zoomCard = new ZoomCardPanel();
+	
+}
+
+private void initEastSide(){
+	eastSide = new JPanel();
+	//eastSide.setLayout(new GridLayout(2, 1));
+	//eastSide.add(stats);
+	eastSide.add(zoomCard);
+	
 }
 
 private void initFrame(){
 	this.setLayout(new BorderLayout());
 	this.getContentPane().add(board,BorderLayout.CENTER);
-	this.getContentPane().add(stats,BorderLayout.EAST);
+	this.getContentPane().add(eastSide,BorderLayout.EAST);
 	this.getContentPane().add(hand,BorderLayout.SOUTH);
 	
 	
 	this.setJMenuBar(menuBar);
-
 }
 
 private void initTestModel(){
@@ -187,7 +213,8 @@ public void mouseEntered(MouseEvent e) {
 @Override
 public void mouseExited(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
-		hand.mouseEntered(e);
+		hand.mouseExited(e);
+		zoomCard.setCard(null);
 	}
 }
 
@@ -202,6 +229,26 @@ public void mousePressed(MouseEvent e) {
 public void mouseReleased(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseReleased(e);
+	}
+}
+
+@Override
+public void mouseDragged(MouseEvent e) {
+	if(e.getComponent().equals(hand)){
+		hand.mouseDragged(e);
+	}
+}
+
+@Override
+public void mouseMoved(MouseEvent e) {
+	if(e.getComponent().equals(hand)){
+		hand.mouseMoved(e);
+		if(hand.getFocusedCard()!=null){
+			zoomCard.setCard(new GraphicCard(hand.getFocusedCard().getImage(),0,0,Board.WIDTH_CARD_ZOOM, Board.HEIGHT_CARD_ZOOM));
+		} else {
+			zoomCard.setCard(null);
+		}
+	
 	}
 }
 
