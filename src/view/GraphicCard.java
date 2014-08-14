@@ -28,29 +28,7 @@ public class GraphicCard implements IDrawable{
 	@Override
 	public void draw(Graphics g) {
 		//g.drawImage(scaleImage(image,width,height),x,y,width,height,null);
-		g.drawImage(scaleImage(image,width,height),x,y,width,height,null);
-	}
-
-	/** 
-	 * Redimensionne une image.
-	 * 
-	 * @param source Image à redimensionner.
-	 * @param width Largeur de l'image cible.
-	 * @param height Hauteur de l'image cible.
-	 * @return Image redimensionnée.
-	 */
-	public Image scaleImage(Image source, int width, int height){
-		 /* On crée une nouvelle image aux bonnes dimensions. */
-	    BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-	 
-	    /* On dessine sur le Graphics de l'image bufferisée. */
-	    Graphics2D g2d = buf.createGraphics();
-	    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g2d.drawImage(source, 0, 0, width, height, null);
-	    g2d.dispose();
-	 
-	    /* On retourne l'image bufferisée, qui est une image. */
-	    return buf;
+		g.drawImage(GraphicsTools.scaleImage(image,width,height),x,y,width,height,null);
 	}
 
 	// Utilise pour reperer la taille de l'image afin de pouvoir cliquer dessus.

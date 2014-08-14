@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,6 +43,7 @@ private JLabel label_nbCard;
 
 private Hand hand;
 private BoardCard boardCard;
+private GameRound gameRound;
 
 // Menu
 private JMenuBar menuBar = new JMenuBar();
@@ -67,6 +67,11 @@ public static int HEIGHT_CARD_BOARD = 100;// hauteur d'une carte sur le plateau 
 public static int WIDTH_CARD_ZOOM = 240; // largeur d'une carte zoomée
 public static int HEIGHT_CARD_ZOOM = 400;// hauteur d'une carte zoomée
 
+public static int POSITION_X_ROUND = 0;   // position de départ du tour de jeu
+public static int POSITION_Y_ROUND = 0; // position de départ du tour de jeu
+public static int WIDTH_ROUND = 50; // largeur d'un element du tour de jeu
+public static int HEIGHT_ROUND = 50;// hauteur d'un element du tour de jeu
+
 // Test Model
 private ArrayList<Card> cards = new ArrayList<Card>();
 private ArrayList<Card> cards2 = new ArrayList<Card>();
@@ -89,7 +94,7 @@ private void initComposant(){
 	initZoomCard();
 	initMenu();
 	initHands();
-	
+	initGameRound();
 	
 	initEastSide();
 	
@@ -151,11 +156,17 @@ private void initZoomCard(){
 	
 }
 
+private void initGameRound(){
+	gameRound = new GameRound(0, 0, 0);
+	
+}
+
 private void initEastSide(){
 	eastSide = new JPanel();
 	//eastSide.setLayout(new GridLayout(2, 1));
 	//eastSide.add(stats);
 	eastSide.add(zoomCard);
+	eastSide.add(gameRound);
 	
 }
 
@@ -201,6 +212,16 @@ public void actionPerformed(ActionEvent e) {
 	 } else if(e.getSource()==item_new){
 		 updateCards(cards);
 		 updateBoardCards(cards2);
+		 
+		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
+		 bool.add(true);
+		 bool.add(false);
+		 bool.add(false);
+		 bool.add(true);
+		 bool.add(false);
+		 bool.add(false);
+		 
+		 gameRound.setGreyRound(bool);
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
 	 }
@@ -219,6 +240,12 @@ public void updateCards(ArrayList<Card> cards){
 
 public void updateBoardCards(ArrayList<Card> cards){
 	boardCard.updateCards(cards);
+}
+
+@Override
+public void updateGameRound(ArrayList<Boolean> bool) {
+	gameRound.setGreyRound(bool);
+	
 }
 
 
@@ -298,6 +325,8 @@ public void mouseMoved(MouseEvent e) {
 		}
 	}
 }
+
+
 
 
 }
