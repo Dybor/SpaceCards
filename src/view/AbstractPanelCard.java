@@ -51,8 +51,9 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 	}
 	
 	
-	
+	// Met à jour toute la main avec une liste de cartes
 	public void updateCards(ArrayList<Card> cards){
+		this.cards.clear();
 		int x = position_X + marge_ext_x;
 		int y = position_y + marge_ext_y;		
 		for(Card card : cards){
@@ -67,6 +68,42 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 		}
 		repaint();
 	}
+	
+	// Met à jour l'affichage des cartes (apres une modification)
+	private void updateGraphicsCards(){
+		int x = position_X + marge_ext_x;
+		int y = position_y + marge_ext_y;				
+		for(GraphicCard gc : cards){
+			gc.setX(x);
+			gc.setY(y);
+			if(x == position_X + marge_ext_x + (scale_width + marge_int_x)*(nbCardbyRow - 1) && y==position_y + marge_ext_y){
+				x = position_X - scale_width - marge_int_x + marge_ext_x ;
+				y = y + scale_height + marge_int_y;
+			}
+			x = x + scale_width + marge_int_x;
+		}
+		repaint();
+	}
+	
+	// Ajoute un certain nombre de carte à la vue
+	public void addCards(ArrayList<Card> cards){
+		for(Card c : cards){
+			this.cards.add(new GraphicCard(c.getImage(), 0, 0, scale_width, scale_height));
+		}
+		updateGraphicsCards();
+	}
+	
+	// Enleve un certain nombre de carte à la vue
+	public void removeCards(ArrayList<Integer> index){
+		ArrayList<GraphicCard> remove = new ArrayList<GraphicCard>();
+		for(Integer i : index){
+			remove.add(cards.get(i));
+		}
+		cards.removeAll(remove);
+		updateGraphicsCards();
+	}
+		
+	
 
 	@Override
 	public void mouseDragged(MouseEvent e) {

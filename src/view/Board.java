@@ -211,7 +211,7 @@ public void actionPerformed(ActionEvent e) {
 		 
 	 } else if(e.getSource()==item_new){
 		 updateCards(cards);
-		 updateBoardCards(cards2);
+		 updateBoardCards(cards2);		 
 		 
 		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
 		 bool.add(true);
