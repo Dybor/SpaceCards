@@ -1,6 +1,8 @@
 package view;
 
-import java.awt.BorderLayout;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +20,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import model.Card;
 import controler.AbstractControler;
@@ -32,7 +35,6 @@ private AbstractControler controler;
 private JPanel board;
 
 
-private JPanel eastSide;
 private JPanel stats;
 private ZoomCardPanel zoomCard;
 
@@ -41,8 +43,10 @@ private JLabel label_PV;
 private JLabel label_nbBuilding;
 private JLabel label_nbCard;
 
+private JTextArea playerEvent;
+
 private Hand hand;
-private BoardCard boardCard;
+private BoardCard playerBoard;
 private GameRound gameRound;
 
 // Menu
@@ -89,29 +93,29 @@ public Board(AbstractControler controler){
 }
 
 private void initComposant(){
-	initBoard();
-	initStats();
-	initZoomCard();
-	initMenu();
-	initHands();
-	initGameRound();
-	
-	initEastSide();
-	
+	initBoard();			//Initialisation du board central
+	initStats();			//Initialisation du résumé des statistiques du joueur
+	initZoomCard();			//Initialisation de l'espace pour la carte zoomée
+	initMenu();				//Initialisation de la barre de menu
+	initHands();			//Initialisation de la main du joueur
+	initGameRound();		//Initialisation des tours de jeu 
+	initPlayerEvent();		//Initialisation des évenements de jeu
 	
 	initTestModel();
 	
 	
-	initFrame();
+	initFrame();			//Initialisation de la frame
 	
 }   
 
 private void initBoard(){
 	board = new JPanel();
-	boardCard = new BoardCard();
-	boardCard.addMouseMotionListener(this);
-	boardCard.addMouseListener(this);
-	board.add(boardCard);
+	playerBoard = new BoardCard(6,2,0,10,0,80,Board.WIDTH_CARD_BOARD,Board.HEIGHT_CARD_BOARD,Board.POSITION_X_BOARD,Board.POSITION_Y_BOARD);
+	playerBoard.addMouseMotionListener(this);
+	playerBoard.addMouseListener(this);
+//	board.setPreferredSize(new Dimension(10*Board.WIDTH_CARD_HAND, playerBoard.getHeightPanel()));
+	board.add(playerBoard);
+	
 }
 
 private void initStats(){
@@ -129,6 +133,7 @@ private void initStats(){
 	stats.add(new JLabel("Cartes en mains"));
 	stats.add(label_nbCard);
 	
+	stats.setBorder(javax.swing.border.LineBorder.createBlackLineBorder());
 	
 }
 
@@ -161,22 +166,59 @@ private void initGameRound(){
 	
 }
 
-private void initEastSide(){
-	eastSide = new JPanel();
-	//eastSide.setLayout(new GridLayout(2, 1));
-	//eastSide.add(stats);
-	eastSide.add(zoomCard);
-	eastSide.add(gameRound);
-	
+private void initPlayerEvent(){
+	playerEvent = new JTextArea();
+	playerEvent.setFocusable(false);
 }
 
+
 private void initFrame(){
-	this.setLayout(new BorderLayout());
-	this.getContentPane().add(board,BorderLayout.CENTER);
-	this.getContentPane().add(eastSide,BorderLayout.EAST);
-	this.getContentPane().add(hand,BorderLayout.SOUTH);
+	this.setLayout(new GridBagLayout());
+	GridBagConstraints gbc = new GridBagConstraints();
 	
+	gbc.gridx = 0 ; gbc.gridy = 0; // la grille commence en (0,0)
+	gbc.fill = GridBagConstraints.VERTICAL;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	gbc.gridwidth = 1;
+	gbc.gridheight = 2;
+	gbc.anchor = GridBagConstraints.CENTER;
+	this.add(board,gbc);
 	
+	gbc.gridx = 1 ; gbc.gridy = 0;
+	gbc.fill = GridBagConstraints.NONE;
+	gbc.fill = GridBagConstraints.NONE;
+	gbc.gridwidth = GridBagConstraints.RELATIVE;
+	gbc.gridheight = 2;
+	gbc.anchor = GridBagConstraints.LINE_END;
+	this.add(gameRound,gbc);
+	
+	gbc.gridx = 2 ; gbc.gridy = 0;
+	gbc.gridwidth = GridBagConstraints.REMAINDER;
+	gbc.gridheight = 1;
+	gbc.anchor = GridBagConstraints.LINE_END;
+	this.add(stats,gbc);
+	
+	gbc.gridx = 2 ; gbc.gridy = 1;
+	gbc.gridwidth = GridBagConstraints.REMAINDER;
+	gbc.gridheight = GridBagConstraints.RELATIVE;
+	gbc.anchor = GridBagConstraints.LINE_END;
+	this.add(zoomCard,gbc);
+	
+	gbc.gridx = 0 ; gbc.gridy = 2;
+	gbc.gridwidth = GridBagConstraints.REMAINDER;
+	gbc.gridheight = GridBagConstraints.RELATIVE;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	gbc.anchor = GridBagConstraints.PAGE_END;
+	this.add(playerEvent,gbc);
+	
+	gbc.gridx = 0; gbc.gridy = 3;
+	gbc.gridheight = GridBagConstraints.REMAINDER;
+	gbc.gridwidth = GridBagConstraints.REMAINDER;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	gbc.anchor = GridBagConstraints.LAST_LINE_START;
+	this.add(hand,gbc);
+	
+
 	this.setJMenuBar(menuBar);
 }
 
@@ -222,6 +264,9 @@ public void actionPerformed(ActionEvent e) {
 		 bool.add(false);
 		 
 		 gameRound.setGreyRound(bool);
+		 
+		 updatePlayerEvent("Tour1");
+		 
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
 	 }
@@ -239,7 +284,7 @@ public void updateCards(ArrayList<Card> cards){
 }
 
 public void updateBoardCards(ArrayList<Card> cards){
-	boardCard.updateCards(cards);
+	playerBoard.updateCards(cards);
 }
 
 @Override
@@ -248,14 +293,21 @@ public void updateGameRound(ArrayList<Boolean> bool) {
 	
 }
 
+@Override
+public void updatePlayerEvent(String str) {
+	playerEvent.setText(str);
+	
+}
+
+
 
 
 @Override
 public void mouseClicked(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseClicked(e);
-	} else if(e.getComponent().equals(boardCard)){
-		boardCard.mouseClicked(e);
+	} else if(e.getComponent().equals(playerBoard)){
+		playerBoard.mouseClicked(e);
 	}
 	
 }
@@ -264,8 +316,8 @@ public void mouseClicked(MouseEvent e) {
 public void mouseEntered(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseEntered(e);
-	} else if(e.getComponent().equals(boardCard)){
-		boardCard.mouseEntered(e);
+	} else if(e.getComponent().equals(playerBoard)){
+		playerBoard.mouseEntered(e);
 	}
 }
 
@@ -274,8 +326,8 @@ public void mouseExited(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseExited(e);
 		zoomCard.setCard(null);
-	} else if(e.getComponent().equals(boardCard)){
-		boardCard.mouseExited(e);
+	} else if(e.getComponent().equals(playerBoard)){
+		playerBoard.mouseExited(e);
 	}
 }
 
@@ -283,8 +335,8 @@ public void mouseExited(MouseEvent e) {
 public void mousePressed(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mousePressed(e);
-	} else if(e.getComponent().equals(boardCard)){
-		boardCard.mousePressed(e);
+	} else if(e.getComponent().equals(playerBoard)){
+		playerBoard.mousePressed(e);
 	}
 }
 
@@ -292,8 +344,8 @@ public void mousePressed(MouseEvent e) {
 public void mouseReleased(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseReleased(e);
-	} else if(e.getComponent().equals(boardCard)){
-		boardCard.mouseReleased(e);
+	} else if(e.getComponent().equals(playerBoard)){
+		playerBoard.mouseReleased(e);
 	}
 }
 
@@ -301,8 +353,8 @@ public void mouseReleased(MouseEvent e) {
 public void mouseDragged(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseDragged(e);
-	} else if(e.getComponent().equals(boardCard)){
-		boardCard.mouseDragged(e);
+	} else if(e.getComponent().equals(playerBoard)){
+		playerBoard.mouseDragged(e);
 	}
 }
 
@@ -316,15 +368,16 @@ public void mouseMoved(MouseEvent e) {
 			zoomCard.setCard(null);
 		}
 	
-	} else if(e.getComponent().equals(boardCard)){
-		boardCard.mouseMoved(e);
-		if(boardCard.getFocusedCard()!=null){
-			zoomCard.setCard(new GraphicCard(boardCard.getFocusedCard().getImage(),0,0,Board.WIDTH_CARD_ZOOM, Board.HEIGHT_CARD_ZOOM));
+	} else if(e.getComponent().equals(playerBoard)){
+		playerBoard.mouseMoved(e);
+		if(playerBoard.getFocusedCard()!=null){
+			zoomCard.setCard(new GraphicCard(playerBoard.getFocusedCard().getImage(),0,0,Board.WIDTH_CARD_ZOOM, Board.HEIGHT_CARD_ZOOM));
 		} else {
 			zoomCard.setCard(null);
 		}
 	}
 }
+
 
 
 

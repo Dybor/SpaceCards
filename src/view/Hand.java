@@ -22,8 +22,7 @@ public class Hand extends AbstractPanelCard{
 	private float ratio = (float) 1.25; //ratio de hauteur lors de la selection de la carte
 	
 	public Hand() {
-		super(10,0,0,0,0,Board.WIDTH_CARD_HAND, Board.HEIGHT_CARD_HAND,Board.POSITION_X_HAND,Board.POSITION_Y_HAND); //nbcard,ext_x,int_x,ext_y,int_y
-		this.setPreferredSize(new Dimension(10*Board.WIDTH_CARD_HAND, (int)(Board.HEIGHT_CARD_HAND*ratio)));
+		super(10,1,0,0,0,0,Board.WIDTH_CARD_HAND, Board.HEIGHT_CARD_HAND,Board.POSITION_X_HAND,Board.POSITION_Y_HAND); //nbcard,ext_x,int_x,ext_y,int_y
 		
 		this.setBorder(javax.swing.border.LineBorder.createBlackLineBorder());
 		

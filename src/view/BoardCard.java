@@ -14,12 +14,11 @@ import model.Card;
 
 public class BoardCard extends AbstractPanelCard{
 
-	public BoardCard() {
-		super(6,20,10,10,80,Board.WIDTH_CARD_BOARD,Board.HEIGHT_CARD_BOARD,Board.POSITION_X_BOARD,Board.POSITION_Y_BOARD); //nbcard,ext_x,int_x,ext_y,int_y
-		this.setPreferredSize(new Dimension(8*Board.WIDTH_CARD_BOARD, Board.HEIGHT_CARD_BOARD*3));
-		
+	public BoardCard(int nbCardbyRow, int nbRow, int marge_ext_x, int marge_int_x,
+			int marge_ext_y, int marge_int_y, int scale_width, int scale_height, int position_X, int position_Y){
+		super(nbCardbyRow, nbRow, marge_ext_x, marge_int_x ,marge_ext_y, 
+				marge_int_y, scale_width,scale_height, position_X, position_Y);
 		this.setBorder(javax.swing.border.LineBorder.createBlackLineBorder());
-		
 	}
 	
 	@Override

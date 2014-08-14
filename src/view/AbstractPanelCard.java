@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,6 +19,7 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 	protected boolean focusACard;
 	
 	protected int nbCardbyRow = 6;
+	protected int nbRow = 2;
 	protected int marge_ext_x = 20;
 	protected int marge_int_x = 10;
 	protected int marge_ext_y = 10;
@@ -28,9 +30,13 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 	protected int position_X = Board.POSITION_X_HAND;
 	protected int position_y = Board.POSITION_Y_HAND;
 	
-	public AbstractPanelCard(int nbCardbyRow, int marge_ext_x, int marge_int_x,
+	protected int widthPanel;
+	protected int heightPanel;
+	
+	public AbstractPanelCard(int nbCardbyRow, int nbRow, int marge_ext_x, int marge_int_x,
 			int marge_ext_y, int marge_int_y, int scale_width, int scale_height, int position_X, int position_Y) {
 		this.nbCardbyRow = nbCardbyRow;
+		this.nbRow = nbRow;
 		this.marge_ext_x = marge_ext_x;
 		this.marge_int_x = marge_int_x;
 		this.marge_ext_y = marge_ext_y;
@@ -39,6 +45,10 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 		this.scale_height = scale_height;
 		this.position_X = position_X;
 		this.position_y = position_Y;
+		
+		widthPanel = position_X + marge_ext_x*2 + nbCardbyRow*scale_width + marge_int_x*(nbCardbyRow-1);
+		heightPanel = position_Y + marge_ext_y*2 + nbRow*scale_height + marge_int_y*(nbRow-1);
+		this.setPreferredSize(new Dimension(widthPanel,heightPanel));
 		
 	}
 	
@@ -159,5 +169,13 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 			return cards.get(flagCard);
 		} else return null;
 		
+	}
+
+	public int getWidthPanel() {
+		return widthPanel;
+	}
+
+	public int getHeightPanel() {
+		return heightPanel;
 	}
 }
