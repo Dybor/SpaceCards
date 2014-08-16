@@ -1,20 +1,19 @@
 package view;
 
-<<<<<<< HEAD
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-=======
-import java.awt.BorderLayout;
->>>>>>> 34e9f4f... Premier modèle de joueur
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -23,6 +22,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import model.Card;
 import model.drawable.DrawableCard;
 import controler.AbstractControler;
 import observer.Observer;
@@ -243,24 +243,10 @@ private void initTestModel(){
 		
 }
 
+	
+	
+}
 
-
-	private void initFrame() {
-		this.setLayout(new BorderLayout());
-		this.getContentPane().add(board, BorderLayout.CENTER);
-		this.getContentPane().add(eastSide, BorderLayout.EAST);
-		this.getContentPane().add(hand, BorderLayout.SOUTH);
-
-		this.setJMenuBar(menuBar);
-	}
-
-	private void initTestModel() {
-		for (int i = 1; i < 9; i++) {
-			cards.add(new model.Card("Monde " + i
-					+ ",Productif,2,1,./src/Cards/card" + i + ".png"));
-		}
-
-	}
 
 @Override
 public void actionPerformed(ActionEvent e) {
@@ -285,14 +271,18 @@ public void actionPerformed(ActionEvent e) {
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
 	 }
+		 
+	
+}
 
-		} else if (e.getSource() == item_new) {
-			updateCards(cards);
-		} else if (e.getSource() == item_quit) {
-			System.exit(0);
-		}
+@Override
+public void updatePV(ArrayList<Integer> pv) {
+	
+}
 
-	}
+public void updateCards(ArrayList<Card> cards){
+	hand.updateCards(cards);
+}
 
 public void updateBoardCards(ArrayList<Card> cards){
 	playerBoard.updateCards(cards);
@@ -310,10 +300,8 @@ public void updatePlayerEvent(String str) {
 	
 }
 
-	@Override
-	public void updatePV(ArrayList<Integer> pv) {
 
-	}
+
 
 @Override
 public void mouseClicked(MouseEvent e) {
@@ -324,9 +312,6 @@ public void mouseClicked(MouseEvent e) {
 	}
 	
 }
-	public void updateCards(ArrayList<DrawableCard> cards) {
-		hand.updateCards(cards);
-	}
 
 @Override
 public void mouseEntered(MouseEvent e) {
@@ -334,8 +319,8 @@ public void mouseEntered(MouseEvent e) {
 		hand.mouseEntered(e);
 	} else if(e.getComponent().equals(playerBoard)){
 		playerBoard.mouseEntered(e);
-167... Premiers modèles de cartes
 	}
+}
 
 @Override
 public void mouseExited(MouseEvent e) {
@@ -345,6 +330,7 @@ public void mouseExited(MouseEvent e) {
 	} else if(e.getComponent().equals(playerBoard)){
 		playerBoard.mouseExited(e);
 	}
+}
 
 @Override
 public void mousePressed(MouseEvent e) {
@@ -353,6 +339,7 @@ public void mousePressed(MouseEvent e) {
 	} else if(e.getComponent().equals(playerBoard)){
 		playerBoard.mousePressed(e);
 	}
+}
 
 @Override
 public void mouseReleased(MouseEvent e) {
@@ -360,16 +347,18 @@ public void mouseReleased(MouseEvent e) {
 		hand.mouseReleased(e);
 	} else if(e.getComponent().equals(playerBoard)){
 		playerBoard.mouseReleased(e);
-
 	}
+}
+
 @Override
 public void mouseDragged(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
 		hand.mouseDragged(e);
 	} else if(e.getComponent().equals(playerBoard)){
 		playerBoard.mouseDragged(e);
-
 	}
+}
+
 @Override
 public void mouseMoved(MouseEvent e) {
 	if(e.getComponent().equals(hand)){
@@ -387,29 +376,7 @@ public void mouseMoved(MouseEvent e) {
 		} else {
 			zoomCard.setCard(null);
 		}
-=======
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		if (e.getComponent().equals(hand)) {
-			hand.mouseDragged(e);
-		}
->>>>>>> 9a65167... Premiers modèles de cartes
 	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		if (e.getComponent().equals(hand)) {
-			hand.mouseMoved(e);
-			if (hand.getFocusedCard() != null) {
-				zoomCard.setCard(new GraphicCard(hand.getFocusedCard()
-						.getImage(), 0, 0, Board.WIDTH_CARD_ZOOM,
-						Board.HEIGHT_CARD_ZOOM));
-			}
-
-		}
-	}
-
-
-
+}
 
 }
