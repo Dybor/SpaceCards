@@ -1,0 +1,15 @@
+package modelInterfaces;
+
+/**
+ * Définit le comportement réseau/sérialisable d'une carte à jouer.
+ * @author Nicolas
+ *
+ */
+public interface NetworkCard {
+
+	/**
+	 * Crée une chaîne de caractère qui sérialise la carte à jouer.
+	 * @return Une chaîne de caractère représentant la carte.
+	 */
+	public String serialize();
+}
