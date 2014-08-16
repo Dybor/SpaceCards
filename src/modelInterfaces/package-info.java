@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author Nicolas
- *
- */
-package modelInterfaces;

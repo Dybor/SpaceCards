@@ -2,7 +2,7 @@ package observer;
 
 import java.util.ArrayList;
 
-import modelInterfaces.DrawableCard;
+import model.drawable.DrawableCard;
 
 public interface Observer {
 	  public void updatePV(ArrayList<Integer> pv);    //met à jour les points de victoire de tous les joueurs

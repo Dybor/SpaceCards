@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-import modelInterfaces.DrawableCard;
+import model.drawable.DrawableCard;
 
 public class Hand extends JPanel implements MouseListener, MouseMotionListener {
 

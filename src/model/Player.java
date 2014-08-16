@@ -2,8 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
-import modelInterfaces.GameCard;
-import modelInterfaces.GamePlayer;
+import model.game.GameCard;
+import model.game.GamePlayer;
 
 public class Player implements GamePlayer {
 

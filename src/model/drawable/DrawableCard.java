@@ -1,4 +1,4 @@
-package modelInterfaces;
+package model.drawable;
 
 import java.awt.Image;
 

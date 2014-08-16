@@ -23,7 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import modelInterfaces.DrawableCard;
+import model.drawable.DrawableCard;
 import controler.AbstractControler;
 import observer.Observer;
 

@@ -1,4 +1,4 @@
-package modelInterfaces;
+package model.network;
 
 /**
  * Définit le comportement réseau/sérialisable d'une carte à jouer.

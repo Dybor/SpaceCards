@@ -1,4 +1,4 @@
-package modelInterfaces;
+package model.game;
 
 /**
  * Défnit le comportement d'une carte à jouer.

@@ -6,9 +6,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import modelInterfaces.DrawableCard;
-import modelInterfaces.GameCard;
-import modelInterfaces.NetworkCard;
+import model.drawable.DrawableCard;
+import model.game.GameCard;
+import model.network.NetworkCard;
 
 public class Card implements GameCard, DrawableCard, NetworkCard {
 
