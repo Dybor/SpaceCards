@@ -226,20 +226,12 @@ private void initFrame(){
 private void initTestModel(){
 	
 	for(int i = 1;i<9;i++){
-			try {
-				cards.add(new Card(ImageIO.read(new File("./src/Cards/card"+i+".png"))));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			cards.add(new Card("12,12,12,12"));
 			
 	}
 	
 	for(int i = 8;i>0;i--){
-		try {
-			cards2.add(new Card(ImageIO.read(new File("./src/Cards/card"+i+".png"))));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		cards2.add(new Card("12,12,12,12"));
 		
 }
 
