@@ -30,7 +30,7 @@ public class Game extends AbstractModel{
 		ArrayList<Integer> list = new ArrayList<>();
 		
 		for (Player p : this.listPlayer){
-			list.add(p.getPv());
+			list.add(p.getScore());
 		}
 		
 		return list;

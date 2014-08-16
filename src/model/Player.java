@@ -1,24 +1,37 @@
 package model;
 
-public class Player {
+import java.util.ArrayList;
 
-	private int pv;
-	
-	public Player() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Player(int pv) {
-		this.pv = pv;
+import modelInterfaces.GameCard;
+import modelInterfaces.GamePlayer;
+
+public class Player implements GamePlayer {
+
+	// Attributes
+	private String name;
+	private int score;
+	private ArrayList<GameCard> hand;
+
+	// Builder
+	public Player(String n) {
+		name =n;
+		score =0;
+		hand =new ArrayList<>();
 	}
 
-	public int getPv() {
-		return pv;
+	// GamePlayer implementation
+	@Override
+	public String getName() {
+		return name;
 	}
 
-	public void setPv(int pv) {
-		this.pv = pv;
+	@Override
+	public int getScore() {
+		return score;
 	}
-	
-	
+
+	@Override
+	public ArrayList<GameCard> getHand() {
+		return hand;
+	}
 }
