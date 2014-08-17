@@ -13,14 +13,14 @@ public class Main {
 		// Instanciation du modèle modèle
 		ArrayList<IGameCard> cards =getCards();
 		IGamePlayer mainPlayer =new Player("Nicolas");
-		GameModel game =new GameModel("Nouvelle partie", mainPlayer, cards);
+		GameModel gameModel =new GameModel("Nouvelle partie", mainPlayer, cards);
 		
 		// Création du contrôleur
-		GameControler controler = new GameControler(game);
+		GameControler controler = new GameControler(gameModel);
 		// Création de notre fenêtre avec le contrôleur en paramètre
 		Board board = new Board(controler);
 		// Ajout de la fenêtre comme observer de notre modèle
-		game.setObserver(board);
+		gameModel.setObserver(board);
 	}
 	
 	public static ArrayList<IGameCard> getCards() {
