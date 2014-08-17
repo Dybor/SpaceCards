@@ -1,7 +1,5 @@
 package model.game;
 
-import java.util.ArrayList;
-
 /**
  * Défnit le comportement d'un joueur de la partie
  * @author Nicolas
@@ -22,10 +20,20 @@ public interface GamePlayer {
 	public int getScore();
 	
 	/**
+	 * Attribue une main a un joueur.
+	 */
+	public void setHand(GameHand h);
+	
+	/**
+	 * Attribue un plateau a un joueur.
+	 */
+	public void setBoard(GameBoard b);
+	
+	/**
 	 * Accesseur de la main du joueur.
 	 * @return Renvoie la liste des cartes que le joueur a en mains.
 	 */
-	public ArrayList<GameCard> getHand();
+	public GameHand getHand();
 	
 	/**
 	 * Accesseur du plateau de jeu du joueur.

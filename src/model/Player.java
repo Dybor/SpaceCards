@@ -1,9 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-
 import model.game.GameBoard;
-import model.game.GameCard;
+import model.game.GameHand;
 import model.game.GamePlayer;
 
 public class Player implements GamePlayer {
@@ -11,14 +9,13 @@ public class Player implements GamePlayer {
 	// Attributes
 	private String name;
 	private int score;
-	private ArrayList<GameCard> hand;
+	private GameHand hand;
 	private GameBoard board;
 
 	// Builder
 	public Player(String n) {
 		name =n;
 		score =0;
-		hand =new ArrayList<>();
 	}
 
 	// GamePlayer implementation
@@ -33,12 +30,22 @@ public class Player implements GamePlayer {
 	}
 
 	@Override
-	public ArrayList<GameCard> getHand() {
+	public GameHand getHand() {
 		return hand;
 	}
 
 	@Override
 	public GameBoard getBoard() {
 		return board;
+	}
+
+	@Override
+	public void setHand(GameHand h) {
+		hand =h;
+	}
+
+	@Override
+	public void setBoard(GameBoard b) {
+		board =b;
 	}
 }

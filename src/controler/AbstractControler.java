@@ -1,17 +1,16 @@
 package controler;
 
-import model.AbstractModel;
+import model.game.AbstractGameModel;
 
 public abstract class AbstractControler {
 
-	protected AbstractModel game;
+	protected AbstractGameModel game;
 
-	public AbstractControler(AbstractModel cal) {
+	public AbstractControler(AbstractGameModel cal) {
 		this.game = cal;
 	}
 
 	public void updatePV() {
-		this.game.updatePV();
 	}
 
 	// Méthode de contrôle

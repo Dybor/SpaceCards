@@ -1,16 +1,15 @@
 package controler;
 
-import model.AbstractModel;
+import model.game.AbstractGameModel;
 
 public class GameControler extends AbstractControler {
 
-	public GameControler(AbstractModel game) {
+	public GameControler(AbstractGameModel game) {
 		super(game);
 	}
 
 	public void control() {
 
-		this.game.updatePV();
 	}
 
 }

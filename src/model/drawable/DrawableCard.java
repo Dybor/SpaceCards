@@ -1,17 +1,22 @@
 package model.drawable;
 
-import java.awt.Image;
-
 /**
- * Définit le comportement graphique d'une carte à jouer
+ * Definit le comportement graphique d'une carte a jouer.
  * @author Nicolas
  *
  */
 public interface DrawableCard {
 
 	/**
-	 * Accesseur de l'image de la carte.
-	 * @return Renvoie un objet contenant le fichier image de la carte.
+	 * Accesseur du numero d'identification de l'image de la carte.
+	 * @return Renvoie un entier.
 	 */
-	public Image getImage();
+	public int getImageId();
+	
+	/**
+	 * Accesseur du numero d'identification d'un des pouvoir de la carte (i compris entre 1 et 6).
+	 * @param i Pouvoir de la carte (compris entre 1 et 6, du pouvoir d'exploration a celui de production).
+	 * @return
+	 */
+	public int getPowerId(int i);
 }

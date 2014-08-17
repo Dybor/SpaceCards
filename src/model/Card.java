@@ -1,11 +1,5 @@
 package model;
 
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import model.drawable.DrawableCard;
 import model.game.GameCard;
 import model.network.NetworkCard;
@@ -14,19 +8,33 @@ public class Card implements GameCard, DrawableCard, NetworkCard {
 
 	// Attributes
 	private String name;
-	private String type;
+	private int type;
 	private int cost;
 	private int scoreValue;
+	private boolean isHomeWorld;
+
+	private int imageId;
+	private int[] powerIds;
 	private String path;
+	
+	private GameCard good;
+	private boolean hasGood;
 
 	// Builder
 	public Card(String stringValue) {
 		String[] values = stringValue.split(",");
 		name = values[0];
-		type = values[1];
+		type = Integer.parseInt(values[1]);
 		cost = Integer.parseInt(values[2]);
 		scoreValue = Integer.parseInt(values[3]);
+		isHomeWorld = Boolean.parseBoolean(values[4]);
+
+		imageId = 1;
+		powerIds = new int[] { 0, 0, 0, 0, 0, 0 };
 		path = "./src/Cards/card1.png";
+		
+		good =null;
+		hasGood =false;
 	}
 
 	// GameCard implementation
@@ -36,7 +44,7 @@ public class Card implements GameCard, DrawableCard, NetworkCard {
 	}
 
 	@Override
-	public String getType() {
+	public int getType() {
 		return type;
 	}
 
@@ -50,16 +58,39 @@ public class Card implements GameCard, DrawableCard, NetworkCard {
 		return scoreValue;
 	}
 
+	@Override
+	public boolean isHomeWorld() {
+		return isHomeWorld;
+	}
+
 	// DrawableCard implementation
 	@Override
-	public Image getImage() {
-		Image im = null;
-		try {
-			im = ImageIO.read(new File(path));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return im;
+	public int getImageId() {
+		return imageId;
+	}
+
+	@Override
+	public int getPowerId(int i) {
+		return powerIds[i];
+	}
+
+	@Override
+	public void produceGood(GameCard c) {
+		good = c;
+		hasGood =true;
+	}
+	
+	@Override
+	public GameCard consumeGood() {
+		GameCard oldGood =good;
+		good =null;
+		hasGood =false;
+		return oldGood;
+	}
+
+	@Override
+	public boolean hasGood() {
+		return hasGood;
 	}
 
 	// NetowrkCard implementation
