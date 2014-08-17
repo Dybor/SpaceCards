@@ -1,16 +1,16 @@
 package model;
 
-import model.game.GameBoard;
-import model.game.GameHand;
-import model.game.GamePlayer;
+import model.game.IGameBoard;
+import model.game.IGameHand;
+import model.game.IGamePlayer;
 
-public class Player implements GamePlayer {
+public class Player implements IGamePlayer {
 
 	// Attributes
 	private String name;
 	private int score;
-	private GameHand hand;
-	private GameBoard board;
+	private IGameHand hand;
+	private IGameBoard board;
 
 	// Builder
 	public Player(String n) {
@@ -30,22 +30,22 @@ public class Player implements GamePlayer {
 	}
 
 	@Override
-	public GameHand getHand() {
+	public IGameHand getHand() {
 		return hand;
 	}
 
 	@Override
-	public GameBoard getBoard() {
+	public IGameBoard getBoard() {
 		return board;
 	}
 
 	@Override
-	public void setHand(GameHand h) {
+	public void setHand(IGameHand h) {
 		hand =h;
 	}
 
 	@Override
-	public void setBoard(GameBoard b) {
+	public void setBoard(IGameBoard b) {
 		board =b;
 	}
 }

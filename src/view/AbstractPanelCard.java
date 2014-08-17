@@ -11,7 +11,7 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 import model.Card;
-import model.drawable.DrawableCard;
+import model.drawable.IDrawableCard;
 
 public abstract class AbstractPanelCard extends JPanel implements MouseListener, MouseMotionListener{
 
@@ -63,11 +63,11 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 	
 	
 	// Met à jour toute la main avec une liste de cartes
-	public void updateCards(ArrayList<DrawableCard> cards){
+	public void updateCards(ArrayList<IDrawableCard> cards){
 		this.cards.clear();
 		int x = position_X + marge_ext_x;
 		int y = position_y + marge_ext_y;		
-		for(DrawableCard card : cards){
+		for(IDrawableCard card : cards){
 			GraphicCard gCard = new GraphicCard(card.getImageId(), x, y, scale_width, scale_height);
 			this.cards.add(gCard);
 			if(x == position_X + marge_ext_x + (scale_width + marge_int_x)*(nbCardbyRow - 1) && y==position_y + marge_ext_y){

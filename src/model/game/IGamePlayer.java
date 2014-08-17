@@ -5,7 +5,7 @@ package model.game;
  * @author Nicolas
  *
  */
-public interface GamePlayer {
+public interface IGamePlayer {
 
 	/**
 	 * Accesseur du nom du joueur.
@@ -22,22 +22,22 @@ public interface GamePlayer {
 	/**
 	 * Attribue une main a un joueur.
 	 */
-	public void setHand(GameHand h);
+	public void setHand(IGameHand h);
 	
 	/**
 	 * Attribue un plateau a un joueur.
 	 */
-	public void setBoard(GameBoard b);
+	public void setBoard(IGameBoard b);
 	
 	/**
 	 * Accesseur de la main du joueur.
 	 * @return Renvoie la liste des cartes que le joueur a en mains.
 	 */
-	public GameHand getHand();
+	public IGameHand getHand();
 	
 	/**
 	 * Accesseur du plateau de jeu du joueur.
 	 * @return Renvoie le plateau de jeux.
 	 */
-	public GameBoard getBoard();
+	public IGameBoard getBoard();
 }

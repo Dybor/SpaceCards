@@ -1,10 +1,10 @@
 package model;
 
-import model.drawable.DrawableCard;
-import model.game.GameCard;
-import model.network.NetworkCard;
+import model.drawable.IDrawableCard;
+import model.game.IGameCard;
+import model.network.INetworkCard;
 
-public class Card implements GameCard, DrawableCard, NetworkCard {
+public class Card implements IGameCard, IDrawableCard, INetworkCard {
 
 	// Attributes
 	private String name;
@@ -17,7 +17,7 @@ public class Card implements GameCard, DrawableCard, NetworkCard {
 	private int[] powerIds;
 	private String path;
 	
-	private GameCard good;
+	private IGameCard good;
 	private boolean hasGood;
 
 	// Builder
@@ -75,14 +75,14 @@ public class Card implements GameCard, DrawableCard, NetworkCard {
 	}
 
 	@Override
-	public void produceGood(GameCard c) {
+	public void produceGood(IGameCard c) {
 		good = c;
 		hasGood =true;
 	}
 	
 	@Override
-	public GameCard consumeGood() {
-		GameCard oldGood =good;
+	public IGameCard consumeGood() {
+		IGameCard oldGood =good;
 		good =null;
 		hasGood =false;
 		return oldGood;

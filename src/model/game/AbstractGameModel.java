@@ -11,8 +11,8 @@ public abstract class AbstractGameModel implements Observable {
 	// Attributes
 	protected String name;
 	protected Observer observer;
-	protected ArrayList<GamePlayer> players = new ArrayList<>();
-	protected ArrayList<GameCard> cards;
+	protected ArrayList<IGamePlayer> players = new ArrayList<>();
+	protected ArrayList<IGameCard> cards;
 	protected int pvPool;
 
 	// Implémentation du pattern observer

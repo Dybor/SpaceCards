@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 
 import model.game.AbstractGameModel;
-import model.game.GameCard;
-import model.game.GamePlayer;
+import model.game.IGameCard;
+import model.game.IGamePlayer;
 import view.Board;
 import controler.GameControler;
 
@@ -12,8 +12,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// Instanciation du modèle modèle
-		ArrayList<GameCard> cards =getCards();
-		GamePlayer mainPlayer =new Player("Nicolas");
+		ArrayList<IGameCard> cards =getCards();
+		IGamePlayer mainPlayer =new Player("Nicolas");
 		AbstractGameModel game =new Game("Nouvelle partie", mainPlayer, cards);
 		
 		// Création du contrôleur
@@ -24,8 +24,8 @@ public class Main {
 		game.setObserver(board);
 	}
 	
-	public static ArrayList<GameCard> getCards() {
-		ArrayList<GameCard> cards =new ArrayList<>();
+	public static ArrayList<IGameCard> getCards() {
+		ArrayList<IGameCard> cards =new ArrayList<>();
 		return cards;
 	}
 }

@@ -5,7 +5,7 @@ package model.drawable;
  * @author Nicolas
  *
  */
-public interface DrawableCard {
+public interface IDrawableCard {
 
 	/**
 	 * Accesseur du numero d'identification de l'image de la carte.

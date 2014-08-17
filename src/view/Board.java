@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import model.Card;
-import model.drawable.DrawableCard;
+import model.drawable.IDrawableCard;
 import controler.GameControler;
 import observer.Observer;
 
@@ -78,8 +78,8 @@ public static int WIDTH_ROUND = 50; // largeur d'un element du tour de jeu
 public static int HEIGHT_ROUND = 50;// hauteur d'un element du tour de jeu
 
 // Test Model
-private ArrayList<DrawableCard> cards = new ArrayList<>();
-private ArrayList<DrawableCard> cards2 = new ArrayList<>();
+private ArrayList<IDrawableCard> cards = new ArrayList<>();
+private ArrayList<IDrawableCard> cards2 = new ArrayList<>();
 
 
 public Board(GameControler controler){                
@@ -275,11 +275,11 @@ public void updatePV(ArrayList<Integer> pv) {
 	
 }
 
-public void updateCards(ArrayList<DrawableCard> cards){
+public void updateCards(ArrayList<IDrawableCard> cards){
 	hand.updateCards(cards);
 }
 
-public void updateBoardCards(ArrayList<DrawableCard> cards){
+public void updateBoardCards(ArrayList<IDrawableCard> cards){
 	playerBoard.updateCards(cards);
 }
 

@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * @author Nicolas
  *
  */
-public interface GameHand {
+public interface IGameHand {
 
 	/**
 	 * Accesseur des cartes de la mains du joueur.
 	 * @return
 	 */
-	public ArrayList<GameCard> getCards();
+	public ArrayList<IGameCard> getCards();
 	
 	/**
 	 * Accesseur de la taille de la main du joueur.
@@ -25,13 +25,13 @@ public interface GameHand {
 	 * Ajoute une carte a la main.
 	 * @param card Carte a ajouter dans la main.
 	 */
-	public void addCard(GameCard card);
+	public void addCard(IGameCard card);
 	
 	/**
 	 * Retire une carte a la main.
 	 * @param card Carte a retirer de la main.
 	 */
-	public void discardCard(GameCard card);
+	public void discardCard(IGameCard card);
 	
 	/**
 	 * Ce test renverra vrai si la main est pleine, c'est-a-dire contient plus de 10 cartes. 

@@ -5,7 +5,7 @@ package model.game;
  * @author Nicolas
  *
  */
-public interface GameCard {
+public interface IGameCard {
 
 	/**
 	 * Identifiant d'un monde vierge.
@@ -66,12 +66,12 @@ public interface GameCard {
 	 * Produit un bien sur le monde.
 	 * @param card
 	 */
-	public void produceGood(GameCard card);
+	public void produceGood(IGameCard card);
 	
 	/**
 	 * Consomme le bien present sur le monde.
 	 */
-	public GameCard consumeGood();
+	public IGameCard consumeGood();
 	
 	/**
 	 * Test d'existence d'un bien sur le monde.

@@ -5,7 +5,7 @@ package model.network;
  * @author Nicolas
  *
  */
-public interface NetworkCard {
+public interface INetworkCard {
 
 	/**
 	 * Crée une chaîne de caractère qui sérialise la carte à jouer.

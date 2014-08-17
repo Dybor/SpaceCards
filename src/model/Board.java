@@ -2,13 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-import model.game.GameBoard;
-import model.game.GameCard;
+import model.game.IGameBoard;
+import model.game.IGameCard;
 
-public class Board implements GameBoard {
+public class Board implements IGameBoard {
 
 	// Attributes
-	private ArrayList<GameCard> cards;
+	private ArrayList<IGameCard> cards;
 
 	// Builder
 	public Board() {
@@ -17,7 +17,7 @@ public class Board implements GameBoard {
 
 	// GameBoard implementation
 	@Override
-	public ArrayList<GameCard> getCards() {
+	public ArrayList<IGameCard> getCards() {
 		return cards;
 	}
 
@@ -27,12 +27,12 @@ public class Board implements GameBoard {
 	}
 
 	@Override
-	public void addCard(GameCard card) {
+	public void addCard(IGameCard card) {
 		cards.add(card);
 	}
 
 	@Override
-	public void removeCard(GameCard card) {
+	public void removeCard(IGameCard card) {
 		cards.remove(cards);
 	}
 
