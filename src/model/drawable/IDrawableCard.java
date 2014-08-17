@@ -6,6 +6,32 @@ package model.drawable;
  *
  */
 public interface IDrawableCard {
+	
+	/**
+	 * Monde sans ressource ou, developpement.
+	 */
+	public static final int WITHOUT_GOOD =0;
+	
+	/**
+	 * Monde avec ressources nouvelles (bleues).
+	 */
+	public static final int NOVELTY_GOODS =1;
+	
+	/**
+	 * Monde avec ressources rares (marrons).
+	 */
+	public static final int RARE_ELEMENTS =2;
+	
+	/**
+	 * Monde avec ressources elevees (vertes).
+	 */
+	public static final int GENES =3;
+	
+	/**
+	 * Monde avec ressources aliens (jaunes).
+	 */
+	public static final int ALIEN_TECHNOLOGY =4;
+	
 
 	/**
 	 * Accesseur du numero d'identification de l'image de la carte.
@@ -19,4 +45,10 @@ public interface IDrawableCard {
 	 * @return
 	 */
 	public int getPowerId(int i);
+	
+	/**
+	 * Accesseur de la couleur d'une ressource si elle existe.
+	 * @return Renvoie un entier.
+	 */
+	public int getGoodColor();
 }

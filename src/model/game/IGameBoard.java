@@ -11,9 +11,10 @@ public interface IGameBoard {
 
 	/**
 	 * Accesseur des cartes du plateau de jeu du joueur.
-	 * @return Renvoie la liste des cartes presentes sur le plateau de jeu du joueur.
+	 * @param i Indice de la carte
+	 * @return
 	 */
-	public ArrayList<IGameCard> getCards();
+	public IGameCard getCard(int i);
 	
 	/**
 	 * Accesseur de la taille du plateau de jeu.

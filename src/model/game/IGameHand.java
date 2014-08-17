@@ -11,9 +11,10 @@ public interface IGameHand {
 
 	/**
 	 * Accesseur des cartes de la mains du joueur.
+	 * @param i Indice de la carte
 	 * @return
 	 */
-	public ArrayList<IGameCard> getCards();
+	public IGameCard getCard(int i);
 	
 	/**
 	 * Accesseur de la taille de la main du joueur.

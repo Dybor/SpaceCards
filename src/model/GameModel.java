@@ -36,7 +36,7 @@ public class GameModel implements Observable {
 	@Override
 	public void notifyObserver(String msg) {
 		if (msg.equals(RunnableGame.SETUP_OKAY)) {
-			// Permettre aux joueux de défausser deux cartes
+			//observer.updateCards(cards);
 		}
 	}
 

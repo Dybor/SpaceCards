@@ -12,6 +12,7 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	private int cost;
 	private int scoreValue;
 	private boolean isHomeWorld;
+	private int goodColor;
 
 	private int imageId;
 	private int[] powerIds;
@@ -28,6 +29,7 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 		cost = Integer.parseInt(values[2]);
 		scoreValue = Integer.parseInt(values[3]);
 		isHomeWorld = Boolean.parseBoolean(values[4]);
+		goodColor =Integer.parseInt(values[5]);
 
 		imageId = 1;
 		powerIds = new int[] { 0, 0, 0, 0, 0, 0 };
@@ -62,18 +64,7 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	public boolean isHomeWorld() {
 		return isHomeWorld;
 	}
-
-	// DrawableCard implementation
-	@Override
-	public int getImageId() {
-		return imageId;
-	}
-
-	@Override
-	public int getPowerId(int i) {
-		return powerIds[i];
-	}
-
+	
 	@Override
 	public void produceGood(IGameCard c) {
 		good = c;
@@ -91,6 +82,22 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	@Override
 	public boolean hasGood() {
 		return hasGood;
+	}
+
+	// DrawableCard implementation
+	@Override
+	public int getImageId() {
+		return imageId;
+	}
+
+	@Override
+	public int getPowerId(int i) {
+		return powerIds[i];
+	}
+	
+	@Override
+	public int getGoodColor() {
+		return goodColor;
 	}
 
 	// NetowrkCard implementation

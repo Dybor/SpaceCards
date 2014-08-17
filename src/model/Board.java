@@ -2,10 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+import model.drawable.IDrawableBoard;
+import model.drawable.IDrawableCard;
 import model.game.IGameBoard;
 import model.game.IGameCard;
 
-public class Board implements IGameBoard {
+public class Board implements IGameBoard, IDrawableBoard {
 
 	// Attributes
 	private ArrayList<IGameCard> cards;
@@ -17,8 +19,8 @@ public class Board implements IGameBoard {
 
 	// GameBoard implementation
 	@Override
-	public ArrayList<IGameCard> getCards() {
-		return cards;
+	public IGameCard getCard(int i) {
+		return cards.get(i);
 	}
 
 	@Override
@@ -42,5 +44,14 @@ public class Board implements IGameBoard {
 			return true;
 		else
 			return false;
+	}
+
+	// IDrawableBoard implementation
+	@Override
+	public ArrayList<IDrawableCard> getCards() {
+		ArrayList<IDrawableCard> cs =new ArrayList<>();
+		for (IGameCard c:cards)
+			cs.add((IDrawableCard)c);
+		return cs;
 	}
 }

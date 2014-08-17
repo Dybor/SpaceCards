@@ -2,10 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+import model.drawable.IDrawableCard;
+import model.drawable.IDrawableHand;
 import model.game.IGameCard;
 import model.game.IGameHand;
 
-public class Hand implements IGameHand {
+public class Hand implements IGameHand, IDrawableHand {
 
 	// Attributes
 	private ArrayList<IGameCard> cards;
@@ -17,8 +19,8 @@ public class Hand implements IGameHand {
 
 	// GameHand implementation
 	@Override
-	public ArrayList<IGameCard> getCards() {
-		return cards;
+	public IGameCard getCard(int i) {
+		return cards.get(i);
 	}
 
 	@Override
@@ -42,6 +44,15 @@ public class Hand implements IGameHand {
 			return true;
 		else
 			return false;
+	}
+
+	// DrawableHand implmentation
+	@Override
+	public ArrayList<IDrawableCard> getCards() {
+		ArrayList<IDrawableCard> cs =new ArrayList<>();
+		for (IGameCard c:cards)
+			cs.add((IDrawableCard)c);
+		return cs;
 	}
 
 }
