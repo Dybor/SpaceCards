@@ -11,7 +11,9 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 import model.Card;
+import model.drawable.IDrawableBoard;
 import model.drawable.IDrawableCard;
+import model.drawable.IDrawableHand;
 
 public abstract class AbstractPanelCard extends JPanel implements MouseListener, MouseMotionListener{
 
@@ -63,22 +65,27 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 	
 	
 	// Met à jour toute la main avec une liste de cartes
-	public void updateCards(ArrayList<IDrawableCard> cards){
-		this.cards.clear();
-		int x = position_X + marge_ext_x;
-		int y = position_y + marge_ext_y;		
-		for(IDrawableCard card : cards){
-			GraphicCard gCard = new GraphicCard(card.getImageId(), x, y, scale_width, scale_height);
+	public void updateCards(IDrawableHand hand){
+		this.cards.clear();		
+		for(IDrawableCard card : hand.getCards()){
+			GraphicCard gCard = new GraphicCard(card.getImageId(), 0, 0, scale_width, scale_height);
 			this.cards.add(gCard);
-			if(x == position_X + marge_ext_x + (scale_width + marge_int_x)*(nbCardbyRow - 1) && y==position_y + marge_ext_y){
-				x = position_X - scale_width - marge_int_x + marge_ext_x ;
-				y = y + scale_height + marge_int_y;
-			}
-			x = x + scale_width + marge_int_x;
 			
 		}
+		updateGraphicsCards();
 		repaint();
 	}
+	
+	// Met à jour toute la main avec une liste de cartes
+		public void updateBoard(IDrawableBoard board){
+			this.cards.clear();	
+			for(IDrawableCard card : board.getCards()){
+				GraphicCard gCard = new GraphicCard(card.getImageId(), 0, 0, scale_width, scale_height);
+				this.cards.add(gCard);
+			}
+			updateGraphicsCards();
+			repaint();
+		}
 	
 	// Met à jour l'affichage des cartes (apres une modification)
 	private void updateGraphicsCards(){

@@ -23,7 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import model.Card;
+import model.drawable.IDrawableBoard;
 import model.drawable.IDrawableCard;
+import model.drawable.IDrawableHand;
 import controler.GameControler;
 import observer.Observer;
 
@@ -76,11 +78,6 @@ public static int POSITION_X_ROUND = 0;   // position de départ du tour de jeu
 public static int POSITION_Y_ROUND = 0; // position de départ du tour de jeu
 public static int WIDTH_ROUND = 50; // largeur d'un element du tour de jeu
 public static int HEIGHT_ROUND = 50;// hauteur d'un element du tour de jeu
-
-// Test Model
-private ArrayList<IDrawableCard> cards = new ArrayList<>();
-private ArrayList<IDrawableCard> cards2 = new ArrayList<>();
-
 
 public Board(GameControler controler){                
   this.setTitle("Race For The Galaxy");
@@ -224,19 +221,7 @@ private void initFrame(){
 }
 
 private void initTestModel(){
-	cards.add(new Card("12,12,12,12,12"));
-	cards.add(new Card("12,12,12,12,12"));
-	cards.add(new Card("12,12,12,12,12"));
-	cards.add(new Card("12,12,12,12,12"));
-	cards.add(new Card("12,12,12,12,12"));
-	cards.add(new Card("12,12,12,12,12"));
-	
-	cards2.add(new Card("12,12,12,12,12"));
-	cards2.add(new Card("12,12,12,12,12"));
-	cards2.add(new Card("12,12,12,12,12"));
-	cards2.add(new Card("12,12,12,12,12"));
-	cards2.add(new Card("12,12,12,12,12"));
-	cards2.add(new Card("12,12,12,12,12"));
+
 	
 }
 
@@ -247,9 +232,22 @@ public void actionPerformed(ActionEvent e) {
 		 controler.launchGame();
 	 } else if(e.getSource()==item_new){
 		 
+			model.Hand hand = new model.Hand();
+			hand.addCard(new Card("12,12,12,12,12,12"));
+			hand.addCard(new Card("12,12,12,12,12,12"));
+			hand.addCard(new Card("12,12,12,12,12,12"));
+			hand.addCard(new Card("12,12,12,12,12,12"));
+			hand.addCard(new Card("12,12,12,12,12,12"));
+			
+			model.Board board = new model.Board();
+			board.addCard(new Card("12,12,12,12,12,12"));
+			board.addCard(new Card("12,12,12,12,12,12"));
+			board.addCard(new Card("12,12,12,12,12,12"));
+			board.addCard(new Card("12,12,12,12,12,12"));
+			board.addCard(new Card("12,12,12,12,12,12"));
 		 
-		 updateCards(cards);
-		 updateBoardCards(cards2);		 
+		 updateHand(hand);
+		 updateBoard(board);		 
 		 
 		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
 		 bool.add(true);
@@ -275,12 +273,12 @@ public void updatePV(ArrayList<Integer> pv) {
 	
 }
 
-public void updateCards(ArrayList<IDrawableCard> cards){
-	hand.updateCards(cards);
+public void updateHand(IDrawableHand hand){
+	this.hand.updateCards(hand);
 }
 
-public void updateBoardCards(ArrayList<IDrawableCard> cards){
-	playerBoard.updateCards(cards);
+public void updateBoard(IDrawableBoard board){
+	playerBoard.updateBoard(board);
 }
 
 @Override
@@ -294,6 +292,7 @@ public void updatePlayerEvent(String str) {
 	playerEvent.setText(str);
 	
 }
+
 
 
 
@@ -373,5 +372,7 @@ public void mouseMoved(MouseEvent e) {
 		}
 	}
 }
+
+
 
 }
