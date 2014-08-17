@@ -6,6 +6,10 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 
 public class GraphicCard implements IDrawable{
@@ -24,6 +28,21 @@ public class GraphicCard implements IDrawable{
 		this.width=width;
 		this.height=height;
 	}
+	
+	public GraphicCard(int id, int x, int y, int width, int height) {
+		try {
+			this.image=ImageIO.read(new File("./src/Cards/card"+id+".png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+		this.x=x;
+		this.y=y;
+		this.width=width;
+		this.height=height;
+	}
+	
 	
 	@Override
 	public void draw(Graphics g) {

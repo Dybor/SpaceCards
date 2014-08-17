@@ -78,8 +78,8 @@ public static int WIDTH_ROUND = 50; // largeur d'un element du tour de jeu
 public static int HEIGHT_ROUND = 50;// hauteur d'un element du tour de jeu
 
 // Test Model
-private ArrayList<Card> cards = new ArrayList<Card>();
-private ArrayList<Card> cards2 = new ArrayList<Card>();
+private ArrayList<DrawableCard> cards = new ArrayList<>();
+private ArrayList<DrawableCard> cards2 = new ArrayList<>();
 
 
 public Board(AbstractControler controler){                
@@ -224,18 +224,19 @@ private void initFrame(){
 }
 
 private void initTestModel(){
+	cards.add(new Card("12,12,12,12,12"));
+	cards.add(new Card("12,12,12,12,12"));
+	cards.add(new Card("12,12,12,12,12"));
+	cards.add(new Card("12,12,12,12,12"));
+	cards.add(new Card("12,12,12,12,12"));
+	cards.add(new Card("12,12,12,12,12"));
 	
-	for(int i = 1;i<9;i++){
-			cards.add(new Card("12,12,12,12"));
-			
-	}
-	
-	for(int i = 8;i>0;i--){
-		cards2.add(new Card("12,12,12,12"));
-		
-}
-
-	
+	cards2.add(new Card("12,12,12,12,12"));
+	cards2.add(new Card("12,12,12,12,12"));
+	cards2.add(new Card("12,12,12,12,12"));
+	cards2.add(new Card("12,12,12,12,12"));
+	cards2.add(new Card("12,12,12,12,12"));
+	cards2.add(new Card("12,12,12,12,12"));
 	
 }
 
@@ -272,11 +273,11 @@ public void updatePV(ArrayList<Integer> pv) {
 	
 }
 
-public void updateCards(ArrayList<Card> cards){
+public void updateCards(ArrayList<DrawableCard> cards){
 	hand.updateCards(cards);
 }
 
-public void updateBoardCards(ArrayList<Card> cards){
+public void updateBoardCards(ArrayList<DrawableCard> cards){
 	playerBoard.updateCards(cards);
 }
 
