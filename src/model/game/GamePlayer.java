@@ -26,4 +26,10 @@ public interface GamePlayer {
 	 * @return Renvoie la liste des cartes que le joueur a en mains.
 	 */
 	public ArrayList<GameCard> getHand();
+	
+	/**
+	 * Accesseur du plateau de jeu du joueur.
+	 * @return Renvoie le plateau de jeux.
+	 */
+	public GameBoard getBoard();
 }

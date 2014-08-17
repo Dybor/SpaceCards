@@ -2,13 +2,14 @@ package model;
 
 import java.util.ArrayList;
 
+import model.game.GamePlayer;
 import observer.Observable;
 import observer.Observer;
 
 public abstract class AbstractModel implements Observable {
 
 	protected ArrayList<Observer> listObserver = new ArrayList<>();
-	protected ArrayList<Player> listPlayer = new ArrayList<>();
+	protected ArrayList<GamePlayer> listPlayer = new ArrayList<>();
 
 	public abstract void updatePV();
 

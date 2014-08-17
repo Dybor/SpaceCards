@@ -62,6 +62,7 @@ public class Card implements GameCard, DrawableCard, NetworkCard {
 		return im;
 	}
 
+	// NetowrkCard implementation
 	@Override
 	public String serialize() {
 		String cardToString = name + "," + type + "," + cost + "," + scoreValue
