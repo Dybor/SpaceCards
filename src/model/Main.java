@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import model.game.AbstractGameModel;
 import model.game.IGameCard;
 import model.game.IGamePlayer;
 import view.Board;
@@ -14,7 +13,7 @@ public class Main {
 		// Instanciation du modèle modèle
 		ArrayList<IGameCard> cards =getCards();
 		IGamePlayer mainPlayer =new Player("Nicolas");
-		AbstractGameModel game =new Game("Nouvelle partie", mainPlayer, cards);
+		GameModel game =new GameModel("Nouvelle partie", mainPlayer, cards);
 		
 		// Création du contrôleur
 		GameControler controler = new GameControler(game);

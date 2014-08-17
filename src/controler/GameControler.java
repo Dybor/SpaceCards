@@ -1,11 +1,11 @@
 package controler;
 
-import model.game.AbstractGameModel;
+import model.GameModel;
 
 public class GameControler{
 
-	private AbstractGameModel game;
-	public GameControler(AbstractGameModel game) {
+	private GameModel game;
+	public GameControler(GameModel game) {
 		this.game = game;
 	}
 
