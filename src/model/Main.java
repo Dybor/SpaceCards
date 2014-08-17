@@ -6,7 +6,6 @@ import model.game.AbstractGameModel;
 import model.game.GameCard;
 import model.game.GamePlayer;
 import view.Board;
-import controler.AbstractControler;
 import controler.GameControler;
 
 public class Main {
@@ -18,7 +17,7 @@ public class Main {
 		AbstractGameModel game =new Game("Nouvelle partie", mainPlayer, cards);
 		
 		// Création du contrôleur
-		AbstractControler controler = new GameControler(game);
+		GameControler controler = new GameControler(game);
 		// Création de notre fenêtre avec le contrôleur en paramètre
 		Board board = new Board(controler);
 		// Ajout de la fenêtre comme observer de notre modèle

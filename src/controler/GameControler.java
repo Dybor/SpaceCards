@@ -2,12 +2,17 @@ package controler;
 
 import model.game.AbstractGameModel;
 
-public class GameControler extends AbstractControler {
+public class GameControler{
 
+	private AbstractGameModel game;
 	public GameControler(AbstractGameModel game) {
-		super(game);
+		this.game = game;
 	}
 
+	public void launchGame(){
+		game.launchGame();
+	}
+	
 	public void control() {
 
 	}

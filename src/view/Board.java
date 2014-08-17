@@ -24,14 +24,14 @@ import javax.swing.JTextArea;
 
 import model.Card;
 import model.drawable.DrawableCard;
-import controler.AbstractControler;
+import controler.GameControler;
 import observer.Observer;
 
 public class Board extends JFrame implements Observer, ActionListener, MouseListener, MouseMotionListener{
 
 
 //L'instance de notre objet contrôleur
-private AbstractControler controler;
+private GameControler controler;
 
 private JPanel board;
 
@@ -82,7 +82,7 @@ private ArrayList<DrawableCard> cards = new ArrayList<>();
 private ArrayList<DrawableCard> cards2 = new ArrayList<>();
 
 
-public Board(AbstractControler controler){                
+public Board(GameControler controler){                
   this.setTitle("Race For The Galaxy");
   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   this.setExtendedState(this.MAXIMIZED_BOTH);
@@ -244,8 +244,10 @@ private void initTestModel(){
 @Override
 public void actionPerformed(ActionEvent e) {
 	 if(e.getSource()==item_join){
-		 
+		 controler.launchGame();
 	 } else if(e.getSource()==item_new){
+		 
+		 
 		 updateCards(cards);
 		 updateBoardCards(cards2);		 
 		 
