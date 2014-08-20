@@ -1,10 +1,15 @@
 package model.game;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import observer.Observable;
 import model.Board;
+import model.Card;
 import model.Hand;
 
 public class RunnableGame implements Runnable {
@@ -13,8 +18,6 @@ public class RunnableGame implements Runnable {
 	public static final String SETUP_OKAY ="La phase de mise en place est terminée";
 	
 	// Attributs privés
-	private Observable model;
-	private int id;
 	private String name;
 	
 	private ArrayList<IGamePlayer> players =new ArrayList<>();
@@ -22,12 +25,10 @@ public class RunnableGame implements Runnable {
 	private int pvPool;
 	
 	// Builder
-	public RunnableGame(Observable m, int i, String n, IGamePlayer p, ArrayList<IGameCard> cs) {
-		model =m;
-		id =i;
+	public RunnableGame(String n, IGamePlayer p) {
 		name =n;
 		players.add(p);
-		cards =cs;
+		createCards();
 	}
 	
 	
@@ -35,16 +36,46 @@ public class RunnableGame implements Runnable {
 	@Override
 	public void run() {
 		// Mise en place 
-		setup();
+		//setup();
 		
 		// Attendre que les joueurs aient défaussé deux cartes
-		boolean ready =false;
+		//boolean ready =false;
 		//while (!ready) {
 		//	ready ==
 		//}
 	}
 
 	// Méthodes privées (phases de jeu)
+	private void createCards() {
+		BufferedReader is;
+		String line=null;
+		IGameCard c=null;
+		try {
+			is =new BufferedReader(new FileReader(new File("./data/cardfiles/cards.txt")));
+			while ((line =is.readLine()) !=null) {
+				String[] data =line.split("\t");
+				int id =Integer.parseInt(data[0]);
+				int type =Integer.parseInt(data[1]);
+				int subtype =Integer.parseInt(data[2]);
+				int cost =Integer.parseInt(data[3]);
+				int vp =Integer.parseInt(data[4]);
+				String name =data[5];
+				int color =Integer.parseInt(data[6]);
+				int homeworld =Integer.parseInt(data[7]);
+				int n =Integer.parseInt(data[8]);
+				for (int i=0 ; i<n ; i++)
+					c =new Card(id, type, subtype, cost, vp, name, color, homeworld);
+				System.out.println(c.toString());
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("A card is not defined correctly :\n"+line);
+		}
+	}
+	
 	private void setup() {
 		// Points initiaux et mélange des cartes
 		pvPool = 12 * players.size();
@@ -57,7 +88,7 @@ public class RunnableGame implements Runnable {
 			p.setBoard(new Board());
 			for (int ic = c; ic < cards.size(); ic++) {
 				IGameCard card = cards.get(ic);
-				if (card.isHomeWorld()) {
+				if (card.getHomeWorldId() >=0) {
 					p.getBoard().addCard(card);
 					cards.remove(card);
 					c = ic;
@@ -71,7 +102,7 @@ public class RunnableGame implements Runnable {
 				draw(p, 6);
 		
 		// Notifier le modèle
-		model.notifyObserver(SETUP_OKAY);
+		//model.notifyObserver(SETUP_OKAY);
 	}
 	
 	// Méthodes privées (actions de jeu)
@@ -79,7 +110,7 @@ public class RunnableGame implements Runnable {
 		for (int i = 0; i < n; i++) {
 			IGameCard card = cards.get(0);
 			p.getHand().addCard(card);
-			cards.remove(cards);
+			cards.remove(card);
 		}
 	}
 }

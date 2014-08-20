@@ -27,9 +27,8 @@ import model.drawable.IDrawableBoard;
 import model.drawable.IDrawableCard;
 import model.drawable.IDrawableHand;
 import controler.GameControler;
-import observer.Observer;
 
-public class Board extends JFrame implements Observer, ActionListener, MouseListener, MouseMotionListener{
+public class Board extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
 
 
 //L'instance de notre objet contrôleur
@@ -268,7 +267,6 @@ public void actionPerformed(ActionEvent e) {
 	
 }
 
-@Override
 public void updatePV(ArrayList<Integer> pv) {
 	
 }
@@ -281,13 +279,11 @@ public void updateBoard(IDrawableBoard board){
 	playerBoard.updateBoard(board);
 }
 
-@Override
 public void updateGameRound(ArrayList<Boolean> bool) {
 	gameRound.setGreyRound(bool);
 	
 }
 
-@Override
 public void updatePlayerEvent(String str) {
 	playerEvent.setText(str);
 	

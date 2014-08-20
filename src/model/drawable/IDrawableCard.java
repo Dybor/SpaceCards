@@ -51,4 +51,10 @@ public interface IDrawableCard {
 	 * @return Renvoie un entier.
 	 */
 	public int getGoodColor();
+	
+	/**
+	 * Accesseur du chemin de l'image de la carte a jouer.
+	 * @return Renvoie un entier.
+	 */
+	public String getImagePath();
 }

@@ -7,34 +7,34 @@ import model.network.INetworkCard;
 public class Card implements IGameCard, IDrawableCard, INetworkCard {
 
 	// Attributes
-	private String name;
+	private int id;
 	private int type;
+	private int subType;
 	private int cost;
-	private int scoreValue;
-	private boolean isHomeWorld;
+	private int victoryPoints;
+	private String name;
 	private int goodColor;
-
-	private int imageId;
-	private int[] powerIds;
-	private String path;
+	private int homeWorld;
 	
+	private int[] powerIds;
 	private IGameCard good;
 	private boolean hasGood;
 
+	private String path;
+	
 	// Builder
-	public Card(String stringValue) {
-		String[] values = stringValue.split(",");
-		name = values[0];
-		type = Integer.parseInt(values[1]);
-		cost = Integer.parseInt(values[2]);
-		scoreValue = Integer.parseInt(values[3]);
-		isHomeWorld = Boolean.parseBoolean(values[4]);
-		goodColor =Integer.parseInt(values[5]);
-
-		imageId = 1;
-		powerIds = new int[] { 0, 0, 0, 0, 0, 0 };
-		path = "./src/Cards/card1.png";
+	public Card(int i, int t, int st, int co, int v, String n, int c, int h) {
+		id =i;
+		type =t;
+		subType =st;
+		cost =co;
+		victoryPoints =v;
+		name =n;
+		goodColor =c;
+		homeWorld =h;
+		path ="./data/images/cards/card_"+id+".jpg";
 		
+		powerIds = new int[] { 0, 0, 0, 0, 0, 0 };
 		good =null;
 		hasGood =false;
 	}
@@ -51,18 +51,28 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	}
 
 	@Override
+	public int getSubType() {
+		return subType;
+	}
+
+	@Override
 	public int getCost() {
 		return cost;
 	}
 
 	@Override
 	public int getScoreValue() {
-		return scoreValue;
+		return victoryPoints;
 	}
 
 	@Override
-	public boolean isHomeWorld() {
-		return isHomeWorld;
+	public int getHomeWorldId() {
+		return homeWorld;
+	}
+	
+	@Override
+	public int getGoodType() {
+		return goodColor;
 	}
 	
 	@Override
@@ -87,7 +97,7 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	// DrawableCard implementation
 	@Override
 	public int getImageId() {
-		return imageId;
+		return id;
 	}
 
 	@Override
@@ -97,15 +107,23 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	
 	@Override
 	public int getGoodColor() {
-		return goodColor;
+		return getGoodType();
+	}
+
+	@Override
+	public String getImagePath() {
+		return path;
 	}
 
 	// NetowrkCard implementation
 	@Override
 	public String serialize() {
-		String cardToString = name + "," + type + "," + cost + "," + scoreValue
-				+ "," + path;
-		return cardToString;
+		return null;
 	}
-
+	
+	// Public methods
+	@Override
+	public String toString() {
+		return getName()+"("+getCost()+","+getScoreValue()+")";
+	}
 }

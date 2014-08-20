@@ -2,48 +2,34 @@ package model;
 
 import java.util.ArrayList;
 
-import observer.Observable;
-import observer.Observer;
-import model.game.IGameCard;
-import model.game.IGamePlayer;
+import controler.Controllable;
+import controler.Observable;
 import model.game.RunnableGame;
 
-public class GameModel implements Observable {
+public class GameModel implements Observable, Controllable {
 
 	// Attributes
-	private String name;
-	private Observer observer;
 	private ArrayList<RunnableGame> games;
 	private RunnableGame currentGame;
-	private IGamePlayer player;
-	private ArrayList<IGameCard> cards;
-	private int pvPool;
-
+	private Player player;
+	
 	// Builder
-	public GameModel(String n, IGamePlayer p, ArrayList<IGameCard> cs) {
+	public GameModel(String n, Player p) {
 		// Création de la partie et ajout du joueur principal
-		name = n;
-		cards = cs;
 		player =p;
+		games =new ArrayList<>();
 	}
 
-	// Implémentation du pattern observer
+	// Implémentation du pattern Observable pour la vue
 	@Override
-	public void setObserver(Observer obs) {
-		observer = obs;
+	public int getModelData() {
+		return 0;
 	}
 
-	@Override
-	public void notifyObserver(String msg) {
-		if (msg.equals(RunnableGame.SETUP_OKAY)) {
-			//observer.updateCards(cards);
-		}
-	}
-
-	// Modèle de la partie
+	// Implémentation du pattern Controllable pour le controleur
 	public void launchGame() {
 		// Création d'une partie
-		currentGame =new RunnableGame(this, games.size(), "Nouvelle partie de "+player.getName()+" ("+games.size()+")", player, cards);
+		currentGame =new RunnableGame("Nouvelle partie de "+player.getName()+" ("+games.size()+")", player);
 		games.add(currentGame);
 		
 		// Lancement de la partie
