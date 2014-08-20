@@ -13,6 +13,14 @@ public class GameControler{
 		game.launchGame();
 	}
 	
+	public void handCardClicked(){
+		
+	}
+	
+	public void BoardCardClicked(){
+		
+	}
+	
 	public void control() {
 
 	}

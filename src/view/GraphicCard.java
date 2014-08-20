@@ -19,6 +19,7 @@ public class GraphicCard implements IDrawable{
 	private int y;
 	private int width;
 	private int height;
+	private int id;
 	
 	
 	public GraphicCard(Image image, int x, int y, int width, int height) {
