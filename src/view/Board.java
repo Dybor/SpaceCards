@@ -27,12 +27,14 @@ import model.drawable.IDrawableBoard;
 import model.drawable.IDrawableCard;
 import model.drawable.IDrawableHand;
 import controler.GameControler;
+import controler.Observable;
 
 public class Board extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
 
 
 //L'instance de notre objet contrôleur
 private GameControler controler;
+private Observable game;
 
 private JPanel board;
 
@@ -78,14 +80,15 @@ public static int POSITION_Y_ROUND = 0; // position de départ du tour de jeu
 public static int WIDTH_ROUND = 50; // largeur d'un element du tour de jeu
 public static int HEIGHT_ROUND = 50;// hauteur d'un element du tour de jeu
 
-public Board(GameControler controler){                
+public Board(GameControler controler, Observable observable){                
   this.setTitle("Race For The Galaxy");
   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   this.setExtendedState(this.MAXIMIZED_BOTH);
   
   this.setLocationRelativeTo(null);
   initComposant();                
-  this.controler = controler;                
+  this.controler = controler;    
+  this.game = observable;
   this.setVisible(true);
 }
 
@@ -232,21 +235,21 @@ public void actionPerformed(ActionEvent e) {
 	 } else if(e.getSource()==item_new){
 		 
 			model.Hand hand = new model.Hand();
-			hand.addCard(new Card("12,12,12,12,12,12"));
-			hand.addCard(new Card("12,12,12,12,12,12"));
-			hand.addCard(new Card("12,12,12,12,12,12"));
-			hand.addCard(new Card("12,12,12,12,12,12"));
-			hand.addCard(new Card("12,12,12,12,12,12"));
-			
-			model.Board board = new model.Board();
-			board.addCard(new Card("12,12,12,12,12,12"));
-			board.addCard(new Card("12,12,12,12,12,12"));
-			board.addCard(new Card("12,12,12,12,12,12"));
-			board.addCard(new Card("12,12,12,12,12,12"));
-			board.addCard(new Card("12,12,12,12,12,12"));
+//			hand.addCard(new Card("12,12,12,12,12,12"));
+//			hand.addCard(new Card("12,12,12,12,12,12"));
+//			hand.addCard(new Card("12,12,12,12,12,12"));
+//			hand.addCard(new Card("12,12,12,12,12,12"));
+//			hand.addCard(new Card("12,12,12,12,12,12"));
+//			
+//			model.Board board = new model.Board();
+//			board.addCard(new Card("12,12,12,12,12,12"));
+//			board.addCard(new Card("12,12,12,12,12,12"));
+//			board.addCard(new Card("12,12,12,12,12,12"));
+//			board.addCard(new Card("12,12,12,12,12,12"));
+//			board.addCard(new Card("12,12,12,12,12,12"));
 		 
 		 updateHand(hand);
-		 updateBoard(board);		 
+//		 updateBoard(board);		 
 		 
 		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
 		 bool.add(true);
