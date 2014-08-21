@@ -11,12 +11,12 @@ public interface IDrawablePlayer {
 	 * Renvoie la main du joueur pour la vue.
 	 * @return
 	 */
-	public IDrawableHand getHand();
+	public IDrawableHand getDrawableHand();
 	
 	/**
 	 * Renvoie le plateau du joueur pour la vue.
 	 * @return
 	 */
-	public IDrawableBoard getBoard();
+	public IDrawableBoard getDrawableBoard();
 	
 }
