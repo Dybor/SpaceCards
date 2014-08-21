@@ -93,8 +93,8 @@ public interface IGameCard {
 	public IGameCard consumeGood();
 	
 	/**
-	 * Test d'existence d'un bien sur le monde.
+	 * Renvoie le bien.
 	 * @return
 	 */
-	public boolean hasGood();
+	public IGameCard getGood();
 }

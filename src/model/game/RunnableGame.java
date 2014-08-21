@@ -12,11 +12,8 @@ import model.Board;
 import model.Card;
 import model.Hand;
 
-public class RunnableGame implements Runnable {
+public class RunnableGame implements Runnable, IGameData {
 
-	// Attriuts statiques
-	public static final String SETUP_OKAY ="La phase de mise en place est terminée";
-	
 	// Attributs privés
 	private String name;
 	
@@ -28,15 +25,30 @@ public class RunnableGame implements Runnable {
 	public RunnableGame(String n, IGamePlayer p) {
 		name =n;
 		players.add(p);
-		createCards();
+		readCards();
 	}
 	
+	// IGameData implementation
+	@Override
+	public ArrayList<IGamePlayer> getPlayers() {
+		return players;
+	}
+
+	@Override
+	public ArrayList<IGameCard> getCards() {
+		return cards;
+	}
+
+	@Override
+	public int getRemainingVP() {
+		return pvPool;
+	}
 	
 	// Lancement du thread
 	@Override
 	public void run() {
 		// Mise en place 
-		//setup();
+		setup();
 		
 		// Attendre que les joueurs aient défaussé deux cartes
 		//boolean ready =false;
@@ -46,7 +58,7 @@ public class RunnableGame implements Runnable {
 	}
 
 	// Méthodes privées (phases de jeu)
-	private void createCards() {
+	private void readCards() {
 		BufferedReader is;
 		String line=null;
 		IGameCard c=null;
@@ -63,16 +75,17 @@ public class RunnableGame implements Runnable {
 				int color =Integer.parseInt(data[6]);
 				int homeworld =Integer.parseInt(data[7]);
 				int n =Integer.parseInt(data[8]);
-				for (int i=0 ; i<n ; i++)
+				for (int i=0 ; i<n ; i++) {
 					c =new Card(id, type, subtype, cost, vp, name, color, homeworld);
-				System.out.println(c.toString());
+					cards.add(c);
+				}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
-			System.out.println("A card is not defined correctly :\n"+line);
+			System.out.println("A card is not correctly defined: \n"+line);
 		}
 	}
 	
@@ -96,13 +109,10 @@ public class RunnableGame implements Runnable {
 				}
 			}
 		}
-
+		
 		// Distribution des cartes
 		for (IGamePlayer p : players)
 				draw(p, 6);
-		
-		// Notifier le modèle
-		//model.notifyObserver(SETUP_OKAY);
 	}
 	
 	// Méthodes privées (actions de jeu)

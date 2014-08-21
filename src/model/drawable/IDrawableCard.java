@@ -57,4 +57,10 @@ public interface IDrawableCard {
 	 * @return Renvoie un entier.
 	 */
 	public String getImagePath();
+	
+	/**
+	 * Teste la presence d'une ressource sur la carte.
+	 * @return
+	 */
+	public boolean hasGood();
 }

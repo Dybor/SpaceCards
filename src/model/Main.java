@@ -14,13 +14,8 @@ public class Main {
 		gameModel.launchGame();
 		
 		// Création du contrôleur
-		GameControler controler = new GameControler(gameModel);
+		//GameControler controler = new GameControler(gameModel);
 		// Création de notre fenêtre avec le contrôleur en paramètre
-		Board board = new Board(controler, gameModel);
-	}
-	
-	public static ArrayList<Card> getCards() {
-		ArrayList<Card> cards =new ArrayList<>();
-		return cards;
+		//Board board = new Board(controler, gameModel);
 	}
 }

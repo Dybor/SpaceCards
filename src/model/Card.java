@@ -88,10 +88,10 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 		hasGood =false;
 		return oldGood;
 	}
-
+	
 	@Override
-	public boolean hasGood() {
-		return hasGood;
+	public IGameCard getGood() {
+		return good;
 	}
 
 	// DrawableCard implementation
@@ -115,6 +115,11 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 		return path;
 	}
 
+	@Override
+	public boolean hasGood() {
+		return hasGood;
+	}
+
 	// NetowrkCard implementation
 	@Override
 	public String serialize() {
@@ -124,6 +129,6 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	// Public methods
 	@Override
 	public String toString() {
-		return getName()+"("+getCost()+","+getScoreValue()+")";
+		return getName()+"("+getCost()+","+getScoreValue()+","+getHomeWorldId()+")";
 	}
 }
