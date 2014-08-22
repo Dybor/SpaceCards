@@ -68,7 +68,7 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 	public void updateCards(IDrawableHand hand){
 		this.cards.clear();		
 		for(IDrawableCard card : hand.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(), 0, 0, scale_width, scale_height);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width, scale_height);
 			this.cards.add(gCard);
 			
 		}
@@ -80,7 +80,7 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 		public void updateBoard(IDrawableBoard board){
 			this.cards.clear();	
 			for(IDrawableCard card : board.getCards()){
-				GraphicCard gCard = new GraphicCard(card.getImageId(), 0, 0, scale_width, scale_height);
+				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width, scale_height);
 				this.cards.add(gCard);
 			}
 			updateGraphicsCards();
@@ -106,7 +106,7 @@ public abstract class AbstractPanelCard extends JPanel implements MouseListener,
 	// Ajoute un certain nombre de carte à la vue
 	public void addCards(ArrayList<Card> cards){
 		for(Card c : cards){
-			this.cards.add(new GraphicCard(c.getImageId(), 0, 0, scale_width, scale_height));
+			this.cards.add(new GraphicCard(c.getImageId(),c.getImagePath(), 0, 0, scale_width, scale_height));
 		}
 		updateGraphicsCards();
 	}

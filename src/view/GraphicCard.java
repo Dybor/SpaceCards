@@ -30,14 +30,17 @@ public class GraphicCard implements IDrawable{
 		this.height=height;
 	}
 	
-	public GraphicCard(int id, int x, int y, int width, int height) {
+	public GraphicCard(int id, String path, int x, int y, int width, int height) {
+		
 		try {
-			this.image=ImageIO.read(new File("./src/Cards/card"+id+".png"));
+			this.image=ImageIO.read(new File(path));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println(path);
 		};
 		
+		this.id = id;
 		this.x=x;
 		this.y=y;
 		this.width=width;

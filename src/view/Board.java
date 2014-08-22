@@ -3,17 +3,13 @@ package view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -22,9 +18,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import model.Card;
+
 import model.drawable.IDrawableBoard;
-import model.drawable.IDrawableCard;
 import model.drawable.IDrawableHand;
 import controler.GameControler;
 import controler.Observable;
@@ -39,13 +34,8 @@ private Observable game;
 private JPanel board;
 
 
-private JPanel stats;
 private ZoomCardPanel zoomCard;
-
-
-private JLabel label_PV;
-private JLabel label_nbBuilding;
-private JLabel label_nbCard;
+private PlayerStatus pStatus;
 
 private JTextArea playerEvent;
 
@@ -94,12 +84,12 @@ public Board(GameControler controler, Observable observable){
 
 private void initComposant(){
 	initBoard();			//Initialisation du board central
-	initStats();			//Initialisation du résumé des statistiques du joueur
 	initZoomCard();			//Initialisation de l'espace pour la carte zoomée
 	initMenu();				//Initialisation de la barre de menu
 	initHands();			//Initialisation de la main du joueur
 	initGameRound();		//Initialisation des tours de jeu 
 	initPlayerEvent();		//Initialisation des évenements de jeu
+	initPlayerStatus();		//Initialisation du panneau de status du joueur
 	
 	initTestModel();
 	
@@ -118,24 +108,6 @@ private void initBoard(){
 	
 }
 
-private void initStats(){
-	stats = new JPanel();
-	stats.setLayout(new GridLayout(3, 2));
-	
-	label_PV = new JLabel("0");
-	label_nbBuilding = new JLabel("0");
-	label_nbCard = new JLabel("0");
-	
-	stats.add(new JLabel("PV"));
-	stats.add(label_PV);
-	stats.add(new JLabel("Batiments Posés"));
-	stats.add(label_nbBuilding);
-	stats.add(new JLabel("Cartes en mains"));
-	stats.add(label_nbCard);
-	
-	stats.setBorder(javax.swing.border.LineBorder.createBlackLineBorder());
-	
-}
 
 private void initMenu(){
 	item_new.addActionListener(this);
@@ -171,6 +143,10 @@ private void initPlayerEvent(){
 	playerEvent.setFocusable(false);
 }
 
+private void initPlayerStatus(){
+	pStatus = new PlayerStatus(7);
+}
+
 
 private void initFrame(){
 	this.setLayout(new GridBagLayout());
@@ -192,12 +168,6 @@ private void initFrame(){
 	gbc.anchor = GridBagConstraints.LINE_END;
 	this.add(gameRound,gbc);
 	
-	gbc.gridx = 2 ; gbc.gridy = 0;
-	gbc.gridwidth = GridBagConstraints.REMAINDER;
-	gbc.gridheight = 1;
-	gbc.anchor = GridBagConstraints.LINE_END;
-	this.add(stats,gbc);
-	
 	gbc.gridx = 2 ; gbc.gridy = 1;
 	gbc.gridwidth = GridBagConstraints.REMAINDER;
 	gbc.gridheight = GridBagConstraints.RELATIVE;
@@ -213,17 +183,32 @@ private void initFrame(){
 	
 	gbc.gridx = 0; gbc.gridy = 3;
 	gbc.gridheight = GridBagConstraints.REMAINDER;
-	gbc.gridwidth = GridBagConstraints.REMAINDER;
+	gbc.gridwidth = GridBagConstraints.RELATIVE;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
 	gbc.anchor = GridBagConstraints.LAST_LINE_START;
 	this.add(hand,gbc);
 	
+	gbc.gridx = 2; gbc.gridy = 3;
+	gbc.gridheight = GridBagConstraints.REMAINDER;
+	gbc.gridwidth = GridBagConstraints.REMAINDER;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	gbc.anchor = GridBagConstraints.CENTER;
+	this.add(pStatus,gbc);
 
 	this.setJMenuBar(menuBar);
 }
 
 private void initTestModel(){
 
+	
+}
+
+private void updateAll(){
+	int me = game.getPlayerViewOwnerIndex();
+	updateBoard(game.getPlayers().get(me).getDrawableBoard());
+	updateHand(game.getPlayers().get(me).getDrawableHand());
+	updatePoolPV(game.getRemainingVP());
+	
 	
 }
 
@@ -248,7 +233,7 @@ public void actionPerformed(ActionEvent e) {
 //			board.addCard(new Card("12,12,12,12,12,12"));
 //			board.addCard(new Card("12,12,12,12,12,12"));
 		 
-		 updateHand(hand);
+		 updateHand(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableHand());
 //		 updateBoard(board);		 
 		 
 		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
@@ -270,7 +255,7 @@ public void actionPerformed(ActionEvent e) {
 	
 }
 
-public void updatePV(ArrayList<Integer> pv) {
+public void updatePoolPV(int pv) {
 	
 }
 
