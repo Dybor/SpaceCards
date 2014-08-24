@@ -15,13 +15,18 @@ public class GameControler{
 		game.launchGame();
 	}
 	
-	public void handCardClicked(){
+	public void handCardClicked(int id){
 		
 	}
 	
-	public void BoardCardClicked(){
+	public void BoardCardClicked(int id){
 		
 	}
+	
+	public void actionCardSelected(int i){
+		
+	}
+
 	
 	public void control() {
 

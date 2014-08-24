@@ -261,18 +261,6 @@ public void actionPerformed(ActionEvent e) {
 	 } else if(e.getSource()==item_new){
 		 
 			model.Hand hand = new model.Hand();
-//			hand.addCard(new Card("12,12,12,12,12,12"));
-//			hand.addCard(new Card("12,12,12,12,12,12"));
-//			hand.addCard(new Card("12,12,12,12,12,12"));
-//			hand.addCard(new Card("12,12,12,12,12,12"));
-//			hand.addCard(new Card("12,12,12,12,12,12"));
-//			
-//			model.Board board = new model.Board();
-//			board.addCard(new Card("12,12,12,12,12,12"));
-//			board.addCard(new Card("12,12,12,12,12,12"));
-//			board.addCard(new Card("12,12,12,12,12,12"));
-//			board.addCard(new Card("12,12,12,12,12,12"));
-//			board.addCard(new Card("12,12,12,12,12,12"));
 		 
 		 updateHand(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableHand());
 		 updateBoard(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableBoard());		 
