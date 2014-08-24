@@ -63,4 +63,10 @@ public interface IDrawableCard {
 	 * @return
 	 */
 	public boolean hasGood();
+	
+	/**
+	 * Indique si la carte peut etre jouee.
+	 * @return
+	 */
+	public boolean isPlayable();
 }

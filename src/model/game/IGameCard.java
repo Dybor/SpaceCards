@@ -97,4 +97,9 @@ public interface IGameCard {
 	 * @return
 	 */
 	public IGameCard getGood();
+	
+	/**
+	 * Precise l'etat jouable ou non de la carte.
+	 */
+	public void setPlayable(boolean p);
 }

@@ -2,9 +2,8 @@ package model;
 
 import model.drawable.IDrawableCard;
 import model.game.IGameCard;
-import model.network.INetworkCard;
 
-public class Card implements IGameCard, IDrawableCard, INetworkCard {
+public class Card implements IGameCard, IDrawableCard {
 
 	// Attributes
 	private int id;
@@ -19,6 +18,8 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	private int[] powerIds;
 	private IGameCard good;
 	private boolean hasGood;
+	
+	private boolean playable;
 
 	private String path;
 	
@@ -32,11 +33,13 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 		name =n;
 		goodColor =c;
 		homeWorld =h;
-		path ="./data/images/cards/card_"+id+".jpg";
+		path ="./data/images/cards/base/card_"+id+".jpg";
 		
 		powerIds = new int[] { 0, 0, 0, 0, 0, 0 };
 		good =null;
 		hasGood =false;
+		
+		playable =false;
 	}
 
 	// GameCard implementation
@@ -93,6 +96,11 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	public IGameCard getGood() {
 		return good;
 	}
+	
+	@Override
+	public void setPlayable(boolean p) {
+		playable =p;
+	}
 
 	// DrawableCard implementation
 	@Override
@@ -119,13 +127,12 @@ public class Card implements IGameCard, IDrawableCard, INetworkCard {
 	public boolean hasGood() {
 		return hasGood;
 	}
-
-	// NetowrkCard implementation
-	@Override
-	public String serialize() {
-		return null;
-	}
 	
+	@Override
+	public boolean isPlayable() {
+		return playable;
+	}
+
 	// Public methods
 	@Override
 	public String toString() {
