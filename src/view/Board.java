@@ -1,15 +1,23 @@
 package view;
 
 
+import java.awt.FlowLayout;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -19,12 +27,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 
+
 import model.drawable.IDrawableBoard;
 import model.drawable.IDrawableHand;
 import controler.GameControler;
+import controler.INotifyView;
 import controler.Observable;
 
-public class Board extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
+public class Board extends JFrame implements ActionListener, MouseListener, MouseMotionListener, ItemListener, INotifyView{
 
 
 //L'instance de notre objet contrôleur
@@ -41,29 +51,32 @@ private JTextArea playerEvent;
 
 private Hand hand;
 private BoardCard playerBoard;
+private ArrayList<BoardCard> otherPlayerBoard;
 private GameRound gameRound;
 
 // Menu
 private JMenuBar menuBar = new JMenuBar();
 private JMenu menu_File = new JMenu("Fichier");
 private JMenu menu_Game = new JMenu("Jeu");
+private JMenu menu_Option = new JMenu("Options");
 
 private JMenuItem item_new = new JMenuItem("Nouvelle Partie");
 private JMenuItem item_join = new JMenuItem("Rejoindre une Partie");
 private JMenuItem item_quit = new JMenuItem("Quitter");
 
+private JCheckBoxMenuItem item_fullScreen = new JCheckBoxMenuItem("Plein écran");
 
 public static int POSITION_X_HAND = 0;   // position de départ de la main du joueur en x 
 public static int POSITION_Y_HAND = 50; // position de départ de la main du joueur en y
 public static int POSITION_X_BOARD = 0;   // position de départ sur le plateau du joueur en x 
 public static int POSITION_Y_BOARD = 0; // position de départ sur le plateau du joueur en y
 
-public static int WIDTH_CARD_HAND = 120; // largeur d'une carte dans la main du joueur
+public static int WIDTH_CARD_HAND = 142; // largeur d'une carte dans la main du joueur
 public static int HEIGHT_CARD_HAND = 200;// hauteur d'une carte dans la main du joueur
-public static int WIDTH_CARD_BOARD = 60; // largeur d'une carte sur le plateau du joueur
+public static int WIDTH_CARD_BOARD = 71; // largeur d'une carte sur le plateau du joueur
 public static int HEIGHT_CARD_BOARD = 100;// hauteur d'une carte sur le plateau du joueur
-public static int WIDTH_CARD_ZOOM = 240; // largeur d'une carte zoomée
-public static int HEIGHT_CARD_ZOOM = 400;// hauteur d'une carte zoomée
+public static int WIDTH_CARD_ZOOM = 357; // largeur d'une carte zoomée
+public static int HEIGHT_CARD_ZOOM = 500;// hauteur d'une carte zoomée
 
 public static int POSITION_X_ROUND = 0;   // position de départ du tour de jeu
 public static int POSITION_Y_ROUND = 0; // position de départ du tour de jeu
@@ -80,6 +93,7 @@ public Board(GameControler controler, Observable observable){
   this.controler = controler;    
   this.game = observable;
   this.setVisible(true);
+  
 }
 
 private void initComposant(){
@@ -100,11 +114,16 @@ private void initComposant(){
 
 private void initBoard(){
 	board = new JPanel();
-	playerBoard = new BoardCard(6,2,0,10,0,80,Board.WIDTH_CARD_BOARD,Board.HEIGHT_CARD_BOARD,Board.POSITION_X_BOARD,Board.POSITION_Y_BOARD);
+	playerBoard = new BoardCard(6,2,0,10,0,0,Board.WIDTH_CARD_BOARD,Board.HEIGHT_CARD_BOARD,Board.POSITION_X_BOARD,Board.POSITION_Y_BOARD);
 	playerBoard.addMouseMotionListener(this);
 	playerBoard.addMouseListener(this);
 //	board.setPreferredSize(new Dimension(10*Board.WIDTH_CARD_HAND, playerBoard.getHeightPanel()));
-	board.add(playerBoard);
+	
+	
+
+	
+	
+	
 	
 }
 
@@ -118,8 +137,13 @@ private void initMenu(){
 	menu_File.add(item_join);
 	menu_File.add(item_quit);
 	
+	item_fullScreen.setState(false);
+	item_fullScreen.addItemListener(this);
+	menu_Option.add(item_fullScreen);
+	
 	menuBar.add(menu_File);
 	menuBar.add(menu_Game);
+	menuBar.add(menu_Option);
 }
 
 private void initHands(){
@@ -192,10 +216,12 @@ private void initFrame(){
 	gbc.gridheight = GridBagConstraints.REMAINDER;
 	gbc.gridwidth = GridBagConstraints.REMAINDER;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	gbc.anchor = GridBagConstraints.CENTER;
+	gbc.anchor = GridBagConstraints.LAST_LINE_START;
 	this.add(pStatus,gbc);
 
 	this.setJMenuBar(menuBar);
+	
+	
 }
 
 private void initTestModel(){
@@ -203,12 +229,27 @@ private void initTestModel(){
 	
 }
 
-private void updateAll(){
+private void fullScreen(boolean bool){
+	GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	GraphicsDevice device = environment.getDefaultScreenDevice();
+	if(bool){
+		this.dispose();
+		this.setUndecorated(true);
+		device.setFullScreenWindow(this);
+		this.setVisible(true);
+	} else {
+		this.dispose();
+		this.setUndecorated(false);
+		device.setFullScreenWindow(null);
+		this.setVisible(true);
+	}
+}
+
+public void refreshAll(){
 	int me = game.getPlayerViewOwnerIndex();
 	updateBoard(game.getPlayers().get(me).getDrawableBoard());
 	updateHand(game.getPlayers().get(me).getDrawableHand());
 	updatePoolPV(game.getRemainingVP());
-	
 	
 }
 
@@ -234,7 +275,7 @@ public void actionPerformed(ActionEvent e) {
 //			board.addCard(new Card("12,12,12,12,12,12"));
 		 
 		 updateHand(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableHand());
-//		 updateBoard(board);		 
+		 updateBoard(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableBoard());		 
 		 
 		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
 		 bool.add(true);
@@ -246,7 +287,35 @@ public void actionPerformed(ActionEvent e) {
 		 
 		 gameRound.setGreyRound(bool);
 		 
-		 updatePlayerEvent("Tour1");
+		 sendInformationMessage("Tour1");
+		 
+		 
+			
+			
+			if(game!=null){
+				//int nbPlayer = game.getPlayers().size();
+				int nbPlayer = 4;
+				
+				board.setLayout(new GridLayout(2,nbPlayer-1));
+				
+				if(nbPlayer >1)
+				{
+					otherPlayerBoard = new ArrayList<>();
+					for(int i = 0;i<nbPlayer-1;i++){
+						BoardCard otherPlayer = new BoardCard(6, 2, 0, 0, 0, 0, Board.WIDTH_CARD_BOARD,Board.HEIGHT_CARD_BOARD, 
+								Board.POSITION_X_BOARD, Board.POSITION_Y_BOARD);
+						otherPlayer.addMouseMotionListener(this);
+						otherPlayer.addMouseListener(this);
+						otherPlayerBoard.add(otherPlayer);
+						
+						board.add(otherPlayer);
+					}
+				
+				}
+				
+				board.add(playerBoard);
+			}
+			
 		 
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
@@ -272,7 +341,7 @@ public void updateGameRound(ArrayList<Boolean> bool) {
 	
 }
 
-public void updatePlayerEvent(String str) {
+public void sendInformationMessage(String str) {
 	playerEvent.setText(str);
 	
 }
@@ -355,6 +424,14 @@ public void mouseMoved(MouseEvent e) {
 			zoomCard.setCard(null);
 		}
 	}
+}
+
+@Override
+public void itemStateChanged(ItemEvent e) {
+	if(e.getSource()==item_fullScreen){
+		fullScreen(((JCheckBoxMenuItem)e.getSource()).getState());
+	}
+	
 }
 
 

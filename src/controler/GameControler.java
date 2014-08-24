@@ -4,6 +4,8 @@ import model.GameModel;
 
 public class GameControler{
 
+	private INotifyView view;
+	
 	private GameModel game;
 	public GameControler(GameModel game) {
 		this.game = game;
@@ -23,6 +25,10 @@ public class GameControler{
 	
 	public void control() {
 
+	}
+	
+	public void setView(INotifyView view){
+		this.view = view;
 	}
 
 }

@@ -52,6 +52,8 @@ public class GraphicCard implements IDrawable{
 	public void draw(Graphics g) {
 		//g.drawImage(scaleImage(image,width,height),x,y,width,height,null);
 		g.drawImage(GraphicsTools.scaleImage(image,width,height),x,y,width,height,null);
+		
+		
 	}
 
 	// Utilise pour reperer la taille de l'image afin de pouvoir cliquer dessus.
