@@ -69,7 +69,7 @@ public class GraphicCard implements IDrawable{
 				g.setColor(Color.CYAN);
 			break;
 			case IDrawableCard.RARE_ELEMENTS :
-				g.setColor(new Color(56, 93, 82));
+				g.setColor(new Color(157, 62, 12));
 			break;
 			}
 			Stroke stroke = new BasicStroke(4);

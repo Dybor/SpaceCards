@@ -34,6 +34,8 @@ import javax.swing.JTextArea;
 
 
 
+
+import model.Hand;
 import model.drawable.IDrawableBoard;
 import model.drawable.IDrawableHand;
 import controler.GameControler;
@@ -62,6 +64,8 @@ private JMenu menu_Option = new JMenu("Options");
 private JMenuItem item_new = new JMenuItem("Nouvelle Partie");
 private JMenuItem item_join = new JMenuItem("Rejoindre une Partie");
 private JMenuItem item_quit = new JMenuItem("Quitter");
+
+private JMenuItem item_test = new JMenuItem("Piocher");
 
 private JCheckBoxMenuItem item_fullScreen = new JCheckBoxMenuItem("Plein écran");
 
@@ -110,6 +114,8 @@ private void initComposant(){
 
 private void initBoard(){
 	board = new GamePanel(1,this.getWidth(),this.getHeight());
+	board.addMouseListener(this);
+	board.addMouseMotionListener(this);
 }
 
 
@@ -121,6 +127,9 @@ private void initMenu(){
 	menu_File.add(item_new);
 	menu_File.add(item_join);
 	menu_File.add(item_quit);
+	
+	item_test.addActionListener(this);
+	menu_Game.add(item_test);
 	
 	item_fullScreen.setState(false);
 	item_fullScreen.addItemListener(this);
@@ -181,6 +190,22 @@ public void refreshAll(){
 	
 }
 
+//*******Fonction Test ************ //
+
+private void piocher(){
+	int me = game.getPlayerViewOwnerIndex();
+	 model.Hand hand = (Hand) game.getPlayers().get(me).getDrawableHand();
+	 hand.addCard(hand.getCard(0));
+	 updateHand(hand);
+}
+
+private void poserCarte(){
+	int me = game.getPlayerViewOwnerIndex();
+	model.Board board= (model.Board) game.getPlayers().get(me).getDrawableBoard();
+	board.addCard(board.getCard(0));
+	updateBoard(board);
+}
+
 
 @Override
 public void actionPerformed(ActionEvent e) {
@@ -209,10 +234,13 @@ public void actionPerformed(ActionEvent e) {
 		 
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
+	 } else if(e.getSource()==item_test){
+		 piocher();
 	 }
-		 
-	
+
 }
+
+
 
 public void refreshSizeGamePanel(){
 	board.setWidth_Screen(board.getWidth());
@@ -274,9 +302,13 @@ public void mouseExited(MouseEvent e) {
 
 @Override
 public void mousePressed(MouseEvent e) {
-//	if(e.getComponent().equals(board)){
-//		board.mousePressed(e);
-//	} 
+	if(e.getComponent().equals(board)){
+		if(board.isFocusedCardInHand()){
+			controler.handCardClicked(board.getFocusedCard().getId());
+		} else if (board.isFocusedCardOnPlayerBoard()){
+			controler.BoardCardClicked(board.getFocusedCard().getId());
+		}
+	} 
 }
 
 @Override

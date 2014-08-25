@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	private int marge_ext_x_P = 20;
 	private int marge_int_x_P = 10;
 	private int marge_ext_y_P = 10;
-	private int marge_int_y_P = 80;
+	private int marge_int_y_P = 30;
 	
 	// Other Player Board
 	
@@ -54,13 +54,13 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	private int marge_ext_x_OP = 20;
 	private int marge_int_x_OP = 10;
 	private int marge_ext_y_OP = 10;
-	private int marge_int_y_OP = 80;
+	private int marge_int_y_OP = 30;
 	
 	// Hand
 	
 	private int position_X_H = 0;
 	private int position_Y_H = 0;
-	private int nbCardbyRow_H = 20;
+	private int nbCardbyRow_H = 30;
 	private int nbRow_H = 1;
 	private int scale_width_H = Board.WIDTH_CARD_HAND;
 	private int scale_height_H = Board.HEIGHT_CARD_HAND;
@@ -183,13 +183,10 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 		
 	// Met à jour l'affichage des cartes de la main joueur(apres une modification)
 	private void updateHand(){
-		System.out.println(this.hand.size());
 		position_Y_H = height_Screen - scale_height_H - 2*marge_ext_y_H; // Permet de raffraichir la position des cartes en fonction de la taille du JPanel si redimensionnement
 		
 		int width_hand = hand.size()*Board.WIDTH_CARD_HAND + 2*marge_ext_x_H + marge_int_x_H*(hand.size()-1); // taille total de la main en X
 		
-		System.out.println("with hand "+width_hand);
-		System.out.println("width screen " + width_Screen);
 		// Dynamise le chevauchement en fonction du nombre de carte en main
 		if(width_hand > width_Screen){
 			//Il y a chevauchement, on calcule la marge negative a appliquer
@@ -201,8 +198,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			dyn_marge_int_x_H = marge_int_x_H;
 		}
 		
-		System.out.println("position_X_H " + position_X_H);
-		System.out.println("dyn_marge_int_x_H " + dyn_marge_int_x_H);
 		
 		int x = position_X_H + marge_ext_x_H;
 		int y = position_Y_H + marge_ext_y_H;				
@@ -444,7 +439,26 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 		
 		return null;
 	}
+	
+	public boolean isFocusedCardInHand(){
+		return flagHandCard>-1;
+	}
+	
+	public boolean isFocusedCardOnPlayerBoard(){
+		return flagPlayerBoardCard>-1;
+	}
 
+	public boolean isFocusedCardOnOtherPlayerBoard(){
+		for(int i = 0 ; i<flagOtherPlayerBoardCard.size();i++){
+			int index = flagOtherPlayerBoardCard.get(i);
+			if (index>-1){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public int getWidthPanel() {
 		return widthPanel;
 	}
