@@ -196,6 +196,13 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	// Met à jour l'affichage des cartes du plateau du joueur(apres une modification)
 	private void updatePlayerBoard(){
+		
+		int widthPlayerBoard = 2*marge_ext_x_P + (nbCardbyRow_P-1)*marge_int_x_P + nbCardbyRow_P*Board.WIDTH_CARD_BOARD;
+		position_X_P = (width_Screen - widthPlayerBoard)/2;
+		
+		int heightPlayerBoard = 2*marge_ext_y_P + (nbRow_P-1)*marge_int_y_P + nbRow_P*Board.HEIGHT_CARD_BOARD;
+		position_Y_P = position_Y_H - heightPlayerBoard;
+		
 		int x = position_X_P + marge_ext_x_P;
 		int y = position_Y_P + marge_ext_y_P;				
 		for(GraphicCard gc : playerBoard){
@@ -211,10 +218,16 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	}
 	
 	private void updateOtherPlayerBoard(){
-		int x = position_X_OP + marge_ext_x_OP;
-		int y = position_Y_OP + marge_ext_y_OP;		
+		int widthPlayerBoard = 2*marge_ext_x_P + (nbCardbyRow_P-1)*marge_int_x_P + nbCardbyRow_P*Board.WIDTH_CARD_BOARD;
+		int heightPlayerBoard = 2*marge_ext_y_P + (nbRow_P-1)*marge_int_y_P + nbRow_P*Board.HEIGHT_CARD_BOARD;
+		
+		position_X_OP = 0;
+		position_Y_OP = 0;
 		
 		for(ArrayList<GraphicCard> list : otherPlayerBoard){
+			
+			int x = position_X_OP + marge_ext_x_OP;
+			int y = position_Y_OP + marge_ext_y_OP;		
 			for(GraphicCard gc : list){
 				gc.setX(x);
 				gc.setY(y);
@@ -224,6 +237,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 				}
 				x = x + scale_width_OP + marge_int_x_OP;
 			}
+			
+			position_X_OP = position_X_OP + widthPlayerBoard;
 		}
 		
 		
