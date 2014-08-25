@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	private int position_X_H = 0;
 	private int position_Y_H = 0;
-	private int nbCardbyRow_H = 10;
+	private int nbCardbyRow_H = 20;
 	private int nbRow_H = 1;
 	private int scale_width_H = Board.WIDTH_CARD_HAND;
 	private int scale_height_H = Board.HEIGHT_CARD_HAND;
@@ -68,6 +68,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	private int marge_int_x_H = 10;
 	private int marge_ext_y_H = 10;
 	private int marge_int_y_H = 80;
+	
+	private int dyn_marge_int_x_H = 0;
 	
 	
 	private int width_Screen = 0;
@@ -135,11 +137,15 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	public void updateCards(IDrawableHand hand){
 		this.hand.clear();		
 		for(IDrawableCard card : hand.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_H, scale_height_H);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_H, scale_height_H,card.getGoodColor(),false);
 			this.hand.add(gCard);
+
+
 			
 		}
+		
 		updateHand();
+		
 		repaint();
 	}
 	
@@ -149,7 +155,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	public void updatePlayerBoard(IDrawableBoard board){
 		this.playerBoard.clear();	
 		for(IDrawableCard card : board.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_P, scale_height_P);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_P, scale_height_P,card.getGoodColor(),true);
 			this.playerBoard.add(gCard);
 		}
 		updatePlayerBoard();
@@ -163,7 +169,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			ArrayList<GraphicCard> list = new ArrayList<>();
 			
 			for(IDrawableCard card : board.getCards()){
-				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_OP, scale_height_OP);
+				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_OP, scale_height_OP,card.getGoodColor(),true);
 				list.add(gCard);
 			}
 			this.otherPlayerBoard.add(list);
@@ -177,19 +183,37 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 		
 	// Met à jour l'affichage des cartes de la main joueur(apres une modification)
 	private void updateHand(){
-
+		System.out.println(this.hand.size());
 		position_Y_H = height_Screen - scale_height_H - 2*marge_ext_y_H; // Permet de raffraichir la position des cartes en fonction de la taille du JPanel si redimensionnement
+		
+		int width_hand = hand.size()*Board.WIDTH_CARD_HAND + 2*marge_ext_x_H + marge_int_x_H*(hand.size()-1); // taille total de la main en X
+		
+		System.out.println("with hand "+width_hand);
+		System.out.println("width screen " + width_Screen);
+		// Dynamise le chevauchement en fonction du nombre de carte en main
+		if(width_hand > width_Screen){
+			//Il y a chevauchement, on calcule la marge negative a appliquer
+			position_X_H = 0;
+			dyn_marge_int_x_H = (width_Screen - (hand.size()+1)*Board.WIDTH_CARD_HAND + 2*marge_ext_x_H)/(hand.size());
+			
+		} else {
+			position_X_H = (width_Screen - width_hand) / 2 ; 
+			dyn_marge_int_x_H = marge_int_x_H;
+		}
+		
+		System.out.println("position_X_H " + position_X_H);
+		System.out.println("dyn_marge_int_x_H " + dyn_marge_int_x_H);
 		
 		int x = position_X_H + marge_ext_x_H;
 		int y = position_Y_H + marge_ext_y_H;				
 		for(GraphicCard gc : hand){
 			gc.setX(x);
 			gc.setY(y);
-			if(x == position_X_H + marge_ext_x_H + (scale_width_H + marge_int_x_H)*(nbCardbyRow_H - 1) && y==position_Y_H + marge_ext_y_H){
-				x = position_X_H - scale_width_H - marge_int_x_H + marge_ext_x_H ;
+			if(x == position_X_H + marge_ext_x_H + (scale_width_H + dyn_marge_int_x_H)*(nbCardbyRow_H - 1) && y==position_Y_H + marge_ext_y_H){
+				x = position_X_H - scale_width_H - dyn_marge_int_x_H + marge_ext_x_H ;
 				y = y + scale_height_H + marge_int_y_H;
 			}
-			x = x + scale_width_H + marge_int_x_H;
+			x = x + scale_width_H + dyn_marge_int_x_H;
 		}
 		repaint();
 	}
@@ -246,7 +270,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	}
 	
 	private void updateZoomCard(GraphicCard card){
-		zoomCard = new GraphicCard(card.getImage(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM);
+		zoomCard = new GraphicCard(card.getId(), card.getPath(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM,card.getGoodColor(),false);
 		
 		float ratio = 0.75f;
 		int max_X = width_Screen;
@@ -275,6 +299,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 		
 		zoomCard.setX(x);
 		zoomCard.setY(y);
+		repaint();
 	}
 
 	
@@ -350,14 +375,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 					}
 				}
 				
-				
-				
-				
-				
-				
-				
-				
-				
 				if(!focusACard){
 					flagHandCard = -1;
 					flagPlayerBoardCard = -1;
@@ -366,13 +383,10 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 						flagOtherPlayerBoardCard.add(-1);
 					}
 					zoomCard = null;
+					repaint();
 				}
 				
 				
-				
-				
-				
-				repaint();
 				
 	}
 	

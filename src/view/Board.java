@@ -49,8 +49,6 @@ private Observable game;
 
 private GamePanel board;
 
-
-private ZoomCardPanel zoomCard;
 private PlayerStatus pStatus;
 
 private GameRound gameRound;
@@ -99,7 +97,6 @@ public Board(GameControler controler, Observable observable){
 
 private void initComposant(){
 	initBoard();			//Initialisation du board central
-	initZoomCard();			//Initialisation de l'espace pour la carte zoomée
 	initMenu();				//Initialisation de la barre de menu
 	initGameRound();		//Initialisation des tours de jeu 
 	initPlayerStatus();		//Initialisation du panneau de status du joueur
@@ -135,11 +132,6 @@ private void initMenu(){
 }
 
 
-private void initZoomCard(){
-	zoomCard = new ZoomCardPanel();
-	
-}
-
 private void initGameRound(){
 	gameRound = new GameRound(0, 0, 0);
 	
@@ -154,7 +146,6 @@ private void initFrame(){
 	this.setLayout(new BorderLayout());
 	this.add(board, BorderLayout.CENTER);
 	this.add(gameRound, BorderLayout.WEST);
-	this.add(zoomCard, BorderLayout.EAST);
 
 	this.setJMenuBar(menuBar);
 	this.addComponentListener(this);
