@@ -220,10 +220,10 @@ public void actionPerformed(ActionEvent e) {
 		 
 		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
 		 bool.add(true);
+		 bool.add(true);
 		 bool.add(false);
 		 bool.add(false);
 		 bool.add(true);
-		 bool.add(false);
 		 bool.add(false);
 		 
 		 gameRound.setGreyRound(bool);

@@ -31,7 +31,7 @@ public class GraphicCard implements IDrawable{
 	private boolean isOnBoard;
 	
 	private boolean isDiscardable;
-	private boolean keepDiscardble;
+	private boolean keepDiscardable;
 	
 	public GraphicCard(int id, String path, int x, int y, int width, int height, int goodColor, boolean isOnBoard, boolean isDiscardable, boolean keepDiscardable) {
 		
@@ -52,7 +52,7 @@ public class GraphicCard implements IDrawable{
 		this.goodColor=goodColor;
 		this.isOnBoard=isOnBoard;
 		this.isDiscardable = isDiscardable;
-		this.keepDiscardble = keepDiscardble;
+		this.keepDiscardable = keepDiscardable;
 	}
 	
 	
@@ -89,7 +89,7 @@ public class GraphicCard implements IDrawable{
 	}
 	
 	public void drawKeepDiscardble(Graphics2D g){
-		if(keepDiscardble){
+		if(keepDiscardable){
 			int x1 = x + width/4;
 			int x2 = x + width*4/12;
 			int x3 = x + width*5/12;
@@ -228,11 +228,11 @@ public class GraphicCard implements IDrawable{
 
 
 	public boolean getIsKeepDiscardble() {
-		return keepDiscardble;
+		return keepDiscardable;
 	}
 
 
 	public void setKeepDiscardble(boolean keepDiscardble) {
-		this.keepDiscardble = keepDiscardble;
+		this.keepDiscardable = keepDiscardble;
 	}
 }

@@ -39,13 +39,23 @@ public class GameRound extends JPanel{
 		//Chargement des Images
 		for(int i = 1;i<7;i++){
 			try {
-					roundImage.add(ImageIO.read(new File("./src/Icons/round"+i+".png")));
+					roundImage.add(ImageIO.read(new File("./data/images/rounds/"+i+"_down.png")));
 					greyRound.add(true);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		for(int i = 1;i<7;i++){
+			try {
+					roundImage.add(ImageIO.read(new File("./data/images/rounds/"+i+"_up.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
+		for(Image img : roundImage){
+			System.out.println(img);
+		}
 		
 	}
 	
@@ -54,13 +64,12 @@ public class GameRound extends JPanel{
 		super.paintComponent(g);
 		int x = Board.POSITION_X_ROUND + marge_ext_x;
 		int y = Board.POSITION_Y_ROUND + marge_ext_y;
-		for(Image img : roundImage){
-			if(greyRound.get((roundImage.indexOf(img)))){
-				g.drawImage(GraphicsTools.greyImage(GraphicsTools.scaleImage(img,Board.WIDTH_ROUND,Board.HEIGHT_ROUND)),x,y,Board.WIDTH_ROUND,Board.HEIGHT_ROUND,null);
+		for(int i = 0 ; i<greyRound.size(); i++){
+			if(greyRound.get(i)){
+				g.drawImage(GraphicsTools.scaleImage(roundImage.get(i),Board.WIDTH_ROUND,Board.HEIGHT_ROUND),x,y,Board.WIDTH_ROUND,Board.HEIGHT_ROUND,null);
 			} else {
-				g.drawImage(GraphicsTools.scaleImage(img,Board.WIDTH_ROUND,Board.HEIGHT_ROUND),x,y,Board.WIDTH_ROUND,Board.HEIGHT_ROUND,null);
+				g.drawImage(GraphicsTools.scaleImage(roundImage.get(i+6),Board.WIDTH_ROUND,Board.HEIGHT_ROUND),x,y,Board.WIDTH_ROUND,Board.HEIGHT_ROUND,null);
 			}
-			
 			y = y + Board.HEIGHT_ROUND + marge_int_y;
 		}	
 	}

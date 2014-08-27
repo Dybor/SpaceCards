@@ -265,7 +265,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	private void updateZoomCard(GraphicCard card){
 		zoomCard = new GraphicCard(card.getId(), card.getPath(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM,card.getGoodColor(),false,false,false);
 		
-		float ratio = 0.75f;
+		float ratio = 0.25f;
 		int max_X = width_Screen;
 		int max_Y = height_Screen;
 		
