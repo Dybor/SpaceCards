@@ -137,11 +137,9 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	public void updateCards(IDrawableHand hand){
 		this.hand.clear();		
 		for(IDrawableCard card : hand.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_H, scale_height_H,card.getGoodColor(),false);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_H, scale_height_H,card.getGoodColor(),false,false,true);
 			this.hand.add(gCard);
-
-
-			
+	
 		}
 		
 		updateHand();
@@ -155,7 +153,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	public void updatePlayerBoard(IDrawableBoard board){
 		this.playerBoard.clear();	
 		for(IDrawableCard card : board.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_P, scale_height_P,card.getGoodColor(),true);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_P, scale_height_P,card.getGoodColor(),true,false,false);
 			this.playerBoard.add(gCard);
 		}
 		updatePlayerBoard();
@@ -169,7 +167,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			ArrayList<GraphicCard> list = new ArrayList<>();
 			
 			for(IDrawableCard card : board.getCards()){
-				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_OP, scale_height_OP,card.getGoodColor(),true);
+				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_OP, scale_height_OP,card.getGoodColor(),true,false,false);
 				list.add(gCard);
 			}
 			this.otherPlayerBoard.add(list);
@@ -265,7 +263,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	}
 	
 	private void updateZoomCard(GraphicCard card){
-		zoomCard = new GraphicCard(card.getId(), card.getPath(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM,card.getGoodColor(),false);
+		zoomCard = new GraphicCard(card.getId(), card.getPath(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM,card.getGoodColor(),false,false,false);
 		
 		float ratio = 0.75f;
 		int max_X = width_Screen;

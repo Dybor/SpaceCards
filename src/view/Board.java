@@ -155,7 +155,7 @@ private void initFrame(){
 	this.setLayout(new BorderLayout());
 	this.add(board, BorderLayout.CENTER);
 	this.add(gameRound, BorderLayout.WEST);
-
+	
 	this.setJMenuBar(menuBar);
 	this.addComponentListener(this);
 	
