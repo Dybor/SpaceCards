@@ -269,7 +269,7 @@ public void updateGameRound(ArrayList<Boolean> bool) {
 }
 
 public void sendInformationMessage(String str) {
-	
+	board.setScreenMessage(str);
 }
 
 
