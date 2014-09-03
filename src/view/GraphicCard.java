@@ -31,10 +31,14 @@ public class GraphicCard implements IDrawable{
 	private boolean hasGood;
 	private boolean isOnBoard;
 	
-	private boolean isDiscardable;
-	private boolean keepDiscardable;
 	
-	public GraphicCard(int id, String path, int x, int y, int width, int height,boolean hasGood, int goodColor, boolean isOnBoard, boolean isDiscardable, boolean keepDiscardable) {
+	private boolean isSelected;
+	private boolean isDiscarded;
+	private boolean isDrawed;
+	
+	public GraphicCard(int id, String path, int x, int y, int width, int height,
+			boolean hasGood, int goodColor, boolean isOnBoard,boolean isDiscarded,
+			boolean isSelected, boolean isDrawed) {
 		
 		this.path = path;
 		try {
@@ -51,9 +55,10 @@ public class GraphicCard implements IDrawable{
 		this.height=height;
 		this.goodColor=goodColor;
 		this.isOnBoard=isOnBoard;
-		this.isDiscardable = isDiscardable;
-		this.keepDiscardable = keepDiscardable;
+		this.isDiscarded=isDiscarded;
 		this.hasGood = hasGood;
+		this.isSelected=isSelected;
+		this.isDrawed=isDrawed;
 	}
 	
 	
@@ -83,62 +88,103 @@ public class GraphicCard implements IDrawable{
 			g.drawRect(x, y, width, height);
 		}
 		
-		if(isDiscardable){
+		if(isSelected){
+			Stroke stroke = new BasicStroke(4);
+			g.setStroke(stroke);
+			g.setColor(Color.GREEN);
+			g.drawRect(x, y, width, height);
+		}
+		
+		if(isDrawed){
+			Stroke stroke = new BasicStroke(2);
+			g.setStroke(stroke);
+			g.setColor(Color.lightGray);
+			g.drawRect(x, y, width, height);
+		}
+		
+		if(isDiscarded){
 			drawKeepDiscardble(g);
 		}
 		
 	}
 	
+	public void drawIsDiscarded(Graphics2D g){
+		int x1 = x + width/4;
+		int x2 = x + width*4/12;
+		int x3 = x + width*5/12;
+		int x4 = x + width/2;
+		int x5 = x + width*7/12;
+		int x6 = x + width*8/12;
+		int x7 = x + width*9/12;
+		
+		int y_ref = y + (height - width) /2;
+		
+		int y1 = y_ref + width/4;
+		int y2 = y_ref + width*4/12;
+		int y3 = y_ref + width*5/12;
+		int y4 = y_ref + width/2;
+		int y5 = y_ref + width*7/12;
+		int y6 = y_ref + width*8/12;
+		int y7 = y_ref + width*9/12;
+		
+		int[] xPoints = {x2,x4,x6,x7,x5,x7,x6,x4,x2,x1,x3,x1};
+		int[] yPoints = {y1,y3,y1,y2,y4,y6,y7,y5,y7,y6,y4,y2};
+		g.setColor(Color.RED);
+		Stroke stroke = new BasicStroke(4);
+		g.setStroke(stroke);
+		g.drawPolygon(xPoints, yPoints, xPoints.length);
+	}
+	
 	public void drawKeepDiscardble(Graphics2D g){
-		if(keepDiscardable){
-			int x1 = x + width/4;
-			int x2 = x + width*4/12;
-			int x3 = x + width*5/12;
-			int x4 = x + width*8/12;
-			int x5 = x + width*9/12;
-			
-			int y_ref = y + (height - width) /2;
-			
-			int y1 = y_ref + width/4;
-			int y2 = y_ref + width*4/12;
-			int y3 = y_ref + width*6/12;
-			int y4 = y_ref + width*7/12;
-			int y5 = y_ref + width*8/12;
-			int y6 = y_ref + width*9/12;
-			
-			int[] xPoints = {x2,x3,x4,x5,x3,x1};
-			int[] yPoints = {y3,y4,y1,y2,y6,y4};
-			g.setColor(Color.GREEN);
-			Stroke stroke = new BasicStroke(4);
-			g.setStroke(stroke);
-			g.drawPolygon(xPoints, yPoints, xPoints.length);
-		} else {
-			
-			int x1 = x + width/4;
-			int x2 = x + width*4/12;
-			int x3 = x + width*5/12;
-			int x4 = x + width/2;
-			int x5 = x + width*7/12;
-			int x6 = x + width*8/12;
-			int x7 = x + width*9/12;
-			
-			int y_ref = y + (height - width) /2;
-			
-			int y1 = y_ref + width/4;
-			int y2 = y_ref + width*4/12;
-			int y3 = y_ref + width*5/12;
-			int y4 = y_ref + width/2;
-			int y5 = y_ref + width*7/12;
-			int y6 = y_ref + width*8/12;
-			int y7 = y_ref + width*9/12;
-			
-			int[] xPoints = {x2,x4,x6,x7,x5,x7,x6,x4,x2,x1,x3,x1};
-			int[] yPoints = {y1,y3,y1,y2,y4,y6,y7,y5,y7,y6,y4,y2};
-			g.setColor(Color.RED);
-			Stroke stroke = new BasicStroke(4);
-			g.setStroke(stroke);
-			g.drawPolygon(xPoints, yPoints, xPoints.length);
-		}
+//		if(keepDiscardable){
+//			int x1 = x + width/4;
+//			int x2 = x + width*4/12;
+//			int x3 = x + width*5/12;
+//			int x4 = x + width*8/12;
+//			int x5 = x + width*9/12;
+//			
+//			int y_ref = y + (height - width) /2;
+//			
+//			int y1 = y_ref + width/4;
+//			int y2 = y_ref + width*4/12;
+//			int y3 = y_ref + width*6/12;
+//			int y4 = y_ref + width*7/12;
+//			int y5 = y_ref + width*8/12;
+//			int y6 = y_ref + width*9/12;
+//			
+//			int[] xPoints = {x2,x3,x4,x5,x3,x1};
+//			int[] yPoints = {y3,y4,y1,y2,y6,y4};
+//			g.setColor(Color.GREEN);
+//			Stroke stroke = new BasicStroke(4);
+//			g.setStroke(stroke);
+//			g.drawPolygon(xPoints, yPoints, xPoints.length);
+//		} else {
+//			
+//			int x1 = x + width/4;
+//			int x2 = x + width*4/12;
+//			int x3 = x + width*5/12;
+//			int x4 = x + width/2;
+//			int x5 = x + width*7/12;
+//			int x6 = x + width*8/12;
+//			int x7 = x + width*9/12;
+//			
+//			int y_ref = y + (height - width) /2;
+//			
+//			int y1 = y_ref + width/4;
+//			int y2 = y_ref + width*4/12;
+//			int y3 = y_ref + width*5/12;
+//			int y4 = y_ref + width/2;
+//			int y5 = y_ref + width*7/12;
+//			int y6 = y_ref + width*8/12;
+//			int y7 = y_ref + width*9/12;
+//			
+//			int[] xPoints = {x2,x4,x6,x7,x5,x7,x6,x4,x2,x1,x3,x1};
+//			int[] yPoints = {y1,y3,y1,y2,y4,y6,y7,y5,y7,y6,y4,y2};
+//			g.setColor(Color.RED);
+//			Stroke stroke = new BasicStroke(4);
+//			g.setStroke(stroke);
+//			g.drawPolygon(xPoints, yPoints, xPoints.length);
+//		}
 	}
 	
 
@@ -216,27 +262,6 @@ public class GraphicCard implements IDrawable{
 	public void setGoodColor(int goodColor) {
 		this.goodColor = goodColor;
 	}
-
-
-	public boolean getTsDiscardable() {
-		return isDiscardable;
-	}
-
-
-	public void setDiscardable(boolean isDiscardable) {
-		this.isDiscardable = isDiscardable;
-	}
-
-
-	public boolean getIsKeepDiscardble() {
-		return keepDiscardable;
-	}
-
-
-	public void setKeepDiscardble(boolean keepDiscardble) {
-		this.keepDiscardable = keepDiscardble;
-	}
-
 
 	public boolean isHasGood() {
 		return hasGood;

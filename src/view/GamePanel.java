@@ -152,7 +152,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	public void updateCards(IDrawableHand hand){
 		this.hand.clear();		
 		for(IDrawableCard card : hand.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_H, scale_height_H,card.hasGood(), card.getGoodColor(),false,false,true);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_H, scale_height_H,card.hasGood(), card.getGoodColor(),false,card.isDiscarded(),card.isSelected(),card.isDrawed());
 			this.hand.add(gCard);
 	
 		}
@@ -168,7 +168,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	public void updatePlayerBoard(IDrawableBoard board){
 		this.playerBoard.clear();	
 		for(IDrawableCard card : board.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_P, scale_height_P,card.hasGood(),card.getGoodColor(),true,false,false);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_P, scale_height_P,card.hasGood(),card.getGoodColor(),true,card.isDiscarded(),card.isSelected(),card.isDrawed());
 			this.playerBoard.add(gCard);
 		}
 		updatePlayerBoard();
@@ -182,7 +182,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			ArrayList<GraphicCard> list = new ArrayList<>();
 			
 			for(IDrawableCard card : board.getCards()){
-				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_OP, scale_height_OP,card.hasGood(),card.getGoodColor(),true,false,false);
+				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_OP, scale_height_OP,card.hasGood(),card.getGoodColor(),false,card.isDiscarded(),card.isSelected(),card.isDrawed());
 				list.add(gCard);
 			}
 			this.otherPlayerBoard.add(list);
@@ -278,7 +278,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	}
 	
 	private void updateZoomCard(GraphicCard card){
-		zoomCard = new GraphicCard(card.getId(), card.getPath(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM,card.isHasGood(),card.getGoodColor(),false,false,false);
+		zoomCard = new GraphicCard(card.getId(), card.getPath(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM,card.isHasGood(),card.getGoodColor(),false,false,false,false);
 		
 		float ratio = 0.25f;
 		int max_X = width_Screen;
