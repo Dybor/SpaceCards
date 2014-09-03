@@ -187,7 +187,6 @@ public void refreshAll(){
 	updateBoard(game.getPlayers().get(me).getDrawableBoard());
 	updateHand(game.getPlayers().get(me).getDrawableHand());
 	updatePoolPV(game.getRemainingVP());
-	
 }
 
 //*******Fonction Test ************ //

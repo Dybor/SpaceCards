@@ -237,5 +237,6 @@ public class RunnableGame implements Runnable, IGameData, INetworkData {
 		if (rounds ==0) { // Mise en place, les joueurs se défausses de deux cartes
 			p.selectCard(id);
 		}
+		controler.notifyView();
 	}
 }

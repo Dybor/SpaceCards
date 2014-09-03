@@ -121,6 +121,12 @@ public interface IGameCard {
 	 * @param d
 	 */
 	public void setDiscarded(boolean d);
+	
+	/**
+	 * Indique que la carte vient d'etre piochee.
+	 * @param d
+	 */
+	public void setDrawed(boolean d);
 
 	/**
 	 * Indique si la carte peut etre jouee.
@@ -139,4 +145,10 @@ public interface IGameCard {
 	 * @return
 	 */
 	public boolean isDiscarded();
+	
+	/**
+	 * Indique si la carte vient d'etre piochee.
+	 * @return
+	 */
+	public boolean isDrawed();
 }

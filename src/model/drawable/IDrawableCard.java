@@ -83,4 +83,10 @@ public interface IDrawableCard {
 	 * @return
 	 */
 	public boolean isDiscarded();
+	
+	/**
+	 * Indique si la carte vient d'etre piochee.
+	 * @return
+	 */
+	public boolean isDrawed();
 }

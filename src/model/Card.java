@@ -25,6 +25,7 @@ public class Card implements IGameCard, IDrawableCard {
 	private boolean playable =false;
 	private boolean selected =false;
 	private boolean discarded =false;
+	private boolean drawed =false;
 	
 	// Builder
 	public Card(int i, int t, int st, int co, int v, String n, int c, int h) {
@@ -164,5 +165,15 @@ public class Card implements IGameCard, IDrawableCard {
 	@Override
 	public boolean isSelected() {
 		return selected;
+	}
+
+	@Override
+	public void setDrawed(boolean d) {
+		drawed =d;
+	}
+
+	@Override
+	public boolean isDrawed() {
+		return drawed;
 	}
 }

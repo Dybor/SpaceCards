@@ -15,7 +15,5 @@ public class Main {
 		// Création de notre fenêtre avec le contrôleur en paramètre
 		Board board = new Board(controler, gameModel);
 		controler.setView(board);
-		
-		gameModel.launchGame();
 	}
 }
