@@ -1,10 +1,14 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -28,6 +32,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	private boolean focusACard;
 	
 	private int nbPlayer = 1;
+	
+	private String screenMessage = "Bonjour !!";
 	
 	
 	// Player Board
@@ -130,6 +136,15 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			zoomCard.draw(g);
 		}
 		
+//		if(!screenMessage.equals("")){
+//			Graphics2D g2d = (Graphics2D) g;
+//			Font f = new Font("Ariel", Font.BOLD, 30);
+//			Rectangle2D rec = f.getStringBounds(screenMessage, g2d.getFontRenderContext());
+//			g2d.setFont(f);
+//			g2d.setColor(Color.BLACK);
+//			g2d.drawString(screenMessage,(float) (width_Screen/2 - rec.getWidth()/2) ,(float)( height_Screen/2 - rec.getHeight()/2));
+//		}
+		
 	}
 	
 	
@@ -137,7 +152,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	public void updateCards(IDrawableHand hand){
 		this.hand.clear();		
 		for(IDrawableCard card : hand.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_H, scale_height_H,card.getGoodColor(),false,false,true);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_H, scale_height_H,card.hasGood(), card.getGoodColor(),false,false,true);
 			this.hand.add(gCard);
 	
 		}
@@ -153,7 +168,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	public void updatePlayerBoard(IDrawableBoard board){
 		this.playerBoard.clear();	
 		for(IDrawableCard card : board.getCards()){
-			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_P, scale_height_P,card.getGoodColor(),true,false,false);
+			GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_P, scale_height_P,card.hasGood(),card.getGoodColor(),true,false,false);
 			this.playerBoard.add(gCard);
 		}
 		updatePlayerBoard();
@@ -167,7 +182,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			ArrayList<GraphicCard> list = new ArrayList<>();
 			
 			for(IDrawableCard card : board.getCards()){
-				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_OP, scale_height_OP,card.getGoodColor(),true,false,false);
+				GraphicCard gCard = new GraphicCard(card.getImageId(),card.getImagePath(), 0, 0, scale_width_OP, scale_height_OP,card.hasGood(),card.getGoodColor(),true,false,false);
 				list.add(gCard);
 			}
 			this.otherPlayerBoard.add(list);
@@ -263,7 +278,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	}
 	
 	private void updateZoomCard(GraphicCard card){
-		zoomCard = new GraphicCard(card.getId(), card.getPath(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM,card.getGoodColor(),false,false,false);
+		zoomCard = new GraphicCard(card.getId(), card.getPath(),0,0,Board.WIDTH_CARD_ZOOM,Board.HEIGHT_CARD_ZOOM,card.isHasGood(),card.getGoodColor(),false,false,false);
 		
 		float ratio = 0.25f;
 		int max_X = width_Screen;
@@ -471,5 +486,9 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
 	public void setHeight_Screen(int height_Screen) {
 		this.height_Screen = height_Screen;
+	}
+
+	public void setScreenMessage(String screenMessage) {
+		this.screenMessage = screenMessage;
 	}
 }

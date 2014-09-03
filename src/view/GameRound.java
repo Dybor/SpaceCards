@@ -53,10 +53,6 @@ public class GameRound extends JPanel{
 			}
 		}
 		
-		for(Image img : roundImage){
-			System.out.println(img);
-		}
-		
 	}
 	
 	@Override

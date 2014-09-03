@@ -28,12 +28,13 @@ public class GraphicCard implements IDrawable{
 	private String path;
 	
 	private int goodColor;
+	private boolean hasGood;
 	private boolean isOnBoard;
 	
 	private boolean isDiscardable;
 	private boolean keepDiscardable;
 	
-	public GraphicCard(int id, String path, int x, int y, int width, int height, int goodColor, boolean isOnBoard, boolean isDiscardable, boolean keepDiscardable) {
+	public GraphicCard(int id, String path, int x, int y, int width, int height,boolean hasGood, int goodColor, boolean isOnBoard, boolean isDiscardable, boolean keepDiscardable) {
 		
 		this.path = path;
 		try {
@@ -41,7 +42,6 @@ public class GraphicCard implements IDrawable{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println(path);
 		};
 		
 		this.id = id;
@@ -53,6 +53,7 @@ public class GraphicCard implements IDrawable{
 		this.isOnBoard=isOnBoard;
 		this.isDiscardable = isDiscardable;
 		this.keepDiscardable = keepDiscardable;
+		this.hasGood = hasGood;
 	}
 	
 	
@@ -62,7 +63,7 @@ public class GraphicCard implements IDrawable{
 		Graphics2D g = (Graphics2D) gg;
 		g.drawImage(GraphicsTools.scaleImage(image,width,height),x,y,width,height,null);
 		
-		if(isOnBoard&&goodColor!=IDrawableCard.WITHOUT_GOOD){
+		if(isOnBoard&&hasGood){
 			switch(goodColor){
 			case IDrawableCard.ALIEN_TECHNOLOGY :
 				g.setColor(Color.YELLOW);
@@ -234,5 +235,10 @@ public class GraphicCard implements IDrawable{
 
 	public void setKeepDiscardble(boolean keepDiscardble) {
 		this.keepDiscardable = keepDiscardble;
+	}
+
+
+	public boolean isHasGood() {
+		return hasGood;
 	}
 }
