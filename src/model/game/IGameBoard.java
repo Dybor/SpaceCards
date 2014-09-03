@@ -1,6 +1,5 @@
 package model.game;
 
-import java.util.ArrayList;
 
 /**
  * Définit le compotement du plateau de jeu du joueur.

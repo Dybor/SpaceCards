@@ -18,10 +18,13 @@ public class Card implements IGameCard, IDrawableCard {
 	private int[] powerIds;
 	private IGameCard good;
 	private boolean hasGood;
-	
-	private boolean playable;
 
 	private String path;
+	
+	// Etats de la carte
+	private boolean playable =false;
+	private boolean selected =false;
+	private boolean discarded =false;
 	
 	// Builder
 	public Card(int i, int t, int st, int co, int v, String n, int c, int h) {
@@ -38,8 +41,6 @@ public class Card implements IGameCard, IDrawableCard {
 		powerIds = new int[] { 0, 0, 0, 0, 0, 0 };
 		good =null;
 		hasGood =false;
-		
-		playable =false;
 	}
 
 	// GameCard implementation
@@ -98,10 +99,10 @@ public class Card implements IGameCard, IDrawableCard {
 	}
 	
 	@Override
-	public void setPlayable(boolean p) {
-		playable =p;
+	public int getId() {
+		return id;
 	}
-
+	
 	// DrawableCard implementation
 	@Override
 	public int getImageId() {
@@ -128,14 +129,40 @@ public class Card implements IGameCard, IDrawableCard {
 		return hasGood;
 	}
 	
-	@Override
-	public boolean isPlayable() {
-		return playable;
-	}
-
 	// Public methods
 	@Override
 	public String toString() {
 		return getName()+"("+getCost()+","+getScoreValue()+","+getHomeWorldId()+")";
+	}
+
+	// Actions
+	@Override
+	public void setPlayable(boolean p) {
+		playable =p;
+	}
+
+	@Override
+	public void setSelected(boolean s) {
+		selected =true;
+	}
+	
+	@Override
+	public void setDiscarded(boolean d) {
+		discarded = d;
+	}
+	
+	@Override
+	public boolean isDiscarded() {
+		return discarded;
+	}
+	
+	@Override
+	public boolean isPlayable() {
+		return playable;
+	}
+	
+	@Override
+	public boolean isSelected() {
+		return selected;
 	}
 }

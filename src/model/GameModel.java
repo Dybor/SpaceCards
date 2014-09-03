@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 import controler.Controllable;
+import controler.IControler;
 import controler.Observable;
 import model.drawable.IDrawableCard;
 import model.drawable.IDrawablePlayer;
@@ -13,15 +14,16 @@ import model.game.RunnableGame;
 public class GameModel implements Observable, Controllable {
 
 	// Attributes
-	private ArrayList<RunnableGame> games;
+	private long idGame;
 	private RunnableGame currentGame;
+	private IControler controler;
 	private Player player;
 	
 	// Builder
 	public GameModel(String n, Player p) {
 		// Création de la partie et ajout du joueur principal
 		player =p;
-		games =new ArrayList<>();
+		idGame =0;
 	}
 
 	// Implémentation du pattern Observable pour la vue
@@ -39,9 +41,9 @@ public class GameModel implements Observable, Controllable {
 	}
 
 	@Override
-	public ArrayList<IDrawableCard> getCards() {
+	public ArrayList<IDrawableCard> getRemainingCards() {
 		ArrayList<IDrawableCard> newList =new ArrayList<>();
-		for (IGameCard c:currentGame.getCards())
+		for (IGameCard c:currentGame.getRemainingCards())
 			newList.add((IDrawableCard)c);
 		return newList;
 	}
@@ -54,11 +56,20 @@ public class GameModel implements Observable, Controllable {
 	// Implémentation du pattern Controllable pour le controleur
 	@Override
 	public void launchGame() {
-		// Création d'une partie
-		currentGame =new RunnableGame("Nouvelle partie de "+player.getName()+" ("+games.size()+")", player);
-		games.add(currentGame);
-		
-		// Lancement de la partie
+		currentGame =new RunnableGame("Nouvelle partie de "+player.getName()+" ("+idGame+")", player);
+		currentGame.setController(controler);
 		currentGame.run();
 	}
+
+	@Override
+	public void treatSelectedCard(int id) {
+		currentGame.treatSelectedCard(player, id);
+	}
+
+	@Override
+	public void setController(IControler c) {
+		controler =c;
+	}
+	
+	
 }

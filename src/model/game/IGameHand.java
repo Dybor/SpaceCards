@@ -1,6 +1,5 @@
 package model.game;
 
-import java.util.ArrayList;
 
 /**
  * Definit le comportement de la main d'un joueur.
@@ -9,6 +8,7 @@ import java.util.ArrayList;
  */
 public interface IGameHand {
 
+	// Getters and setters
 	/**
 	 * Accesseur des cartes de la mains du joueur.
 	 * @param i Indice de la carte
@@ -39,4 +39,11 @@ public interface IGameHand {
 	 * @return Renvoie vrai si la taille de la main est strictement superieure a 10.
 	 */
 	public boolean isFull();
+	
+	// Actions de jeu
+	/**
+	 * Selectionne une carte.
+	 * @param id
+	 */
+	public void selectCard(int id);
 }

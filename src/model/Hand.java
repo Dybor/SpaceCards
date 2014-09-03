@@ -17,7 +17,7 @@ public class Hand implements IGameHand, IDrawableHand {
 		cards =new ArrayList<>();
 	}
 
-	// GameHand implementation
+	// GameHand implementation : Getters and setters
 	@Override
 	public IGameCard getCard(int i) {
 		return cards.get(i);
@@ -53,6 +53,18 @@ public class Hand implements IGameHand, IDrawableHand {
 		for (IGameCard c:cards)
 			cs.add((IDrawableCard)c);
 		return cs;
+	}
+
+	// GameCard implementation : actions
+	@Override
+	public void selectCard(int id) {
+		// Recherche de la carte
+		for (IGameCard c:cards) {
+			if (c.getId() ==id) {
+				c.setSelected(true);
+				break;
+			}
+		}
 	}
 
 }

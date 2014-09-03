@@ -12,4 +12,12 @@ public interface Controllable {
 	 */
 	public void launchGame();
 	
+	/**
+	 * Traite la carte avec l'identifiant id.
+	 * @param id
+	 */
+	public void treatSelectedCard(int id);
+	
+	public void setController(IControler c);
+	
 }

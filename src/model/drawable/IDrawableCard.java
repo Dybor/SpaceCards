@@ -33,6 +33,7 @@ public interface IDrawableCard {
 	public static final int ALIEN_TECHNOLOGY =4;
 	
 
+	// Getters and setters
 	/**
 	 * Accesseur du numero d'identification de l'image de la carte.
 	 * @return Renvoie un entier.
@@ -64,9 +65,22 @@ public interface IDrawableCard {
 	 */
 	public boolean hasGood();
 	
+	// Actions
 	/**
 	 * Indique si la carte peut etre jouee.
 	 * @return
 	 */
 	public boolean isPlayable();
+	
+	/**
+	 * Indique si la carte est selectionnee.
+	 * @return
+	 */
+	public boolean isSelected();
+	
+	/**
+	 * Indique si la carte est dans la liste de cartes a défausser.
+	 * @return
+	 */
+	public boolean isDiscarded();
 }

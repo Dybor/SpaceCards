@@ -38,7 +38,7 @@ public interface IGameCard {
 	public static int WINDFALLS_WORLD =23;
 	
 	
-	
+	// Getters and setters
 	/**
 	 * Accesseur du nom de la carte.
 	 * @return Renvoie le nom de la carte.
@@ -99,7 +99,44 @@ public interface IGameCard {
 	public IGameCard getGood();
 	
 	/**
+	 * Renvoie l'id de la carte.
+	 * @return
+	 */
+	public int getId();
+	
+	// Actions
+	/**
 	 * Precise l'etat jouable ou non de la carte.
 	 */
 	public void setPlayable(boolean p);
+	
+	/**
+	 * Selectionne la carte.
+	 * @param s
+	 */
+	public void setSelected(boolean s);
+	
+	/**
+	 * Envoie ou non la carte dans la liste de cartes a defausser.
+	 * @param d
+	 */
+	public void setDiscarded(boolean d);
+
+	/**
+	 * Indique si la carte peut etre jouee.
+	 * @return
+	 */
+	public boolean isPlayable();
+	
+	/**
+	 * Indique si la carte est selectionnee.
+	 * @return
+	 */
+	public boolean isSelected();
+	
+	/**
+	 * Indique si la carte est dans la liste de cartes a défausser.
+	 * @return
+	 */
+	public boolean isDiscarded();
 }

@@ -2,13 +2,14 @@ package controler;
 
 import model.GameModel;
 
-public class GameControler{
+public class GameControler implements IControler {
 
 	private INotifyView view;
 	
 	private GameModel game;
 	public GameControler(GameModel game) {
 		this.game = game;
+		game.setController(this);
 	}
 
 	public void launchGame(){
@@ -16,7 +17,7 @@ public class GameControler{
 	}
 	
 	public void handCardClicked(int id){
-		
+		game.treatSelectedCard(id);
 	}
 	
 	public void BoardCardClicked(int id){
@@ -34,6 +35,11 @@ public class GameControler{
 	
 	public void setView(INotifyView view){
 		this.view = view;
+	}
+
+	@Override
+	public void notifyView() {
+		view.refreshAll();
 	}
 
 }

@@ -14,6 +14,7 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	private int score;
 	private IGameHand hand;
 	private IGameBoard board;
+	private boolean ready;
 
 	// Builder
 	public Player(String n) {
@@ -21,7 +22,7 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 		score =0;
 	}
 
-	// GamePlayer implementation
+	// GamePlayer implementation : Getters and setters
 	@Override
 	public String getName() {
 		return name;
@@ -51,8 +52,18 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	public void setBoard(IGameBoard b) {
 		board =b;
 	}
+	
+	@Override
+	public boolean isReady() {
+		return ready;
+	}
 
-	// GamePlayer implementation
+	@Override
+	public void setReady(boolean r) {
+		ready =r;
+	}
+
+	// DrawablePlayer implementation
 	@Override
 	public IDrawableHand getDrawableHand() {
 		return (IDrawableHand)hand;
@@ -61,5 +72,10 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	@Override
 	public IDrawableBoard getDrawableBoard() {
 		return (IDrawableBoard)board;
+	}
+
+	@Override
+	public void selectCard(int id) {
+		hand.selectCard(id);
 	}
 }

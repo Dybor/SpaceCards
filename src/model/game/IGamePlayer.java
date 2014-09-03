@@ -7,6 +7,7 @@ package model.game;
  */
 public interface IGamePlayer {
 
+	// Getters and setters
 	/**
 	 * Accesseur du nom du joueur.
 	 * @return Renvoie le nom du joueur.
@@ -40,4 +41,23 @@ public interface IGamePlayer {
 	 * @return Renvoie le plateau de jeux.
 	 */
 	public IGameBoard getBoard();
+	
+	/**
+	 * Indique si le joueur a termine de jouer et attend que la partie avance.
+	 * @return
+	 */
+	public boolean isReady();
+	
+	/**
+	 * Change l'etat du joueur.
+	 * @param r
+	 */
+	public void setReady(boolean r);
+	
+	// Actions de jeu
+	/**
+	 * Selectionne une carte.
+	 * @param id
+	 */
+	public void selectCard(int id);
 }

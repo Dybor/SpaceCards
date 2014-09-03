@@ -29,7 +29,7 @@ public interface Observable {
 	 * Ranvoie la liste des cartes de la pioche pour la vue.
 	 * @return
 	 */
-	public ArrayList<IDrawableCard> getCards();
+	public ArrayList<IDrawableCard> getRemainingCards();
 	
 	/**
 	 * Renvoie le nombre de points restants dans le pool de PV.

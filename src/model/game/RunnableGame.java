@@ -8,34 +8,40 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import controler.IControler;
 import model.Board;
 import model.Card;
 import model.Hand;
+import model.network.INetworkData;
 
-public class RunnableGame implements Runnable, IGameData {
+public class RunnableGame implements Runnable, IGameData, INetworkData {
 
 	// Attributs privés
 	private String name;
-	
-	private ArrayList<IGamePlayer> players =new ArrayList<>();
-	private ArrayList<IGameCard> cards =new ArrayList<>();
+
+	private IControler controler;
+	private ArrayList<IGamePlayer> players = new ArrayList<>();
+	private ArrayList<IGameCard> cards = new ArrayList<>();
 	private int pvPool;
-	
+	private int rounds;
+
+	private ArrayList<IGamePlayer>[] actions = new ArrayList[5];
+
 	// Builder
 	public RunnableGame(String n, IGamePlayer p) {
-		name =n;
+		name = n;
 		players.add(p);
 		readCards();
 	}
-	
-	// IGameData implementation
+
+	// IGameData implementation : Getters
 	@Override
 	public ArrayList<IGamePlayer> getPlayers() {
 		return players;
 	}
 
 	@Override
-	public ArrayList<IGameCard> getCards() {
+	public ArrayList<IGameCard> getRemainingCards() {
 		return cards;
 	}
 
@@ -43,40 +49,48 @@ public class RunnableGame implements Runnable, IGameData {
 	public int getRemainingVP() {
 		return pvPool;
 	}
-	
+
 	// Lancement du thread
 	@Override
 	public void run() {
-		// Mise en place 
+		// Mise en place
 		setup();
-		
-		// Attendre que les joueurs aient défaussé deux cartes
-		//boolean ready =false;
-		//while (!ready) {
-		//	ready ==
-		//}
+
+		// Tours de jeu
+		/*while (boardsNotComplete() && pvPool > 0) {
+			rounds += 1;
+			launchRounds();
+		}*/
+
+		// Fin de la partie
 	}
 
+	public void setController(IControler c) {
+		controler =c;
+	}
+	
 	// Méthodes privées (phases de jeu)
 	private void readCards() {
 		BufferedReader is;
-		String line=null;
-		IGameCard c=null;
+		String line = null;
+		IGameCard c = null;
 		try {
-			is =new BufferedReader(new FileReader(new File("./data/cardfiles/cards.txt")));
-			while ((line =is.readLine()) !=null) {
-				String[] data =line.split("\t");
-				int id =Integer.parseInt(data[0]);
-				int type =Integer.parseInt(data[1]);
-				int subtype =Integer.parseInt(data[2]);
-				int cost =Integer.parseInt(data[3]);
-				int vp =Integer.parseInt(data[4]);
-				String name =data[5];
-				int color =Integer.parseInt(data[6]);
-				int homeworld =Integer.parseInt(data[7]);
-				int n =Integer.parseInt(data[8]);
-				for (int i=0 ; i<n ; i++) {
-					c =new Card(id, type, subtype, cost, vp, name, color, homeworld);
+			is = new BufferedReader(new FileReader(new File(
+					"./data/cardfiles/cards.txt")));
+			while ((line = is.readLine()) != null) {
+				String[] data = line.split("\t");
+				int id = Integer.parseInt(data[0]);
+				int type = Integer.parseInt(data[1]);
+				int subtype = Integer.parseInt(data[2]);
+				int cost = Integer.parseInt(data[3]);
+				int vp = Integer.parseInt(data[4]);
+				String name = data[5];
+				int color = Integer.parseInt(data[6]);
+				int homeworld = Integer.parseInt(data[7]);
+				int n = Integer.parseInt(data[8]);
+				for (int i = 0; i < n; i++) {
+					c = new Card(id, type, subtype, cost, vp, name, color,
+							homeworld);
 					cards.add(c);
 				}
 			}
@@ -85,13 +99,14 @@ public class RunnableGame implements Runnable, IGameData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
-			System.out.println("A card is not correctly defined: \n"+line);
+			System.out.println("A card is not correctly defined: \n" + line);
 		}
 	}
-	
+
 	private void setup() {
 		// Points initiaux et mélange des cartes
 		pvPool = 12 * players.size();
+		rounds = 0;
 		Collections.shuffle(cards);
 
 		// Main, plateau mondes de départ
@@ -101,7 +116,7 @@ public class RunnableGame implements Runnable, IGameData {
 			p.setBoard(new Board());
 			for (int ic = c; ic < cards.size(); ic++) {
 				IGameCard card = cards.get(ic);
-				if (card.getHomeWorldId() >=0) {
+				if (card.getHomeWorldId() >= 0) {
 					p.getBoard().addCard(card);
 					cards.remove(card);
 					c = ic;
@@ -109,18 +124,118 @@ public class RunnableGame implements Runnable, IGameData {
 				}
 			}
 		}
-		
-		// Distribution des cartes
-		for (IGamePlayer p : players)
-				draw(p, 6);
+
+		// Distribution des cartes (toutes les cartes sont jouables)
+		for (IGamePlayer p : players) {
+			draw(p, 6);
+			IGameHand h =p.getHand();
+			for (int i=0 ; i<h.size() ; i++) {
+				h.getCard(i).setPlayable(true);
+			}
+		}
+		controler.notifyView();
+
+		// Les joueur se défaussent de deux cartes chacun
+		//while (!playersAreReady())
+		//	wait(500, "SETUP : Les joueurs se défaussent de deux cartes.");
+		//setPlayersUnready();
 	}
-	
-	// Méthodes privées (actions de jeu)
+
+	private void launchRounds() {
+		// Les joueurs choisissent leurs actions
+		while (!playersAreReady())
+			wait(500, "LAUNCH_ROUND : Les joueurs choisissent leurs actions.");
+		setPlayersUnready();
+
+		// Traitement des actions
+		for (int a = 0; a < actions.length; a++) {
+			if (actions[a].size() > 0) {
+				switch (a) {
+				case 0:
+					exploreAction();
+					break;
+				case 1:
+					developAction();
+					break;
+				case 2:
+					colonizeAction();
+					break;
+				case 3:
+					consumeAction();
+					break;
+				case 4:
+					produceAction();
+				}
+			}
+		}
+	}
+
+	// Méthodes privées
+	private void wait(long timeout, String msg) {
+		try {
+			wait(500);
+		} catch (InterruptedException e) {
+			System.out.println(msg);
+			e.printStackTrace();
+		}
+	}
+
+	private boolean playersAreReady() {
+		boolean ready = true;
+		for (IGamePlayer p : players) {
+			ready = ready && p.isReady();
+		}
+		return ready;
+	}
+
+	private boolean boardsNotComplete() {
+		for (IGamePlayer p : players) {
+			if (p.getBoard().size() >= 12)
+				return true;
+		}
+		return false;
+	}
+
+	private void setPlayersUnready() {
+		for (IGamePlayer p : players) {
+			p.setReady(false);
+		}
+	}
+
 	private void draw(IGamePlayer p, int n) {
 		for (int i = 0; i < n; i++) {
 			IGameCard card = cards.get(0);
 			p.getHand().addCard(card);
 			cards.remove(card);
+		}
+	}
+
+	// Phases de jeu
+	private void exploreAction() {
+		// TODO Auto-generated method stub
+	}
+
+	private void developAction() {
+		// TODO Auto-generated method stub
+	}
+
+	private void colonizeAction() {
+		// TODO Auto-generated method stub
+	}
+
+	private void consumeAction() {
+		// TODO Auto-generated method stub
+	}
+
+	private void produceAction() {
+		// TODO Auto-generated method stub
+	}
+
+	// IGameData implementation : Fonctions implémentant les actions utilisateurs
+	@Override
+	public void treatSelectedCard(IGamePlayer p, int id) {
+		if (rounds ==0) { // Mise en place, les joueurs se défausses de deux cartes
+			p.selectCard(id);
 		}
 	}
 }
