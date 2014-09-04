@@ -61,10 +61,9 @@ public class Hand implements IGameHand, IDrawableHand {
 		// Recherche de la carte
 		for (IGameCard c:cards) {
 			if (c.getId() ==id) {
-				c.setSelected(true);
+				c.setSelected(!c.isSelected());
 				break;
 			}
 		}
 	}
-
 }

@@ -128,6 +128,7 @@ public class RunnableGame implements Runnable, IGameData, INetworkData {
 		// Distribution des cartes (toutes les cartes sont jouables)
 		for (IGamePlayer p : players) {
 			draw(p, 6);
+			p.setCardsToBeSelectedNumber(2);
 			IGameHand h =p.getHand();
 			for (int i=0 ; i<h.size() ; i++) {
 				h.getCard(i).setPlayable(true);
@@ -212,31 +213,27 @@ public class RunnableGame implements Runnable, IGameData, INetworkData {
 
 	// Phases de jeu
 	private void exploreAction() {
-		// TODO Auto-generated method stub
 	}
 
 	private void developAction() {
-		// TODO Auto-generated method stub
 	}
 
 	private void colonizeAction() {
-		// TODO Auto-generated method stub
 	}
 
 	private void consumeAction() {
-		// TODO Auto-generated method stub
 	}
 
 	private void produceAction() {
-		// TODO Auto-generated method stub
 	}
 
 	// IGameData implementation : Fonctions implémentant les actions utilisateurs
 	@Override
 	public void treatSelectedCard(IGamePlayer p, int id) {
-		if (rounds ==0) { // Mise en place, les joueurs se défausses de deux cartes
-			p.selectCard(id);
-		}
+		p.selectCard(id);
+		if (p.getSelectedCardsNumber() <p.getCardsToBeSelectedNumber())
+			controler.sendMessage("Encore "+(p.getCardsToBeSelectedNumber()-p.getSelectedCardsNumber())+" carte(s) à sélectionner");
+		else controler.sendMessage("Deux cartes ont déjà été sélectionnées");
 		controler.notifyView();
 	}
 }

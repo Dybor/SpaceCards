@@ -46,4 +46,9 @@ public class GameControler implements IControler {
 		view.refreshAll();
 	}
 
+	@Override
+	public void sendMessage(String msg) {
+		view.sendInformationMessage(msg);
+	}
+
 }

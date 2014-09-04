@@ -11,4 +11,9 @@ public interface IControler {
 	 * Indique au controleur qu'il doit rafraichir la vue.
 	 */
 	public void notifyView();
+
+	/**
+	 * Envoyer un message d'information
+	 */
+	public void sendMessage(String msg);
 }

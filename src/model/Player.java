@@ -14,7 +14,10 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	private int score;
 	private IGameHand hand;
 	private IGameBoard board;
+	
 	private boolean ready;
+	private int nSelectedCards;
+	private int nCardsToBeSelected;
 
 	// Builder
 	public Player(String n) {
@@ -62,6 +65,21 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	public void setReady(boolean r) {
 		ready =r;
 	}
+	
+	@Override
+	public int getSelectedCardsNumber() {
+		return nSelectedCards;
+	}
+	
+	@Override
+	public int getCardsToBeSelectedNumber() {
+		return nCardsToBeSelected;
+	}
+	
+	@Override
+	public void setCardsToBeSelectedNumber(int n) {
+		nCardsToBeSelected =n;
+	}
 
 	// DrawablePlayer implementation
 	@Override
@@ -77,5 +95,8 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	@Override
 	public void selectCard(int id) {
 		hand.selectCard(id);
+		nSelectedCards =0;
+		for (int i =0 ; i<hand.size() ; i++)
+			if (hand.getCard(i).isSelected()) nSelectedCards +=1;
 	}
 }

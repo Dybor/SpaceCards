@@ -144,14 +144,19 @@ public class Card implements IGameCard, IDrawableCard {
 
 	@Override
 	public void setSelected(boolean s) {
-		selected =true;
+		selected =s;
 	}
 	
 	@Override
 	public void setDiscarded(boolean d) {
 		discarded = d;
 	}
-	
+
+	@Override
+	public void setDrawed(boolean d) {
+		drawed =d;
+	}
+
 	@Override
 	public boolean isDiscarded() {
 		return discarded;
@@ -165,11 +170,6 @@ public class Card implements IGameCard, IDrawableCard {
 	@Override
 	public boolean isSelected() {
 		return selected;
-	}
-
-	@Override
-	public void setDrawed(boolean d) {
-		drawed =d;
 	}
 
 	@Override

@@ -54,6 +54,24 @@ public interface IGamePlayer {
 	 */
 	public void setReady(boolean r);
 	
+	/**
+	 * Renvoie le nombre de carte actuellement selectionnees.
+	 * @return
+	 */
+	public int getSelectedCardsNumber();
+	
+	/**
+	 * Renvoie le nombre de carte a selectionner.
+	 * @return
+	 */
+	public int getCardsToBeSelectedNumber();
+	
+	/**
+	 * Active le nombre de carte que le joueur doit selectionner.
+	 * @return
+	 */
+	public void setCardsToBeSelectedNumber(int n);
+	
 	// Actions de jeu
 	/**
 	 * Selectionne une carte.

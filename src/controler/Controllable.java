@@ -18,6 +18,10 @@ public interface Controllable {
 	 */
 	public void treatSelectedCard(int id);
 	
+	/**
+	 * 
+	 * @param c
+	 */
 	public void setController(IControler c);
 	
 }
