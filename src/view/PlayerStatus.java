@@ -79,4 +79,8 @@ public class PlayerStatus extends JPanel {
 		nbPV.setText(""+pv);
 	}
 
+	public Button getValidate_Button() {
+		return validate_Button;
+	}
+
 }

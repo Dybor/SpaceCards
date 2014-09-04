@@ -27,6 +27,10 @@ public class GameControler implements IControler {
 	public void actionCardSelected(int i){
 		
 	}
+	
+	public void validateButtonClicked(){
+		
+	}
 
 	
 	public void control() {

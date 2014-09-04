@@ -156,6 +156,10 @@ private void initFrame(){
 	this.add(board, BorderLayout.CENTER);
 	this.add(gameRound, BorderLayout.WEST);
 	
+	pStatus.setActionListenerValidateButton(this);
+	this.add(pStatus,BorderLayout.EAST);
+	
+	
 	this.setJMenuBar(menuBar);
 	this.addComponentListener(this);
 	
@@ -235,6 +239,8 @@ public void actionPerformed(ActionEvent e) {
 		System.exit(0); 
 	 } else if(e.getSource()==item_test){
 		 piocher();
+	 } else if(e.getSource()==pStatus.getValidate_Button()){
+		 controler.validateButtonClicked();
 	 }
 
 }
