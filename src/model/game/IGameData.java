@@ -10,28 +10,15 @@ import java.util.ArrayList;
 public interface IGameData {
 
 	// Getters
-	/**
-	 * Renvoie la liste de joueurs.
-	 * @return
-	 */
 	public ArrayList<IGamePlayer> getPlayers();
-	
-	/**
-	 * Renvoie la liste des cartes restantes dans la pioche.
-	 * @return
-	 */
 	public ArrayList<IGameCard> getRemainingCards();
-	
-	/**
-	 * Renvoie le nombre de points restants dans le pool de PVs.
-	 * @return
-	 */
 	public int getRemainingVP();
+	public boolean playersAreReady();
+	public boolean boardsNotComplete();
+	public ArrayList<IGameCard> getCards();
 	
-	// Traitement des actions des joueurs
-	/**
-	 * Traite la carte selectionnee par le joueur.
-	 * @param id
-	 */
-	public void treatSelectedCard(IGamePlayer p, int id);
+	// Setters
+	public void setPlayersUnready();
+	public void initializeParameters();
+	public void setCards(ArrayList<IGameCard> cs);
 }

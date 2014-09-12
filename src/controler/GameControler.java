@@ -29,7 +29,7 @@ public class GameControler implements IControler {
 	}
 	
 	public void validateButtonClicked(){
-		
+		game.validateAction();
 	}
 
 	

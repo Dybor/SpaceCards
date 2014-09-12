@@ -8,6 +8,12 @@ package controler;
 public interface Controllable {
 
 	/**
+	 * 
+	 * @param c
+	 */
+	public void setController(IControler c);
+	
+	/**
 	 * Lance une nouvelle partie.
 	 */
 	public void launchGame();
@@ -19,9 +25,8 @@ public interface Controllable {
 	public void treatSelectedCard(int id);
 	
 	/**
-	 * 
-	 * @param c
+	 * Validation de l'action du joueur.
 	 */
-	public void setController(IControler c);
+	public void validateAction();
 	
 }
