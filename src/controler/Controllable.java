@@ -8,7 +8,7 @@ package controler;
 public interface Controllable {
 
 	/**
-	 * 
+	 * Associe au modele son controleur
 	 * @param c
 	 */
 	public void setController(IControler c);

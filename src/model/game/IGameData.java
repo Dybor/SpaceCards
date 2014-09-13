@@ -11,14 +11,14 @@ public interface IGameData {
 
 	// Getters
 	public ArrayList<IGamePlayer> getPlayers();
-	public ArrayList<IGameCard> getRemainingCards();
+	public ArrayList<IGameCard> getStack();
 	public int getRemainingVP();
 	public boolean playersAreReady();
-	public boolean boardsNotComplete();
-	public ArrayList<IGameCard> getCards();
+	public boolean boardsComplete();
+	public IGameCard getFirstCard();
 	
 	// Setters
-	public void setPlayersUnready();
 	public void initializeParameters();
 	public void setCards(ArrayList<IGameCard> cs);
+	public void setPlayersUnready();
 }

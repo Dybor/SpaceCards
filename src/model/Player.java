@@ -16,6 +16,7 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	private IGameBoard board;
 	
 	private boolean ready;
+	private boolean validate;
 	private int nSelectedCards;
 	private int nCardsToBeSelected;
 
@@ -80,6 +81,19 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	public void setCardsToBeSelectedNumber(int n) {
 		nCardsToBeSelected =n;
 	}
+	
+	@Override
+	public void selectCard(int id) {
+		hand.selectCard(id);
+		nSelectedCards =0;
+		for (int i =0 ; i<hand.size() ; i++)
+			if (hand.getCard(i).isSelected()) nSelectedCards +=1;
+	}
+	
+	@Override
+	public void setValidate(boolean v) {
+		validate =v;
+	}
 
 	// DrawablePlayer implementation
 	@Override
@@ -93,10 +107,7 @@ public class Player implements IGamePlayer, IDrawablePlayer {
 	}
 
 	@Override
-	public void selectCard(int id) {
-		hand.selectCard(id);
-		nSelectedCards =0;
-		for (int i =0 ; i<hand.size() ; i++)
-			if (hand.getCard(i).isSelected()) nSelectedCards +=1;
+	public boolean canValidate() {
+		return validate;
 	}
 }

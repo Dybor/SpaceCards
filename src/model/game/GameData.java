@@ -1,25 +1,18 @@
 package model.game;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import model.Card;
 import model.network.INetworkData;
-import controler.IControler;
 
 public class GameData implements IGameData, INetworkData {
 
-	// Attributs privés
+	// Attributes
 	private String name;
 
 	private ArrayList<IGamePlayer> players = new ArrayList<>();
 	private ArrayList<IGameCard> cards = new ArrayList<>();
-	private int pvPool;
+	private int vpPool;
 	private int rounds;
 
 	// Builder
@@ -35,13 +28,13 @@ public class GameData implements IGameData, INetworkData {
 	}
 
 	@Override
-	public ArrayList<IGameCard> getRemainingCards() {
+	public ArrayList<IGameCard> getStack() {
 		return cards;
 	}
 
 	@Override
 	public int getRemainingVP() {
-		return pvPool;
+		return vpPool;
 	}
 	
 	@Override
@@ -52,7 +45,7 @@ public class GameData implements IGameData, INetworkData {
 	}
 
 	@Override
-	public boolean boardsNotComplete() {
+	public boolean boardsComplete() {
 		for (IGamePlayer p : players)
 			if (p.getBoard().size() >= 12)
 				return true;
@@ -60,19 +53,16 @@ public class GameData implements IGameData, INetworkData {
 	}
 
 	@Override
-	public ArrayList<IGameCard> getCards() {
-		return cards;
+	public IGameCard getFirstCard() {
+		IGameCard first =cards.get(0);
+		cards.remove(0);
+		return first;
 	}
 
 	// IGameData implementation : Setters
 	@Override
-	public void setPlayersUnready() {
-		for (IGamePlayer p : players) p.setReady(false);
-	}
-	
-	@Override
 	public void initializeParameters() {
-		pvPool = 12*players.size();
+		vpPool = 12*players.size();
 		Collections.shuffle(cards);
 		rounds =0;
 	}
@@ -80,5 +70,10 @@ public class GameData implements IGameData, INetworkData {
 	@Override
 	public void setCards(ArrayList<IGameCard> cs) {
 		cards =cs;
+	}
+	
+	@Override
+	public void setPlayersUnready() {
+		for (IGamePlayer p : players) p.setReady(false);
 	}
 }

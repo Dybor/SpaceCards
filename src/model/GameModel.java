@@ -1,5 +1,7 @@
 package model;
 
+import io.FileReaderManager;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,6 +23,8 @@ import model.game.GameData;
 public class GameModel implements Observable, Controllable {
 
 	// Attributes
+	private FileReaderManager reader =new FileReaderManager();
+	
 	private long idGame;
 	private GameData gameData;
 	private IControler controler;
@@ -28,7 +32,6 @@ public class GameModel implements Observable, Controllable {
 	
 	// Builder
 	public GameModel(String n, Player p) {
-		// Création de la partie et ajout du joueur principal
 		player =p;
 		idGame =0;
 	}
@@ -36,7 +39,7 @@ public class GameModel implements Observable, Controllable {
 	// Implémentation du pattern Observable pour la vue
 	@Override
 	public int getPlayerViewOwnerIndex() {
-		return 0;
+		return gameData.getPlayers().indexOf((IGamePlayer)player);
 	}
 
 	@Override
@@ -48,9 +51,9 @@ public class GameModel implements Observable, Controllable {
 	}
 
 	@Override
-	public ArrayList<IDrawableCard> getRemainingCards() {
+	public ArrayList<IDrawableCard> getStack() {
 		ArrayList<IDrawableCard> newList =new ArrayList<>();
-		for (IGameCard c:gameData.getRemainingCards())
+		for (IGameCard c:gameData.getStack())
 			newList.add((IDrawableCard)c);
 		return newList;
 	}
@@ -64,6 +67,7 @@ public class GameModel implements Observable, Controllable {
 	@Override
 	public void treatSelectedCard(int id) {
 		player.selectCard(id);
+		player.setValidate(player.getSelectedCardsNumber() <=player.getCardsToBeSelectedNumber()); 
 		controler.notifyView();
 	}
 
@@ -81,7 +85,8 @@ public class GameModel implements Observable, Controllable {
 	@Override
 	public void launchGame() {
 		gameData =new GameData("Nouvelle partie de "+player.getName()+" ("+idGame+")", player);
-		readCards();
+		reader.open("./data/cardfiles/cards.txt");
+		gameData.setCards(reader.readCards());
 		setup();
 
 		// Tours de jeu
@@ -93,40 +98,7 @@ public class GameModel implements Observable, Controllable {
 		// Fin de la partie
 	}
 	
-	private void readCards() {
-		BufferedReader is;
-		String line = null;
-		IGameCard c = null;
-		ArrayList<IGameCard> cards =new ArrayList<>();
-		try {
-			is = new BufferedReader(new FileReader(new File(
-					"./data/cardfiles/cards.txt")));
-			while ((line = is.readLine()) != null) {
-				String[] data = line.split("\t");
-				int id = Integer.parseInt(data[0]);
-				int type = Integer.parseInt(data[1]);
-				int subtype = Integer.parseInt(data[2]);
-				int cost = Integer.parseInt(data[3]);
-				int vp = Integer.parseInt(data[4]);
-				String name = data[5];
-				int color = Integer.parseInt(data[6]);
-				int homeworld = Integer.parseInt(data[7]);
-				int n = Integer.parseInt(data[8]);
-				for (int i = 0; i < n; i++) {
-					c = new Card(id, type, subtype, cost, vp, name, color,
-							homeworld);
-					cards.add(c);
-				}
-			}
-			gameData.setCards(cards);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.out.println("A card is not correctly defined: \n" + line);
-		}
-	}
+	
 	
 	private void setup() {
 		// Points initiaux et mélange des cartes
@@ -137,11 +109,11 @@ public class GameModel implements Observable, Controllable {
 		for (IGamePlayer p : gameData.getPlayers()) {
 			p.setHand(new Hand());
 			p.setBoard(new Board());
-			for (int ic = c; ic < gameData.getCards().size(); ic++) {
-				IGameCard card = gameData.getCards().get(ic);
+			for (int ic = c; ic < gameData.getStack().size(); ic++) {
+				IGameCard card = gameData.getStack().get(ic);
 				if (card.getHomeWorldId() >= 0) {
 					p.getBoard().addCard(card);
-					gameData.getCards().remove(card);
+					gameData.getStack().remove(card);
 					c = ic;
 					break;
 				}
@@ -162,10 +134,7 @@ public class GameModel implements Observable, Controllable {
 	
 	// Actions de jeu
 	private void draw(IGamePlayer p, int n) {
-		for (int i = 0; i < n; i++) {
-			IGameCard card = gameData.getCards().get(0);
-			p.getHand().addCard(card);
-			gameData.getCards().remove(card);
-		}
+		for (int i = 0; i < n; i++)
+			p.getHand().addCard(gameData.getFirstCard());
 	}
 }
