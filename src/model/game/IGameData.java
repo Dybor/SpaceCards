@@ -12,10 +12,12 @@ public interface IGameData {
 	// Attributs statiques
 	public static final int WAITING_PHASE =-1;
 	public static final int SETUP_PHASE =0;
-	public static final int EXPLORE_PHASE =1;
+	public static final int EXPLORE_5_PHASE =1;
+	public static final int EXPLORE_1_1_PHASE =1;
 	public static final int DEVELOP_PHASE =2;
 	public static final int SETTLE_PHASE =3;
-	public static final int CONSUME_PHASE =4;
+	public static final int CONSUME_vp2_PHASE =4;
+	public static final int SELL_PHASE =4;
 	public static final int PRODUCE_PHASE =5;
 	
 	// Getters

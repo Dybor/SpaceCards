@@ -88,13 +88,17 @@ public class GameModel implements Observable, Controllable {
 		// Traitement de l'action du joueur
 		if (gameData.getPhase() ==IGameData.SETUP_PHASE) {
 			setupValidation();
-		} else if (gameData.getPhase() ==IGameData.EXPLORE_PHASE) {
+		} else if (gameData.getPhase() ==IGameData.EXPLORE_5_PHASE) {
+			explore();
+		} else if (gameData.getPhase() ==IGameData.EXPLORE_1_1_PHASE) {
 			explore();
 		} else if (gameData.getPhase() ==IGameData.DEVELOP_PHASE) {
 			develop();
 		} else if (gameData.getPhase() ==IGameData.SETTLE_PHASE) {
 			settle();
-		} else if (gameData.getPhase() ==IGameData.CONSUME_PHASE) {
+		} else if (gameData.getPhase() ==IGameData.CONSUME_vp2_PHASE) {
+			consume();
+		} else if (gameData.getPhase() ==IGameData.SELL_PHASE) {
 			consume();
 		} else if (gameData.getPhase() ==IGameData.PRODUCE_PHASE) {
 			produce();
