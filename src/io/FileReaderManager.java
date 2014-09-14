@@ -44,11 +44,7 @@ public class FileReaderManager {
 				String name = data[5];
 				int color = Integer.parseInt(data[6]);
 				int homeworld = Integer.parseInt(data[7]);
-				int n = Integer.parseInt(data[8]);
-				for (int i = 0; i < n; i++) {
-					c = new Card(id*10+i, type, subtype, cost, vp, name, color, homeworld);
-					cards.add(c);
-				}
+				cards.add(new Card(id, type, subtype, cost, vp, name, color, homeworld));
 			}
 		} catch (IOException e) {
 			msg.sendMessage("Problème de lecture de la carte");
