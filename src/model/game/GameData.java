@@ -11,9 +11,11 @@ public class GameData implements IGameData, INetworkData {
 	private String name;
 
 	private ArrayList<IGamePlayer> players = new ArrayList<>();
-	private ArrayList<IGameCard> cards = new ArrayList<>();
+	private ArrayList<IGameCard> stack = new ArrayList<>();
+	private ArrayList<IGameCard> discardedCards = new ArrayList<>();
 	private int vpPool;
 	private int rounds;
+	private int currentPhase;
 
 	// Builder
 	public GameData(String n, IGamePlayer p) {
@@ -29,7 +31,7 @@ public class GameData implements IGameData, INetworkData {
 
 	@Override
 	public ArrayList<IGameCard> getStack() {
-		return cards;
+		return stack;
 	}
 
 	@Override
@@ -54,8 +56,8 @@ public class GameData implements IGameData, INetworkData {
 
 	@Override
 	public IGameCard getFirstCard() {
-		IGameCard first =cards.get(0);
-		cards.remove(0);
+		IGameCard first =stack.get(0);
+		stack.remove(0);
 		return first;
 	}
 
@@ -63,17 +65,32 @@ public class GameData implements IGameData, INetworkData {
 	@Override
 	public void initializeParameters() {
 		vpPool = 12*players.size();
-		Collections.shuffle(cards);
+		Collections.shuffle(stack);
 		rounds =0;
 	}
 	
 	@Override
 	public void setCards(ArrayList<IGameCard> cs) {
-		cards =cs;
+		stack =cs;
 	}
 	
 	@Override
 	public void setPlayersUnready() {
 		for (IGamePlayer p : players) p.setReady(false);
+	}
+
+	@Override
+	public int getRounds() {
+		return rounds;
+	}
+
+	@Override
+	public int getPhase() {
+		return currentPhase;
+	}
+
+	@Override
+	public void addDiscardedCard(IGameCard c) {
+		discardedCards.add(c);
 	}
 }

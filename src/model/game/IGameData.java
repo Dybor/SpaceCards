@@ -9,10 +9,21 @@ import java.util.ArrayList;
  */
 public interface IGameData {
 
+	// Attributs statiques
+	public static final int WAITING_PHASE =-1;
+	public static final int SETUP_PHASE =0;
+	public static final int EXPLORE_PHASE =1;
+	public static final int DEVELOP_PHASE =2;
+	public static final int SETTLE_PHASE =3;
+	public static final int CONSUME_PHASE =4;
+	public static final int PRODUCE_PHASE =5;
+	
 	// Getters
 	public ArrayList<IGamePlayer> getPlayers();
 	public ArrayList<IGameCard> getStack();
 	public int getRemainingVP();
+	public int getRounds();
+	public int getPhase();
 	public boolean playersAreReady();
 	public boolean boardsComplete();
 	public IGameCard getFirstCard();
@@ -21,4 +32,5 @@ public interface IGameData {
 	public void initializeParameters();
 	public void setCards(ArrayList<IGameCard> cs);
 	public void setPlayersUnready();
+	public void addDiscardedCard(IGameCard c);
 }

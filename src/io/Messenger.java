@@ -7,7 +7,8 @@ public class Messenger {
 	private boolean active;
 	
 	// Builder
-	public Messenger(String name) {
+	public Messenger(String n) {
+		name =n;
 		active =true;
 	}
 	

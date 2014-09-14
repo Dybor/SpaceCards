@@ -34,7 +34,7 @@ public class Hand implements IGameHand, IDrawableHand {
 	}
 
 	@Override
-	public void discardCard(IGameCard card) {
+	public void discardsCard(IGameCard card) {
 		cards.remove(card);
 	}
 

@@ -1,6 +1,7 @@
 package model;
 
 import io.FileReaderManager;
+import io.Messenger;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +17,7 @@ import controler.Observable;
 import model.drawable.IDrawableCard;
 import model.drawable.IDrawablePlayer;
 import model.game.IGameCard;
+import model.game.IGameData;
 import model.game.IGameHand;
 import model.game.IGamePlayer;
 import model.game.GameData;
@@ -24,6 +26,7 @@ public class GameModel implements Observable, Controllable {
 
 	// Attributes
 	private FileReaderManager reader =new FileReaderManager();
+	private Messenger msg;
 	
 	private long idGame;
 	private GameData gameData;
@@ -32,6 +35,7 @@ public class GameModel implements Observable, Controllable {
 	
 	// Builder
 	public GameModel(String n, Player p) {
+		msg =new Messenger("GameModel");
 		player =p;
 		idGame =0;
 	}
@@ -78,7 +82,26 @@ public class GameModel implements Observable, Controllable {
 
 	@Override
 	public void validateAction() {
+		// Le joueur est prêt
 		player.setReady(true);
+		
+		// Traitement de l'action du joueur
+		if (gameData.getPhase() ==IGameData.SETUP_PHASE) {
+			setupValidation();
+		} else if (gameData.getPhase() ==IGameData.EXPLORE_PHASE) {
+			explore();
+		} else if (gameData.getPhase() ==IGameData.DEVELOP_PHASE) {
+			develop();
+		} else if (gameData.getPhase() ==IGameData.SETTLE_PHASE) {
+			settle();
+		} else if (gameData.getPhase() ==IGameData.CONSUME_PHASE) {
+			consume();
+		} else if (gameData.getPhase() ==IGameData.PRODUCE_PHASE) {
+			produce();
+		}
+		
+		// Mise à jour de la vue
+		controler.notifyView();
 	}
 	
 	// Méthodes de la partie
@@ -97,8 +120,6 @@ public class GameModel implements Observable, Controllable {
 
 		// Fin de la partie
 	}
-	
-	
 	
 	private void setup() {
 		// Points initiaux et mélange des cartes
@@ -136,5 +157,38 @@ public class GameModel implements Observable, Controllable {
 	private void draw(IGamePlayer p, int n) {
 		for (int i = 0; i < n; i++)
 			p.getHand().addCard(gameData.getFirstCard());
+	}
+	
+	private void setupValidation() {
+		IGameHand h =player.getHand();
+		ArrayList<IGameCard> dCards =new ArrayList<IGameCard>();
+		for (int i =0 ; i<h.size() ; i++) {
+			IGameCard c =h.getCard(i);
+			if (c.isSelected()) dCards.add(c);
+		}
+		for (IGameCard c:dCards) {
+			h.discardsCard(c);
+			gameData.addDiscardedCard(c);
+		}
+	}
+	
+	private void explore() {
+		
+	}
+	
+	private void develop() {
+		
+	}
+	
+	private void settle() {
+		
+	}
+	
+	private void consume() {
+		
+	}
+	
+	private void produce() {
+		
 	}
 }

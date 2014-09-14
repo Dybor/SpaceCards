@@ -34,7 +34,6 @@ public class FileReaderManager {
 		IGameCard c = null;
 		ArrayList<IGameCard> cards =new ArrayList<>();
 		try {
-			
 			while ((line = is.readLine()) != null) {
 				String[] data = line.split("\t");
 				int id = Integer.parseInt(data[0]);
@@ -47,8 +46,7 @@ public class FileReaderManager {
 				int homeworld = Integer.parseInt(data[7]);
 				int n = Integer.parseInt(data[8]);
 				for (int i = 0; i < n; i++) {
-					c = new Card(id, type, subtype, cost, vp, name, color,
-							homeworld);
+					c = new Card(id*10+i, type, subtype, cost, vp, name, color, homeworld);
 					cards.add(c);
 				}
 			}
@@ -59,5 +57,4 @@ public class FileReaderManager {
 		}
 		return cards;
 	}
-
 }
