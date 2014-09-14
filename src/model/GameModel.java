@@ -20,7 +20,6 @@ import model.game.IGameCard;
 import model.game.IGameData;
 import model.game.IGameHand;
 import model.game.IGamePlayer;
-import model.game.GameData;
 
 public class GameModel implements Observable, Controllable {
 
@@ -67,41 +66,40 @@ public class GameModel implements Observable, Controllable {
 		return gameData.getRemainingVP();
 	}
 
-	// Implémentation du pattern Controllable pour le controleur
 	@Override
-	public void treatSelectedCard(int id) {
-		player.selectCard(id);
-		player.setValidate(player.getSelectedCardsNumber() <=player.getCardsToBeSelectedNumber()); 
-		controler.notifyView();
+	public boolean isActionChoicePhase() {
+		return gameData.getPhase() ==IGameData.ACTION_CHOICE_PHASE;
 	}
-
+	
+	// Implémentation du pattern Controllable pour le controleur
 	@Override
 	public void setController(IControler c) {
 		controler =c;
 	}
 
 	@Override
-	public void validateAction() {
-		// Le joueur est prêt
-		player.setReady(true);
-		
+	public void treatSelectedCard(int id) {
+		if (gameData.getPhase() !=IGameData.ACTION_CHOICE_PHASE) {
+			player.selectCard(id);
+			player.setValidate(player.getSelectedCardsNumber() ==player.getCardsToBeSelectedNumber()); 
+			controler.notifyView();
+		}
+	}
+
+		@Override
+	public void validateAction(int i) {
 		// Traitement de l'action du joueur
 		if (gameData.getPhase() ==IGameData.SETUP_PHASE) {
-			setupValidation();
-		} else if (gameData.getPhase() ==IGameData.EXPLORE_5_PHASE) {
-			explore();
-		} else if (gameData.getPhase() ==IGameData.EXPLORE_1_1_PHASE) {
-			explore();
-		} else if (gameData.getPhase() ==IGameData.DEVELOP_PHASE) {
-			develop();
-		} else if (gameData.getPhase() ==IGameData.SETTLE_PHASE) {
-			settle();
-		} else if (gameData.getPhase() ==IGameData.CONSUME_vp2_PHASE) {
-			consume();
-		} else if (gameData.getPhase() ==IGameData.SELL_PHASE) {
-			consume();
-		} else if (gameData.getPhase() ==IGameData.PRODUCE_PHASE) {
-			produce();
+			if (gameData.getPhase() ==IGameData.SETUP_PHASE) setupValidation();
+		} else {
+			gameData.setPhase(i);
+			if (gameData.getPhase() ==IGameData.EXPLORE_5_PHASE) explore();
+			else if (gameData.getPhase() ==IGameData.EXPLORE_1_1_PHASE) explore();
+			else if (gameData.getPhase() ==IGameData.DEVELOP_PHASE) develop();
+			else if (gameData.getPhase() ==IGameData.SETTLE_PHASE) settle();
+			else if (gameData.getPhase() ==IGameData.CONSUME_vp2_PHASE) consume();
+			else if (gameData.getPhase() ==IGameData.SELL_PHASE) consume();
+			else if (gameData.getPhase() ==IGameData.PRODUCE_PHASE) produce();
 		}
 		
 		// Mise à jour de la vue
@@ -174,25 +172,28 @@ public class GameModel implements Observable, Controllable {
 			h.discardsCard(c);
 			gameData.addDiscardedCard(c);
 		}
+		gameData.setPhase(IGameData.ACTION_CHOICE_PHASE);
 	}
 	
 	private void explore() {
-		
+		msg.sendMessage("Explorer");
 	}
 	
 	private void develop() {
-		
+		msg.sendMessage("Développer");
 	}
 	
 	private void settle() {
-		
+		msg.sendMessage("Coloniser");
 	}
 	
 	private void consume() {
-		
+		msg.sendMessage("Consommer");
 	}
 	
 	private void produce() {
-		
+		msg.sendMessage("Produire");
 	}
+
+	
 }

@@ -1,8 +1,11 @@
-package model.game;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+import model.game.IGameCard;
+import model.game.IGameData;
+import model.game.IGamePlayer;
 import model.network.INetworkData;
 
 public class GameData implements IGameData, INetworkData {
@@ -66,6 +69,7 @@ public class GameData implements IGameData, INetworkData {
 	public void initializeParameters() {
 		vpPool = 12*players.size();
 		Collections.shuffle(stack);
+		currentPhase =IGameData.SETUP_PHASE;
 		rounds =0;
 	}
 	
@@ -92,5 +96,10 @@ public class GameData implements IGameData, INetworkData {
 	@Override
 	public void addDiscardedCard(IGameCard c) {
 		discardedCards.add(c);
+	}
+
+	@Override
+	public void setPhase(int phase) {
+		currentPhase =phase;
 	}
 }

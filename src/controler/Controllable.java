@@ -7,26 +7,9 @@ package controler;
  */
 public interface Controllable {
 
-	/**
-	 * Associe au modele son controleur
-	 * @param c
-	 */
 	public void setController(IControler c);
-	
-	/**
-	 * Lance une nouvelle partie.
-	 */
 	public void launchGame();
-	
-	/**
-	 * Traite la carte avec l'identifiant id.
-	 * @param id
-	 */
 	public void treatSelectedCard(int id);
-	
-	/**
-	 * Validation de l'action du joueur.
-	 */
-	public void validateAction();
+	public void validateAction(int i);
 	
 }

@@ -12,28 +12,10 @@ import model.drawable.IDrawablePlayer;
  */
 public interface Observable {
 	
-	/**
-	 * Renvoie la position du joueur possedant la vue courrante dans la liste de
-	 * joueurs de la partie.
-	 * @return
-	 */
 	public int getPlayerViewOwnerIndex();
-	
-	/**
-	 * Renvoie la liste des joueurs pour la vue.
-	 * @return
-	 */
 	public ArrayList<IDrawablePlayer> getPlayers();
-	
-	/**
-	 * Ranvoie la liste des cartes de la pioche pour la vue.
-	 * @return
-	 */
 	public ArrayList<IDrawableCard> getStack();
-	
-	/**
-	 * Renvoie le nombre de points restants dans le pool de PV.
-	 * @return
-	 */
 	public int getRemainingVP();
+	public boolean isActionChoicePhase();
+	
 }

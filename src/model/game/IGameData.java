@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public interface IGameData {
 
 	// Attributs statiques
-	public static final int WAITING_PHASE =-2;
+	public static final int WAITING_PHASE =-3;
+	public static final int ACTION_CHOICE_PHASE =-2;
 	public static final int SETUP_PHASE =-1;
 	public static final int EXPLORE_5_PHASE =0;
 	public static final int EXPLORE_1_1_PHASE =1;
@@ -35,4 +36,5 @@ public interface IGameData {
 	public void setCards(ArrayList<IGameCard> cs);
 	public void setPlayersUnready();
 	public void addDiscardedCard(IGameCard c);
+	public void setPhase(int phase);
 }
