@@ -29,7 +29,7 @@ public class GameRound extends JPanel{
 		this.marge_ext_y = marge_ext_y;	
 		
 		this.setPreferredSize(new Dimension(Board.WIDTH_ROUND, Board.HEIGHT_ROUND*6));
-		this.setBorder(javax.swing.border.LineBorder.createBlackLineBorder());
+//		this.setBorder(javax.swing.border.LineBorder.createBlackLineBorder());
 		
 		initGameRound();
 	}

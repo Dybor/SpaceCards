@@ -55,6 +55,8 @@ private PlayerStatus pStatus;
 
 private GameRound gameRound;
 
+private JPanel westPanel;
+
 // Menu
 private JMenuBar menuBar = new JMenuBar();
 private JMenu menu_File = new JMenu("Fichier");
@@ -148,16 +150,19 @@ private void initGameRound(){
 
 private void initPlayerStatus(){
 	pStatus = new PlayerStatus(7);
+	pStatus.setActionListenerValidateButton(this);
+	pStatus.setActionListenerRadioButton(this);
 }
 
 
 private void initFrame(){
 	this.setLayout(new BorderLayout());
 	this.add(board, BorderLayout.CENTER);
-	this.add(gameRound, BorderLayout.WEST);
 	
-	pStatus.setActionListenerValidateButton(this);
-	this.add(pStatus,BorderLayout.EAST);
+	westPanel = new JPanel(new GridLayout(2,1));
+	westPanel.add(gameRound);
+	westPanel.add(pStatus);
+	this.add(westPanel, BorderLayout.WEST);
 	
 	
 	this.setJMenuBar(menuBar);
@@ -191,6 +196,7 @@ public void refreshAll(){
 	updateBoard(game.getPlayers().get(me).getDrawableBoard());
 	updateHand(game.getPlayers().get(me).getDrawableHand());
 	updatePoolPV(game.getRemainingVP());
+	pStatus.setVisibleTrueValidateButton(game.getPlayers().get(me).canValidate());
 }
 
 //*******Fonction Test ************ //
@@ -213,34 +219,37 @@ private void poserCarte(){
 @Override
 public void actionPerformed(ActionEvent e) {
 	 if(e.getSource()==item_join){
-		 controler.launchGame();
+		 
+//		 model.Hand hand = new model.Hand();
+//		 
+//		 updateHand(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableHand());
+//		 updateBoard(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableBoard());		 
+//		 
+//		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
+//		 bool.add(true);
+//		 bool.add(true);
+//		 bool.add(false);
+//		 bool.add(false);
+//		 bool.add(true);
+//		 bool.add(false);
+//		 
+//		 gameRound.setGreyRound(bool);
+//		 
+//		 sendInformationMessage("Tour1");
+//		 
+//		 refreshSizeGamePanel();
+		 
+		 
 	 } else if(e.getSource()==item_new){
-		 
-			model.Hand hand = new model.Hand();
-		 
-		 updateHand(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableHand());
-		 updateBoard(game.getPlayers().get(game.getPlayerViewOwnerIndex()).getDrawableBoard());		 
-		 
-		 ArrayList<Boolean> bool = new ArrayList<Boolean>();
-		 bool.add(true);
-		 bool.add(true);
-		 bool.add(false);
-		 bool.add(false);
-		 bool.add(true);
-		 bool.add(false);
-		 
-		 gameRound.setGreyRound(bool);
-		 
-		 sendInformationMessage("Tour1");
-		 
-		 refreshSizeGamePanel();
-		 
+		 controler.launchGame();
 	 } else if(e.getSource()==item_quit){
 		System.exit(0); 
 	 } else if(e.getSource()==item_test){
 		 piocher();
 	 } else if(e.getSource()==pStatus.getValidate_Button()){
-		 controler.validateButtonClicked();
+		 controler.validateButtonClicked(pStatus.getButtonSelected());
+	 } else if(pStatus.getBrList().contains(e.getSource())){
+		 pStatus.setButtonSelected(pStatus.getBrList().indexOf(e.getSource()));
 	 }
 
 }

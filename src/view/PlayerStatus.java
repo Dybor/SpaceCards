@@ -22,6 +22,8 @@ public class PlayerStatus extends JPanel {
 	
 	private ButtonGroup bg;
 	private ArrayList<JRadioButton> brList;
+	private ArrayList<String> nameList;
+	private int buttonSelected = 0;
 	
 	private Button validate_Button;
 	private JLabel nbPV;
@@ -30,13 +32,21 @@ public class PlayerStatus extends JPanel {
 	
 	public PlayerStatus(int nbButton) {
 //		this.setPreferredSize(new Dimension(200, 400));
-		this.setLayout(new GridLayout(3,3));
+		this.setLayout(new GridLayout(12,1));
 		
 		bg = new ButtonGroup();
 		brList = new ArrayList<>();
+		nameList = new ArrayList<>();
+		nameList.add("Explorer +5");
+		nameList.add("Explorer +1+1");
+		nameList.add("Développer");
+		nameList.add("Coloniser");
+		nameList.add("Consommer-Vendre");
+		nameList.add("Consommer-x2");
+		nameList.add("Produire");
 		
 		for(int i = 0 ;i<nbButton;i++){
-			JRadioButton rb = new JRadioButton("Action : "+i);
+			JRadioButton rb = new JRadioButton(nameList.get(i));
 			brList.add(rb);
 			bg.add(rb);
 			this.add(rb);
@@ -71,6 +81,16 @@ public class PlayerStatus extends JPanel {
 		validate_Button.addActionListener(a);
 	}
 	
+	public void setActionListenerRadioButton(ActionListener a){
+		for(JRadioButton radio : brList){
+			radio.addActionListener(a);
+		}
+	}
+	
+	public void setVisibleTrueValidateButton(boolean b){
+		validate_Button.setVisible(b);
+	}
+	
 	public void cleanRadioButton(){
 		bg.clearSelection();
 	}
@@ -82,5 +102,19 @@ public class PlayerStatus extends JPanel {
 	public Button getValidate_Button() {
 		return validate_Button;
 	}
+
+	public ArrayList<JRadioButton> getBrList() {
+		return brList;
+	}
+	
+	public void setButtonSelected(int i){
+		buttonSelected = i;
+	}
+	
+	public int getButtonSelected(){
+		return buttonSelected;
+	}
+	
+
 
 }

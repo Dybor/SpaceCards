@@ -111,6 +111,18 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 		updatePlayerBoard();
 		updateOtherPlayerBoard();
 		
+		if(!screenMessage.equals("")){
+			Graphics2D g2d = (Graphics2D) g;
+			Font f = new Font("Ariel", Font.BOLD, 12);
+			Rectangle2D rec = f.getStringBounds(screenMessage, g2d.getFontRenderContext());
+			g2d.setFont(f);
+			g2d.setColor(Color.BLACK);
+//			g2d.drawString(screenMessage,(float) (width_Screen/2 - rec.getWidth()/2) ,(float)( height_Screen/2 - rec.getHeight()/2));
+
+			g2d.drawString(screenMessage,(float) (width_Screen/2 - rec.getWidth()/2) ,(float) (height_Screen - scale_height_H - 2*marge_ext_y_H - rec.getHeight()*2));
+		}
+		
+		
 		//affiche les cartes du plateau joueur
 		for (Iterator iter = playerBoard.iterator(); iter.hasNext();) {
 			IDrawable d = (IDrawable) iter.next();
@@ -136,16 +148,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			zoomCard.draw(g);
 		}
 		
-		if(!screenMessage.equals("")){
-			Graphics2D g2d = (Graphics2D) g;
-			Font f = new Font("Ariel", Font.BOLD, 12);
-			Rectangle2D rec = f.getStringBounds(screenMessage, g2d.getFontRenderContext());
-			g2d.setFont(f);
-			g2d.setColor(Color.BLACK);
-//			g2d.drawString(screenMessage,(float) (width_Screen/2 - rec.getWidth()/2) ,(float)( height_Screen/2 - rec.getHeight()/2));
-
-			g2d.drawString(screenMessage,(float) (width_Screen/2 - rec.getWidth()/2) ,(float) (height_Screen - scale_height_H - 2*marge_ext_y_H - rec.getHeight()*2));
-		}
 		
 	}
 	
@@ -405,7 +407,12 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if(flagHandCard>0){
+			zoomCard = null;
+			repaint();
+		}
+		
+
 		
 	}
 
@@ -426,7 +433,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
