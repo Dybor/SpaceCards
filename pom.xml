@@ -27,7 +27,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.geekteam.model.Main</mainClass>
+							<mainClass>com.geekteam.ui.fx.RaceForTheGalaxy</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

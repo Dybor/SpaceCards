@@ -1,6 +1,8 @@
-package com.geekteam.core.model;
+package com.geekteam.ui;
 
 import com.geekteam.core.controler.GameControler;
+import com.geekteam.core.model.GameModel;
+import com.geekteam.core.model.Player;
 import com.geekteam.ui.view.Board;
 
 public class Main {
