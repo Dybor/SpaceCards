@@ -8,32 +8,39 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-import com.geekteam.ui.Main;
-
 public class MainMenu extends BorderPane {
-	public MainMenu() {
-		getStyleClass().add("pane");
+	public MainMenu(final RaceForTheGalaxy application) {
+		getStyleClass().add("main-pane");
 		setTop(newLogo());
-		setCenter(newButtons());
+		setCenter(newButtons(application));
 	}
 
-	private VBox newButtons() {
+	private VBox newButtons(final RaceForTheGalaxy application) {
 
 		VBox buttons = new VBox();
 		buttons.getStyleClass().add("buttons");
 
-		Button newGame = new Button("Nouvelle Partie".toUpperCase());
-		newGame.setOnAction(new EventHandler<ActionEvent>() {
+		Button start = newButton("Nouvelle Partie",
+				new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(final ActionEvent event) {
-				Main.main(null);
+				application.startGame();
 			}
 		});
-		buttons.getChildren().add(newGame);
+		buttons.getChildren().add(start);
 
-		Button exit = new Button("Quitter".toUpperCase());
-		exit.setOnAction(new EventHandler<ActionEvent>() {
+		Button join = newButton("Rejoindre Partie",
+				new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(final ActionEvent event) {
+				application.joinGame();
+			}
+		});
+		buttons.getChildren().add(join);
+
+		Button exit = newButton("Quitter", new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(final ActionEvent event) {
@@ -42,6 +49,14 @@ public class MainMenu extends BorderPane {
 		});
 		buttons.getChildren().add(exit);
 		return buttons;
+	}
+
+	private Button newButton(final String text,
+			final EventHandler<ActionEvent> handler) {
+		Button button = new Button(text.toUpperCase());
+		button.setOnAction(handler);
+		button.getStyleClass().add("rich-blue");
+		return button;
 	}
 
 	private ImageView newLogo() {

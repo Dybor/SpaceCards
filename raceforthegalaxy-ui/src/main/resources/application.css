@@ -7,32 +7,63 @@
   	-fx-image: url("images/logo.png");
 }
 
+.phases {
+	-fx-alignment: center;
+	-fx-hgap: 5;
+}
 
-.pane {
+.phase {
+	-fx-background-color: white, linear-gradient(to right, darkgray, gray, darkgray);
+    -fx-background-radius: 5;
+    -fx-background-insets: 0.0,1.0,2.0,3.0;
+    -fx-padding: 12.0 30.0 12.0 30.0;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Mittelschrift';
+}
+
+.counter {
+    -fx-background-insets: 0.0,1.0,2.0,3.0;
+    -fx-padding: 12.0 30.0 12.0 30.0;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Mittelschrift';
+}
+
+.main-pane {
 	-fx-background: black;
-	-fx-padding: 15;
+	-fx-padding: 15.0;
 }
 .buttons{
-	-fx-spacing: 5;
+	-fx-spacing: 5.0;
 	-fx-alignment: center;
 	-fx-fill-width: true;
 }
 
-.buttons Button {
+.rich-blue {
     -fx-background-color:
         #000000,
         linear-gradient(#7ebcea, #2f4b8f),
         linear-gradient(#426ab7, #263e75),
         linear-gradient(#395cab, #223768);
-    -fx-background-insets: 0,1,2,3;
-    -fx-background-radius: 3,2,2,2;
-    -fx-padding: 12 30 12 30;
+    -fx-background-insets: 0.0,1.0,2.0,3.0;
+    -fx-background-radius: 3.0,2.0,2.0,2.0;
+    -fx-padding: 12.0 30.0 12.0 30.0;
     -fx-text-fill: white;
-    -fx-font-size: 12px;
+    -fx-font-size: 12.0px;
     -fx-font-weight: bold;
     -fx-font-family: 'Mittelschrift';
 }
 
-.buttons Button Text {
-    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , 1);
+.rich-blue:hover, .rich-blue:pressed {
+    -fx-background-color:
+        linear-gradient(#395cab, #223768),
+        linear-gradient(#426ab7, #263e75),
+        linear-gradient(#7ebcea, #2f4b8f);
+}
+
+.rich-blue Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0.0,0.0,0.0,0.8) , 0.0, 0.0 , 0.0 , 1.0);
 }
