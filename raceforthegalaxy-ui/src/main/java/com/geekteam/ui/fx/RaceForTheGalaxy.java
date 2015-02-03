@@ -1,34 +1,36 @@
 package com.geekteam.ui.fx;
 
+import java.io.IOException;
+
 import javafx.application.Application;
-import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class RaceForTheGalaxy extends Application {
 
 	private Stage stage_;
-	private MainMenu mainMenu_;
-	private final GameBoard board_;
+	private final BorderPane board_;
+	private final BorderPane mainMenu_;
+	private static RaceForTheGalaxy __instance;
 
-	public RaceForTheGalaxy() {
-		mainMenu_ = new MainMenu(this);
-		board_ = new GameBoard();
+	public RaceForTheGalaxy() throws IOException {
+		mainMenu_ = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
+		board_ = FXMLLoader.load(getClass().getResource("/Board.fxml"));
 	}
 
 	@Override
 	public void start(final Stage stage) {
+		__instance = this;
 		initStage(stage);
-		mainMenu_ = new MainMenu(this);
-		stage_.setScene(toScene(mainMenu_));
+		stage_.setScene(new Scene(mainMenu_));
 		stage_.show();
 	}
 
-	private Scene toScene(final Parent parent) {
-		Scene scene = new Scene(parent);
-		scene.getStylesheets().add("/application.css");
-		return scene;
+	public static RaceForTheGalaxy getInstance() {
+		return __instance;
 	}
 
 	private void initStage(final Stage stage) {
@@ -50,7 +52,7 @@ public class RaceForTheGalaxy extends Application {
 	}
 
 	public void startGame() {
-		stage_.setScene(toScene(board_));
+		stage_.setScene(new Scene(board_));
 	}
 
 }

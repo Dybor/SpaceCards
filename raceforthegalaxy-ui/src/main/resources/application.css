@@ -36,12 +36,13 @@
 	-fx-background: black;
 	-fx-padding: 15.0;
 }
-.buttons{
-	-fx-spacing: 5.0;
-	-fx-alignment: center;
-	-fx-fill-width: true;
-}
 
+.buttons{
+	-fx-alignment: center;
+	-fx-orientation: vertical;
+	-fx-column-halignment: center;
+	-fx-vgap: 5;
+}
 .rich-blue {
     -fx-background-color:
         #000000,

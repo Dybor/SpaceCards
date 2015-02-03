@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane styleClass="main-pane" xmlns:fx="http://javafx.com/fxml/1"
+	xmlns="http://javafx.com/javafx/8" fx:controller="com.geekteam.ui.fx.GameBoardController"
+	stylesheets="@application.css">
+	<top>
+		<BorderPane>
+			<left>
+				<ImageView fitWidth="100" preserveRatio="true" styleClass="logo" />
+			</left>
+			<center>
+				<FlowPane styleClass="phases">
+					<children>
+						<Label styleClass="phase" text="I" />
+						<Label styleClass="phase" text="II" />
+						<Label styleClass="phase" text="III" />
+						<Label styleClass="phase" text="IV" />
+						<Label styleClass="phase" text="IV" />
+					</children>
+				</FlowPane>
+			</center>
+			<right>
+				<Label fx:id="round" styleClass="counter" text="round" />
+			</right>
+		</BorderPane>
+	</top>
+	<left>
+		<TableView fx:id="players" styleClass="players">
+			<columns>
+				<TableColumn text="Players" fx:id="name">
+					<cellValueFactory>
+						<PropertyValueFactory property="name" />
+					</cellValueFactory>
+				</TableColumn>
+			</columns>
+			<sortOrder>
+				<fx:reference source="name" />
+			</sortOrder>
+		</TableView>
+	</left>
+	<center>
+		<FlowPane styleClass="planets" fx:id="planets"/>
+	</center>
+</BorderPane>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" styleClass="main-pane" fx:controller="com.geekteam.ui.fx.MainMenuController"
+	stylesheets="@application.css">
+	<top>
+		<ImageView styleClass="logo" />
+	</top>
+	<center>
+		<FlowPane styleClass="buttons">
+			<Button styleClass="rich-blue" text="NOUVELLE PARTIE" onAction="#startGame"/>
+			<Button styleClass="rich-blue" text="REJOINDRE PARTIE" onAction="#joinGame"/>
+			<Button styleClass="rich-blue" text="QUITTER" onAction="#exit"/>
+		</FlowPane>
+	</center>
+</BorderPane>
+
