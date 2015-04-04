@@ -5,9 +5,9 @@
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
-			<groupId>com.geekteam.raceforthegalaxy</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>raceforthegalaxy-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<properties>
@@ -15,7 +15,7 @@
 	</properties>
 	<parent>
 		<groupId>com.geekteam.raceforthegalaxy</groupId>
-		<artifactId>raceforthegalaxy-parent</artifactId>
+		<artifactId>raceforthegalaxy</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 </project>
